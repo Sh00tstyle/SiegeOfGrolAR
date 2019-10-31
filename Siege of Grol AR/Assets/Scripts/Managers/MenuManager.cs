@@ -14,26 +14,30 @@ public class MenuManager : Singleton<MenuManager>
     {
         _menuStack = new Stack<MenuBehaviour>();
         _menuStack.Push(_defaultMenu);
+        _defaultMenu.ShowMenu();
     }
 
     public void GoToMenu(MenuBehaviour pTargetMenu)
     {
+        //// Hide and disable last menu
+        //if (!pTargetMenu.stackOptions.HasFlag(StackOptions.OVERLAY))
+        //    _menuStack.Peek().HideMenu();
 
+        //// Enable new menu and add to stack if neccesary
+        //if (pTargetMenu.stackOptions.HasFlag(StackOptions.PUSHTOSTACK))
+        //    _menuStack.Push(pTargetMenu);
 
-        // Hide and disable last menu
-        if (pTargetMenu.options != MenuOptions.OVERLAY)
+        if (pTargetMenu.inAnimation == AnimationOption.PUSH)
+            pTargetMenu.PushMenu(_menuStack.Peek());
+        else
             _menuStack.Peek().HideMenu();
 
-        // Enable new menu and add to stack if neccesary
-        if (pTargetMenu.options == MenuOptions.PUSHTOSTACK)
-            _menuStack.Push(pTargetMenu);
-
-        if (pTargetMenu.options == MenuOptions.CLEARSTACK)
-        {
-            _menuStack = new Stack<MenuBehaviour>();
-            _menuStack.Push(pTargetMenu);
-        }
-
+        //if (pTargetMenu.stackOptions.HasFlag(StackOptions.CLEARSTACK))
+        //{
+        //    _menuStack = new Stack<MenuBehaviour>();
+        //    _menuStack.Push(pTargetMenu);
+        //}
+        _menuStack.Push(pTargetMenu);
         pTargetMenu.ShowMenu();
     }
 

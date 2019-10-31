@@ -1,7 +1,7 @@
 ﻿using System;
 
 [Flags]
-public enum MenuOptions
+public enum StackOptions
 {
     OVERLAY = 1,
     CLEARSTACK = 1 << 1,
