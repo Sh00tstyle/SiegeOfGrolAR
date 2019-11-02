@@ -8,90 +8,79 @@ using UnityEngine.Events;
 
 public class MenuBehaviour : MonoBehaviour
 {
-    [Header("Animation")]
-    public StackOptions stackOptions;
-    public AnimationOption inAnimation, outAnimation;
-    public Direction inAnimationDirection, outAnimationDirection;
+    [SerializeField]
+    MenuAnimation[] _animations;
 
     [SerializeField]
-    Ease easeIn, easeOut;
+    CanvasGroup _canvasGroup;
+
     [SerializeField]
-    float easeInDuration, easeOutDuration;
+    RectTransform _canvasRect;
 
-
-    [Header("Canvas objects")]
-    [SerializeField]
-    RectTransform containerRect;
-    [SerializeField]
-    CanvasGroup canvasGroup;
-
-
-
-    public Tween activeTween;
-
+    Tween _activeTween;
 
     private void Awake()
     {
-        if (inAnimation == AnimationOption.ANIMATE || inAnimation == AnimationOption.PUSH)
-            containerRect.localPosition = _GetAnimationVector(inAnimationDirection);
-    }
-
-    void _FadeMenu(bool fadeIn)
-    {
-        activeTween = canvasGroup.DOFade(fadeIn ? 1 : 0, fadeIn ? easeInDuration : easeOutDuration).SetEase(fadeIn ? easeIn : easeOut);
-
-        if (!fadeIn)
-            activeTween.OnComplete(() => this.gameObject.SetActive(false));
-    }
-
-    void _AnimationMenu(bool animationIn)
-    {
-        if (canvasGroup.alpha < 1)
-            canvasGroup.alpha = 1;
-
-        activeTween = containerRect.DOLocalMove(
-            animationIn ? Vector2.zero : _GetAnimationVector(outAnimationDirection),
-            animationIn ? easeInDuration : easeOutDuration
-           ).SetEase(animationIn ? easeIn : easeOut);
-
-        if (!animationIn)
-            activeTween.OnComplete(() => this.gameObject.SetActive(false));
-    }
-
-    public void PushMenu(MenuBehaviour pPreviousMenu)
-    {
-        activeTween.Kill();
-        // E.g. In case we're coming from the left, the old menu should go to the right
-        Direction pushDirection = Direction.DOWN;
-        switch (inAnimationDirection)
+        for (int i = 0; i < _animations.Length; ++i)
         {
-            case Direction.UP:
-                pushDirection = Direction.DOWN;
-                break;
-            case Direction.DOWN:
-                pushDirection = Direction.UP;
-                break;
-            case Direction.RIGHT:
-                pushDirection = Direction.LEFT;
-                break;
-            case Direction.LEFT:
-                pushDirection = Direction.RIGHT;
-                break;
+            _animations[i].SetListener();
         }
-        pPreviousMenu.activeTween = pPreviousMenu.containerRect.DOLocalMove(_GetAnimationVector(pushDirection), pPreviousMenu.easeOutDuration)
-            .SetEase(pPreviousMenu.easeOut)
-            .OnComplete(() => pPreviousMenu.gameObject.SetActive(false));
 
-        _AnimationMenu(true);
+
     }
 
-    public void ShowMenu()
-    {
-        activeTween.Kill();
-        this.gameObject.SetActive(true);
+    //void _FadeMenu(bool fadeIn)
+    //{
+    //    activeTween = canvasGroup.DOFade(fadeIn ? 1 : 0, fadeIn ? easeInDuration : easeOutDuration).SetEase(fadeIn ? easeIn : easeOut);
 
-        //else
-        _AnimationMenu(true);
+    //    if (!fadeIn)
+    //        activeTween.OnComplete(() => this.gameObject.SetActive(false));
+    //}
+
+    void _SlideIn(Direction pDirection)
+    {
+
+        _activeTween = _canvasRect.DOLocalMove(Vector2.zero, 1);
+
+
+    }
+
+    //public void PushMenu(MenuBehaviour pPreviousMenu)
+    //{
+    //    activeTween.Kill();
+    //    // E.g. In case we're coming from the left, the old menu should go to the right
+    //    Direction pushDirection = Direction.DOWN;
+    //    switch (inAnimationDirection)
+    //    {
+    //        case Direction.UP:
+    //            pushDirection = Direction.DOWN;
+    //            break;
+    //        case Direction.DOWN:
+    //            pushDirection = Direction.UP;
+    //            break;
+    //        case Direction.RIGHT:
+    //            pushDirection = Direction.LEFT;
+    //            break;
+    //        case Direction.LEFT:
+    //            pushDirection = Direction.RIGHT;
+    //            break;
+    //    }
+    //    pPreviousMenu.activeTween = pPreviousMenu.containerRect.DOLocalMove(_GetAnimationVector(pushDirection), pPreviousMenu.easeOutDuration)
+    //        .SetEase(pPreviousMenu.easeOut)
+    //        .OnComplete(() => pPreviousMenu.gameObject.SetActive(false));
+
+    //    _AnimationMenu(true);
+    //}
+
+    public void ShowMenu(Ease pEase, float pEaseDuration, AnimationOption pAnimation = AnimationOption.ANIMATE, Direction pDirection = Direction.DOWN)
+    {
+        _canvasRect.localPosition = -_GetAnimationVector(pDirection);
+        Debug.Log("Show menu");
+        //activeTween.Kill();
+        gameObject.SetActive(true);
+
+        ////else
+        _SlideIn(pDirection);
 
     }
 
@@ -111,15 +100,15 @@ public class MenuBehaviour : MonoBehaviour
         return Vector2.zero;
     }
 
-    public void HideMenu()
-    {
-        activeTween.Kill();
-        if (outAnimation == AnimationOption.INSTANT)
-            gameObject.SetActive(false);
-        else if (outAnimation == AnimationOption.DISSOLVE)
-            _FadeMenu(false);
-        else
-            _AnimationMenu(false);
-    }
+    //public void HideMenu()
+    //{
+    //    activeTween.Kill();
+    //    if (outAnimation == AnimationOption.INSTANT)
+    //        gameObject.SetActive(false);
+    //    else if (outAnimation == AnimationOption.DISSOLVE)
+    //        _FadeMenu(false);
+    //    else
+    //        _AnimationMenu(false);
+    //}
 
 }

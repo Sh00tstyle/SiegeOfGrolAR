@@ -14,7 +14,7 @@ public class MenuManager : Singleton<MenuManager>
     {
         _menuStack = new Stack<MenuBehaviour>();
         _menuStack.Push(_defaultMenu);
-        _defaultMenu.ShowMenu();
+        //_defaultMenu.ShowMenu();
     }
 
     public void GoToMenu(MenuBehaviour pTargetMenu)
@@ -27,30 +27,30 @@ public class MenuManager : Singleton<MenuManager>
         //if (pTargetMenu.stackOptions.HasFlag(StackOptions.PUSHTOSTACK))
         //    _menuStack.Push(pTargetMenu);
 
-        if (pTargetMenu.inAnimation == AnimationOption.PUSH)
-            pTargetMenu.PushMenu(_menuStack.Peek());
-        else
-            _menuStack.Peek().HideMenu();
+        //if (pTargetMenu.inAnimation == AnimationOption.PUSH)
+        //    pTargetMenu.PushMenu(_menuStack.Peek());
+        //else
+        //    _menuStack.Peek().HideMenu();
 
-        //if (pTargetMenu.stackOptions.HasFlag(StackOptions.CLEARSTACK))
-        //{
-        //    _menuStack = new Stack<MenuBehaviour>();
-        //    _menuStack.Push(pTargetMenu);
-        //}
-        _menuStack.Push(pTargetMenu);
-        pTargetMenu.ShowMenu();
+        ////if (pTargetMenu.stackOptions.HasFlag(StackOptions.CLEARSTACK))
+        ////{
+        ////    _menuStack = new Stack<MenuBehaviour>();
+        ////    _menuStack.Push(pTargetMenu);
+        ////}
+        //_menuStack.Push(pTargetMenu);
+        //pTargetMenu.ShowMenu();
     }
 
-    public void Back()
-    {
-        // If only one item is in the stack, there is no point going back 
-        if (_menuStack.Count <= 1)
-            return;
+    //public void Back()
+    //{
+    //    // If only one item is in the stack, there is no point going back 
+    //    if (_menuStack.Count <= 1)
+    //        return;
 
-        // Hide and disable current last menu
-        _menuStack.Peek().HideMenu();
-        _menuStack.Pop();
-        // Enable last menu
-        _menuStack.Peek().ShowMenu();
-    }
+    //    // Hide and disable current last menu
+    //    _menuStack.Peek().HideMenu();
+    //    _menuStack.Pop();
+    //    // Enable last menu
+    //    _menuStack.Peek().ShowMenu();
+    //}
 }

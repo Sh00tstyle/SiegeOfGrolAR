@@ -617,17 +617,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72edc8c9d5cb95840a92343cc551ace2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stackOptions: 4
-  inAnimation: 2
-  outAnimation: 0
-  inAnimationDirection: 1
-  outAnimationDirection: 2
-  easeIn: 1
-  easeOut: 1
-  easeInDuration: 0.3
-  easeOutDuration: 0.3
-  containerRect: {fileID: 585186079}
-  canvasGroup: {fileID: 1022092076}
+  _animations: []
+  _canvasGroup: {fileID: 0}
+  _canvasRect: {fileID: 0}
 --- !u!114 &1022092078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -923,29 +915,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7a427af644dfc488892fb199abb457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rightSwipe:
-    m_PersistentCalls:
-      m_Calls: []
-  _leftSwipe:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1820660303}
-        m_MethodName: GoToMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2108657006}
-          m_ObjectArgumentAssemblyTypeName: MenuBehaviour, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _upSwipe:
-    m_PersistentCalls:
-      m_Calls: []
-  _downSwipe:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1376299434
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,17 +960,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72edc8c9d5cb95840a92343cc551ace2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stackOptions: 4
-  inAnimation: 3
-  outAnimation: 3
-  inAnimationDirection: 2
-  outAnimationDirection: 2
-  easeIn: 1
-  easeOut: 1
-  easeInDuration: 1
-  easeOutDuration: 1
-  containerRect: {fileID: 476445319}
-  canvasGroup: {fileID: 1376299435}
+  _animations: []
+  _canvasGroup: {fileID: 0}
+  _canvasRect: {fileID: 0}
 --- !u!114 &1376299437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,17 +1168,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72edc8c9d5cb95840a92343cc551ace2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stackOptions: 4
-  inAnimation: 0
-  outAnimation: 3
-  inAnimationDirection: 2
-  outAnimationDirection: 2
-  easeIn: 1
-  easeOut: 1
-  easeInDuration: 1
-  easeOutDuration: 1
-  containerRect: {fileID: 628267324}
-  canvasGroup: {fileID: 1695844578}
+  _animations:
+  - menu: {fileID: 2108657006}
+    option: 2
+    direction: 3
+    triggerButton: {fileID: 0}
+    ease: 1
+    easeDuration: 1
+    swipeDirection: 3
+    swipeDetection: {fileID: 1114647970}
+  _canvasGroup: {fileID: 1695844578}
+  _canvasRect: {fileID: 628267324}
 --- !u!1 &1717055842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,29 +1229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7a427af644dfc488892fb199abb457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rightSwipe:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1820660303}
-        m_MethodName: Back
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _leftSwipe:
-    m_PersistentCalls:
-      m_Calls: []
-  _upSwipe:
-    m_PersistentCalls:
-      m_Calls: []
-  _downSwipe:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1717055845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1377,40 +1315,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7a427af644dfc488892fb199abb457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rightSwipe:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1820660303}
-        m_MethodName: Back
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _leftSwipe:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1820660303}
-        m_MethodName: GoToMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1376299436}
-          m_ObjectArgumentAssemblyTypeName: MenuBehaviour, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _upSwipe:
-    m_PersistentCalls:
-      m_Calls: []
-  _downSwipe:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1807791104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1619,17 +1523,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72edc8c9d5cb95840a92343cc551ace2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stackOptions: 4
-  inAnimation: 3
-  outAnimation: 3
-  inAnimationDirection: 2
-  outAnimationDirection: 2
-  easeIn: 1
-  easeOut: 1
-  easeInDuration: 1
-  easeOutDuration: 1
-  containerRect: {fileID: 7647216}
-  canvasGroup: {fileID: 2108657005}
+  _animations:
+  - menu: {fileID: 1695844579}
+    option: 2
+    direction: 2
+    triggerButton: {fileID: 0}
+    ease: 0
+    easeDuration: 1
+    swipeDirection: 0
+    swipeDetection: {fileID: 1807791103}
+  _canvasGroup: {fileID: 2108657005}
+  _canvasRect: {fileID: 7647216}
 --- !u!114 &2108657007
 MonoBehaviour:
   m_ObjectHideFlags: 0

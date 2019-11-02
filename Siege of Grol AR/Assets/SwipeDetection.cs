@@ -3,50 +3,61 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class SwipeDetection : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class SwipeDetection : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    [System.Serializable]
-    public class SwipeEvent : UnityEvent { }
+    UnityEvent _swipeLeft = new UnityEvent();
+    UnityEvent _swipeUp = new UnityEvent();
+    UnityEvent _swipeDown = new UnityEvent();
+    UnityEvent _swipeRight = new UnityEvent();
+    int _eventCount;
 
-
-
-    [SerializeField]
-    SwipeEvent _rightSwipe, _leftSwipe, _upSwipe, _downSwipe;
-
-
-
-
-    // Unneccesary?
     public void OnBeginDrag(PointerEventData pEventData)
     {
     }
 
-    // Unneccesary?
+
     public void OnDrag(PointerEventData pEventData)
     {
     }
 
+    public void AddListener(Direction pDirection, UnityAction pAction)
+    {
+        Debug.Log("Add Listener");
+        _GetSwipeEventFromDirection(pDirection).AddListener(pAction);
+        _eventCount++;
+       
+    }
+
+    UnityEvent _GetSwipeEventFromDirection(Direction pDirection)
+    {
+        UnityEvent swipeEvent = null;
+        switch (pDirection)
+        {
+            case Direction.UP:
+                swipeEvent = _swipeUp;
+                break;
+            case Direction.DOWN:
+                swipeEvent = _swipeDown;
+                break;
+            case Direction.RIGHT:
+                swipeEvent = _swipeUp;
+                break;
+            case Direction.LEFT:
+                swipeEvent = _swipeLeft;
+                break;
+        }
+        return swipeEvent;
+    }
 
     public void OnEndDrag(PointerEventData pEventData)
     {
-        Direction direction = _GetSwipeDirection((pEventData.position - pEventData.pressPosition).normalized);
-        switch (direction)
-        {
-            case Direction.UP:
-                _upSwipe.Invoke();
-                break;
-            case Direction.DOWN:
-                _downSwipe.Invoke();
-                break;
-            case Direction.RIGHT:
-                _rightSwipe.Invoke();
-                break;
-            case Direction.LEFT:
-                _leftSwipe.Invoke();
-                break;
-        }
+        if (_eventCount <= 0)
+            return;
 
+        _GetSwipeEventFromDirection(_GetSwipeDirection((pEventData.position - pEventData.pressPosition).normalized)).Invoke();
+        Debug.Log(_GetSwipeDirection((pEventData.position - pEventData.pressPosition).normalized));
     }
 
 
