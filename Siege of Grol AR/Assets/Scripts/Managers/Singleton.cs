@@ -4,7 +4,7 @@
 /// Inherit from this base class to create a singleton.
 /// e.g. public class MyClassName : Singleton<MyClassName> {}
 /// </summary>
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _Instance;
 
@@ -31,12 +31,11 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         else
         {
             Debug.LogError("An instance of the singleton " + name + "already exists, destroying second instance");
-            Destroy(this);
+
+            Destroy(this); // Note: This destroys only the script component and not the entire gameobject
         }
     }
 
-    protected virtual void Initialize()
-    {
-        //Use this in subclasses for initialization
-    }
+    protected abstract void Initialize();
+
 }

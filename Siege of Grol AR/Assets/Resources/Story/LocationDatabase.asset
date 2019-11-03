@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3326522ddeb576489efc16916ad1fc5, type: 3}
+  m_Name: LocationDatabase
+  m_EditorClassIdentifier: 
+  locations:
+  - locationName: Church
+    characterName: Priest
+    longitude: 0
+    latitude: 0
+    locationPrefab: {fileID: 8932859176998543524, guid: 4c5fba2df2139524e85ae72dc0306716,
+      type: 3}
+    sabotageInteractionPrefab: {fileID: 7555471724891556800, guid: 4d9658f610afee64e87cee67dba516e9,
+      type: 3}
+    helpInteractionPrefab: {fileID: 7555471724891556800, guid: f4853162d3f39154784a2d90a2d7b53f,
+      type: 3}
+  - locationName: Pub
+    characterName: Drunkard
+    longitude: 0
+    latitude: 0
+    locationPrefab: {fileID: 8932859176998543524, guid: 1ac00fd30a99c5f47a2a141cb0a8878d,
+      type: 3}
+    sabotageInteractionPrefab: {fileID: 7555471724891556800, guid: f4853162d3f39154784a2d90a2d7b53f,
+      type: 3}
+    helpInteractionPrefab: {fileID: 7555471724891556800, guid: 4d9658f610afee64e87cee67dba516e9,
+      type: 3}
+  - locationName: Farm
+    characterName: Farmlady
+    longitude: 0
+    latitude: 0
+    locationPrefab: {fileID: 8932859176998543524, guid: 7a4148e678cd47f4aadc84dfd1178bf1,
+      type: 3}
+    sabotageInteractionPrefab: {fileID: 7555471724891556800, guid: f4853162d3f39154784a2d90a2d7b53f,
+      type: 3}
+    helpInteractionPrefab: {fileID: 7555471724891556800, guid: 4d9658f610afee64e87cee67dba516e9,
+      type: 3}
