@@ -6,23 +6,18 @@ using UnityEngine.UI;
 [System.Serializable]
 public class MenuAnimation
 {
-    [SerializeField]
-    MenuBehaviour menu;
-    [SerializeField]
-    AnimationOption option;
-    [SerializeField]
-    Direction direction;
-    [SerializeField]
-    Button triggerButton;
-    [SerializeField]
-    Ease ease = Ease.InSine;
-    [SerializeField]
-    float easeDuration;
 
-    [SerializeField]
-    Direction swipeDirection;
-    [SerializeField]
-    SwipeDetection swipeDetection;
+    public StackOptions stackOptions = StackOptions.PUSHTOSTACK;
+    public MenuBehaviour menu;
+    public AnimationOption animation = AnimationOption.INSTANT;
+    public AnimationCurve customCurve = null;
+    public Direction direction;
+    public Button triggerButton;
+    public Ease ease = Ease.InSine;
+    public float easeDuration = 0.5f;
+
+    public Direction swipeDirection;
+    public SwipeDetection swipeDetection;
 
     public void SetListener()
     {
@@ -31,10 +26,10 @@ public class MenuAnimation
             return;
 
         if (swipeDetection != null)
-            swipeDetection.AddListener(swipeDirection, () => menu.ShowMenu(ease, easeDuration, option, direction));
+            swipeDetection.AddListener(swipeDirection, () => MenuManager.Instance.GoToMenu(menu, this));
 
         if (triggerButton != null)
-            triggerButton.onClick.AddListener(() => menu.ShowMenu(ease, easeDuration, option, direction));
+            triggerButton.onClick.AddListener(() => MenuManager.Instance.GoToMenu(menu, this));
     }
 }
 

@@ -1,7 +1,6 @@
 ﻿public enum AnimationOption
 {
     INSTANT,
-    DISSOLVE,
+    FADEIN,
     ANIMATE,
-    PUSH,
 }

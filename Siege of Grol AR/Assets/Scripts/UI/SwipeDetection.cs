@@ -13,6 +13,11 @@ public class SwipeDetection : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     UnityEvent _swipeRight = new UnityEvent();
     int _eventCount;
 
+    void Start()
+    {
+        if (_eventCount <= 0)
+            enabled = false;
+    }
     public void OnBeginDrag(PointerEventData pEventData)
     {
     }
@@ -24,10 +29,8 @@ public class SwipeDetection : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
     public void AddListener(Direction pDirection, UnityAction pAction)
     {
-        Debug.Log("Add Listener");
         _GetSwipeEventFromDirection(pDirection).AddListener(pAction);
         _eventCount++;
-       
     }
 
     UnityEvent _GetSwipeEventFromDirection(Direction pDirection)
@@ -53,11 +56,7 @@ public class SwipeDetection : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
     public void OnEndDrag(PointerEventData pEventData)
     {
-        if (_eventCount <= 0)
-            return;
-
-        _GetSwipeEventFromDirection(_GetSwipeDirection((pEventData.position - pEventData.pressPosition).normalized)).Invoke();
-        Debug.Log(_GetSwipeDirection((pEventData.position - pEventData.pressPosition).normalized));
+              _GetSwipeEventFromDirection(_GetSwipeDirection((pEventData.position - pEventData.pressPosition).normalized)).Invoke();
     }
 
 
