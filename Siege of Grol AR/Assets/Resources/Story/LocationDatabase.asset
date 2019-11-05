@@ -17,7 +17,7 @@ MonoBehaviour:
     characterName: Priest
     longitude: 0
     latitude: 0
-    locationPrefab: {fileID: 8932859176998543524, guid: 4c5fba2df2139524e85ae72dc0306716,
+    locationPrefab: {fileID: 6287936002076052214, guid: 4c5fba2df2139524e85ae72dc0306716,
       type: 3}
     sabotageInteractionPrefab: {fileID: 7555471724891556800, guid: 4d9658f610afee64e87cee67dba516e9,
       type: 3}
@@ -27,7 +27,7 @@ MonoBehaviour:
     characterName: Drunkard
     longitude: 0
     latitude: 0
-    locationPrefab: {fileID: 8932859176998543524, guid: 1ac00fd30a99c5f47a2a141cb0a8878d,
+    locationPrefab: {fileID: 1476973701947105000, guid: 3168ec98ff3f08047afc7865417b924f,
       type: 3}
     sabotageInteractionPrefab: {fileID: 7555471724891556800, guid: f4853162d3f39154784a2d90a2d7b53f,
       type: 3}
@@ -37,7 +37,7 @@ MonoBehaviour:
     characterName: Farmlady
     longitude: 0
     latitude: 0
-    locationPrefab: {fileID: 8932859176998543524, guid: 7a4148e678cd47f4aadc84dfd1178bf1,
+    locationPrefab: {fileID: 254016986255830106, guid: 1ac00fd30a99c5f47a2a141cb0a8878d,
       type: 3}
     sabotageInteractionPrefab: {fileID: 7555471724891556800, guid: f4853162d3f39154784a2d90a2d7b53f,
       type: 3}

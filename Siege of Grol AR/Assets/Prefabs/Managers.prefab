@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5406026185941479752}
   - component: {fileID: 9032188890336476301}
+  - component: {fileID: 2083937022}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -44,3 +45,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _locationDatabase: {fileID: 11400000, guid: b97a88c313593714d823aee73eec3b3d, type: 2}
+--- !u!114 &2083937022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4226521800383124955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66a6d7b586aeec43b79ec54fbf30939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mapCamera: {fileID: 0}
+  _mapTransform: {fileID: 0}

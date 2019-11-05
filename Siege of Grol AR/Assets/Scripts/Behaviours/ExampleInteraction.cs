@@ -17,6 +17,8 @@ public class ExampleInteraction : Interaction
     {
         Debug.Log("Starting example interaction coroutine");
 
-        yield return null;
+        yield return new WaitForSeconds(3.0f);
+
+        GameManager.Instance.NextLocation();
     }
 }

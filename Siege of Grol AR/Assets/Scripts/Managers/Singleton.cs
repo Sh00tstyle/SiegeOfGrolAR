@@ -13,12 +13,33 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         get 
         {
             if (_Instance == null)
-                Debug.LogError("The singleton of " + typeof(T) + " was null");
+            {
+                T potentialInstance = FindObjectOfType<T>();
+
+                if(potentialInstance != null)
+                {
+                    _Instance = potentialInstance;
+                    DontDestroyOnLoad(_Instance.gameObject);
+                }
+                else
+                {
+                    Debug.LogError("The singleton of " + typeof(T) + " was null and could not be found. Make sure the script is present on a GameObject in your scene!");
+                }
+            }
 
             return _Instance;
         }
     }
 
+    public static bool IsInitialized 
+    {
+        get 
+        {
+            return _Instance != null;
+        }
+    }
+
+    /**
     private void Awake()
     {
         if (_Instance == null)
@@ -35,7 +56,15 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             Destroy(this); // Note: This destroys only the script component and not the entire gameobject
         }
     }
+    /**/
 
-    protected abstract void Initialize();
+    protected virtual void Initialize()
+    {
+        // Can be removed
+    }
+    private void Awake()
+    {
+        Initialize(); // Can be removed
+    }
 
 }

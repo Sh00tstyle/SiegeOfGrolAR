@@ -11,14 +11,13 @@ public class GameManager : Singleton<GameManager>
     private bool _isHelpingSpy;
 
     private Location _currentLocation;
-    private Transform _currentLocationTransform;
-    private Narrator _currentLocationNarrator;
-    private Interaction _currentInteraction;
 
+    private Narrator _currentNarrator;
+    private Interaction _currentInteraction;
 
     private int _currentLocationIndex;
 
-    protected override void Initialize()
+    private void Awake()
     {
         _currentLocationIndex = 0;
 
@@ -26,11 +25,16 @@ public class GameManager : Singleton<GameManager>
         CreateNewLocation();
     }
 
-    public void SetStoryDecision(bool isHelpingSpy)
+    private void Update()
     {
-        _isHelpingSpy = isHelpingSpy;
+        HandleLocationInput();
+    }
 
-        // Could notify other entities at this point, but not sure if it is needed?
+    public void SetStoryDecision(bool pIsHelpingSpy)
+    {
+        _isHelpingSpy = pIsHelpingSpy;
+
+        // Could notify other entities at this point, but not sure if it is needed since it is probably set by an interaction/behaviour
     }
 
     public void NextLocation()
@@ -40,7 +44,6 @@ public class GameManager : Singleton<GameManager>
         if(_currentLocationIndex >= _locationDatabase.locations.Length)
         {
             _currentLocation = null; // no more locations left
-
             return;
         }
 
@@ -48,29 +51,55 @@ public class GameManager : Singleton<GameManager>
         CreateNewLocation();
     }
 
+    public void StartInteraction()
+    {
+        if (_currentInteraction != null)
+            _currentInteraction.Activate();
+    }
+
     private void CreateNewLocation()
     {
-        GameObject instantiatedPrefab;
-
-        instantiatedPrefab = Instantiate(_currentLocation.locationPrefab);
-        _currentLocationTransform = instantiatedPrefab.transform;
-        _currentLocationNarrator = instantiatedPrefab.GetComponent<Narrator>();
+        Transform locationTransform = Instantiate(_currentLocation.locationPrefab).transform;
 
         if (_currentLocationIndex == 0)
+        {
+            Debug.Log("Created story branch location, no need to create an interaction");
+
             return; // this is the first location, the story decision will take place here
+        }
+           
 
         if(_isHelpingSpy)
         {
-            instantiatedPrefab = Instantiate(_currentLocation.helpInteractionPrefab, _currentLocationTransform);
-            _currentInteraction = instantiatedPrefab.GetComponent<Interaction>();
+            Instantiate(_currentLocation.helpInteractionPrefab, locationTransform);
         }
         else
         {
-            instantiatedPrefab = Instantiate(_currentLocation.sabotageInteractionPrefab, _currentLocationTransform);
-            _currentInteraction = instantiatedPrefab.GetComponent<Interaction>();
+            Instantiate(_currentLocation.sabotageInteractionPrefab, locationTransform);
         }
+    }
 
-        // DEBUG: Activate to see if it works
-        _currentInteraction.Activate();
+    private void HandleLocationInput()
+    {
+        if (Input.GetMouseButtonDown(0)) // Detect the location on mouse button press / touch
+        {
+            RaycastHit hit;
+            Ray ray = CameraManager.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform.tag == Tags.Location)
+                {
+                    Debug.Log("Clicked location");
+
+                    // Store the currently selected narration and interaction
+                    _currentNarrator = hit.transform.GetComponent<Narrator>();
+                    _currentInteraction = _currentNarrator.GetComponentInChildren<Interaction>();
+
+                    if (_currentNarrator != null)
+                        _currentNarrator.OpenMenu();
+                }
+            }
+        }
     }
 }
