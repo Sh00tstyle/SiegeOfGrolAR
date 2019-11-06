@@ -73,8 +73,6 @@ public class MenuBehaviourEditor : Editor
             GUILayout.Label("Animation triggers", EditorStyles.miniBoldLabel);
             EditorGUILayout.PropertyField(animation.FindPropertyRelative("triggerButton"));
             EditorGUILayout.PropertyField(animation.FindPropertyRelative("swipeDetection"));
-            if (swipeDetection.objectReferenceValue != null)
-                EditorGUILayout.PropertyField(animation.FindPropertyRelative("swipeDirection"));
 
 
             GUILayout.Space(5f);

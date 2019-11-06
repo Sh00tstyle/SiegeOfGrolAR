@@ -8,6 +8,20 @@ public class MenuManager : Singleton<MenuManager>
     Stack<MenuBehaviour> _menuStack;
     Stack<MenuAnimation> _animationStack;
 
+    MenuBehaviour LastMenu
+    {
+        get
+        {
+            MenuBehaviour previousMenu = null;
+            if (_menuStack.Count > 0)
+                previousMenu = _menuStack.Peek();
+            else
+                previousMenu = _rootMenu;
+
+            return previousMenu;
+        }
+    }
+
 
     MenuBehaviour _rootMenu;
 
@@ -21,8 +35,13 @@ public class MenuManager : Singleton<MenuManager>
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) )
+        {
+            Tween activeTween = LastMenu.activeTween;
+            if (activeTween != null && !activeTween.IsPlaying())
             Back();
+        }
+           
     }
 
     void _NewMenuRoot(MenuBehaviour pTargetRoot)
@@ -30,8 +49,8 @@ public class MenuManager : Singleton<MenuManager>
         _rootMenu = pTargetRoot;
         _menuStack = new Stack<MenuBehaviour>();
         _animationStack = new Stack<MenuAnimation>();
-
     }
+
 
     public void GoToMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation)
     {
@@ -40,31 +59,33 @@ public class MenuManager : Singleton<MenuManager>
             case AnimationOption.INSTANT:
                 {
                     pTargetMenu.gameObject.SetActive(true);
-                    _GetLastMenu().gameObject.SetActive(true);
+                    LastMenu.gameObject.SetActive(true);
                 }
                 break;
             case AnimationOption.FADEIN:
-                pTargetMenu.FadeMenu(pAnimation, _GetLastMenu());
+                pTargetMenu.FadeMenu(pAnimation, pAnimation.stackOptions.HasFlag(StackOptions.OVERLAY) ? null : LastMenu, true);
+                break;
+            case AnimationOption.FADEOUT:
+                pTargetMenu.FadeMenu(pAnimation, pAnimation.stackOptions.HasFlag(StackOptions.OVERLAY) ? null : LastMenu, false);
                 break;
             case AnimationOption.ANIMATE:
-                pTargetMenu.ShowMenu(pAnimation, _GetLastMenu());
+                pTargetMenu.ShowMenu(pAnimation, LastMenu);
+                break;
+            case AnimationOption.DISMISS:
+                pTargetMenu.HideMenu(pAnimation);
                 break;
         }
 
-        _menuStack.Push(pTargetMenu);
-        _animationStack.Push(pAnimation);
+        if (pAnimation.stackOptions.HasFlag(StackOptions.PUSHTOSTACK))
+        {
+            _menuStack.Push(pTargetMenu);
+            _animationStack.Push(pAnimation);
+        }
+        if (pTargetMenu == _defaultMenu || pAnimation.stackOptions.HasFlag(StackOptions.CLEARSTACK))
+            _NewMenuRoot(pTargetMenu);
     }
 
-    MenuBehaviour _GetLastMenu()
-    {
-        MenuBehaviour previousMenu = null;
-        if (_menuStack.Count > 0)
-            previousMenu = _menuStack.Peek();
-        else
-            previousMenu = _rootMenu;
 
-        return previousMenu;
-    }
 
     public void Back()
     {
@@ -73,7 +94,7 @@ public class MenuManager : Singleton<MenuManager>
             return;
 
         MenuAnimation lastAnimation = _animationStack.Peek();
-        MenuBehaviour lastMenu = _GetLastMenu();
+        MenuBehaviour lastMenu = LastMenu;
 
 
         // Invert last animation direction, in case it has one
@@ -102,7 +123,11 @@ public class MenuManager : Singleton<MenuManager>
         _animationStack.Pop();
 
         //// Show the menu before that, in case it was slid back
-        _GetLastMenu().ShowMenu(invertedAnimation, lastMenu);
+        MenuBehaviour newMenu = LastMenu;
+        newMenu.ShowMenu(invertedAnimation, lastMenu);
+
+        if (newMenu == _defaultMenu)
+            _NewMenuRoot(newMenu);
     }
 
 

@@ -15,8 +15,6 @@ public class MenuAnimation
     public Button triggerButton;
     public Ease ease = Ease.InSine;
     public float easeDuration = 0.5f;
-
-    public Direction swipeDirection;
     public SwipeDetection swipeDetection;
 
     public void SetListener()
@@ -26,7 +24,7 @@ public class MenuAnimation
             return;
 
         if (swipeDetection != null)
-            swipeDetection.AddListener(swipeDirection, () => MenuManager.Instance.GoToMenu(menu, this));
+            swipeDetection.AddListener(direction, () => MenuManager.Instance.GoToMenu(menu, this));
 
         if (triggerButton != null)
             triggerButton.onClick.AddListener(() => MenuManager.Instance.GoToMenu(menu, this));

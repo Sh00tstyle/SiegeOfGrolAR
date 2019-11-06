@@ -2,5 +2,7 @@
 {
     INSTANT,
     FADEIN,
+    FADEOUT,
     ANIMATE,
+    DISMISS,
 }
