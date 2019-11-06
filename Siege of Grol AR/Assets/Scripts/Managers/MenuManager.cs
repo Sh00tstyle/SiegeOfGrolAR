@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class MenuManager : Singleton<MenuManager>
 {
+    public MenuBehaviour narrationMenu;
+
     Stack<MenuBehaviour> _menuStack;
     Stack<MenuAnimation> _animationStack;
 

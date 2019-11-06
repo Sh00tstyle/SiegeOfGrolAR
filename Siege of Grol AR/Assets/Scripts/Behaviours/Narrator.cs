@@ -21,9 +21,7 @@ public class Narrator : MonoBehaviour
     {
         Debug.Log("Opening Narration of " + name);
 
-        // The menu for the narration should be opened here
-
-        GameManager.Instance.StartInteraction(); // DEBUG: This should be called from a menu
+        MenuManager.Instance.GoToMenu(MenuManager.Instance.narrationMenu); // This will be changed to use an enum in the future
     }
 
     public string GetNextText()
