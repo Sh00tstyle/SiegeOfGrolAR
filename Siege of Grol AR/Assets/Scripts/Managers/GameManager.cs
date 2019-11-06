@@ -61,20 +61,11 @@ public class GameManager : Singleton<GameManager>
     {
         Transform locationTransform = Instantiate(_currentLocation.locationPrefab).transform;
 
-        /**
-        if (_currentLocationIndex == 0)
-        {
-            Debug.Log("Created story branch location, no need to create an interaction");
-
-            return; // this is the first location, the story decision will take place here
-        }
-        /**/
-
-        if(_isHelpingSpy)
+        if(_isHelpingSpy && _currentLocation.helpInteractionPrefab != null)
         {
             Instantiate(_currentLocation.helpInteractionPrefab, locationTransform);
         }
-        else
+        else if(!_isHelpingSpy && _currentLocation.sabotageInteractionPrefab != null)
         {
             Instantiate(_currentLocation.sabotageInteractionPrefab, locationTransform);
         }
@@ -101,6 +92,21 @@ public class GameManager : Singleton<GameManager>
                         _currentNarrator.OpenMenu();
                 }
             }
+        }
+    }
+
+    public Narrator CurrentNarrator
+    {
+        get
+        {
+            return _currentNarrator;
+        }
+    }
+
+    public Interaction CurrentInteraction
+    {
+        get { 
+            return _currentInteraction; 
         }
     }
 }
