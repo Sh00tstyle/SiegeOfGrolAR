@@ -28,6 +28,9 @@ public class MenuManager : Singleton<MenuManager>
     [SerializeField]
     MenuBehaviour _defaultMenu;
 
+    [SerializeField]
+    MenuAnimation _defaultAnimation;
+
     private void Awake()
     {
         NewMenuRoot(_defaultMenu);
@@ -35,7 +38,7 @@ public class MenuManager : Singleton<MenuManager>
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) )
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Tween activeTween = LastMenu.activeTween;
             if (activeTween != null && !activeTween.IsPlaying())
@@ -52,8 +55,11 @@ public class MenuManager : Singleton<MenuManager>
     }
 
 
-    public void GoToMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation)
+    public void GoToMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation = null)
     {
+        if (pAnimation == null)
+            pAnimation = _defaultAnimation;
+
         switch (pAnimation.animation)
         {
             case AnimationOption.INSTANT:
