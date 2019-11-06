@@ -61,13 +61,14 @@ public class GameManager : Singleton<GameManager>
     {
         Transform locationTransform = Instantiate(_currentLocation.locationPrefab).transform;
 
+        /**
         if (_currentLocationIndex == 0)
         {
             Debug.Log("Created story branch location, no need to create an interaction");
 
             return; // this is the first location, the story decision will take place here
         }
-           
+        /**/
 
         if(_isHelpingSpy)
         {
