@@ -35,36 +35,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         get 
         {
-            return _Instance != null;
+            return Instance != null;
         }
     }
-
-    /**
-    private void Awake()
-    {
-        if (_Instance == null)
-        {
-            _Instance = this as T;
-            DontDestroyOnLoad(gameObject);
-
-            Initialize();
-        }
-        else
-        {
-            Debug.LogError("An instance of the singleton " + name + "already exists, destroying second instance");
-
-            Destroy(this); // Note: This destroys only the script component and not the entire gameobject
-        }
-    }
-    /**/
-
-    protected virtual void Initialize()
-    {
-        // Can be removed
-    }
-    private void Awake()
-    {
-        Initialize(); // Can be removed
-    }
-
 }

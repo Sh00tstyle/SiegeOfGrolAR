@@ -28,9 +28,9 @@ public class MenuManager : Singleton<MenuManager>
     [SerializeField]
     MenuBehaviour _defaultMenu;
 
-    protected override void Initialize()
+    private void Awake()
     {
-        _NewMenuRoot(_defaultMenu);
+        NewMenuRoot(_defaultMenu);
     }
 
     void Update()
@@ -44,7 +44,7 @@ public class MenuManager : Singleton<MenuManager>
            
     }
 
-    void _NewMenuRoot(MenuBehaviour pTargetRoot)
+    void NewMenuRoot(MenuBehaviour pTargetRoot)
     {
         _rootMenu = pTargetRoot;
         _menuStack = new Stack<MenuBehaviour>();
@@ -82,7 +82,7 @@ public class MenuManager : Singleton<MenuManager>
             _animationStack.Push(pAnimation);
         }
         if (pTargetMenu == _defaultMenu || pAnimation.stackOptions.HasFlag(StackOptions.CLEARSTACK))
-            _NewMenuRoot(pTargetMenu);
+            NewMenuRoot(pTargetMenu);
     }
 
 
@@ -127,7 +127,7 @@ public class MenuManager : Singleton<MenuManager>
         newMenu.ShowMenu(invertedAnimation, lastMenu);
 
         if (newMenu == _defaultMenu)
-            _NewMenuRoot(newMenu);
+            NewMenuRoot(newMenu);
     }
 
 
