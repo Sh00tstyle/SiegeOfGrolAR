@@ -106,5 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e94bc3fcf7fd7ad499e8ece056b31eb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _narrative: []
-  _hint: 
+  _narrative:
+  - Test1
+  - Test2
+  - Test3
+  _hint: Hint
