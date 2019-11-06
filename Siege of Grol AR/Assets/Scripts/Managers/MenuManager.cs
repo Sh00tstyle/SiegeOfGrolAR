@@ -1,52 +1,134 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class MenuManager : Singleton<MenuManager>
 {
     Stack<MenuBehaviour> _menuStack;
+    Stack<MenuAnimation> _animationStack;
+
+    MenuBehaviour LastMenu
+    {
+        get
+        {
+            MenuBehaviour previousMenu = null;
+            if (_menuStack.Count > 0)
+                previousMenu = _menuStack.Peek();
+            else
+                previousMenu = _rootMenu;
+
+            return previousMenu;
+        }
+    }
+
+
+    MenuBehaviour _rootMenu;
 
     [SerializeField]
     MenuBehaviour _defaultMenu;
 
-
     protected override void Initialize()
     {
-        _menuStack = new Stack<MenuBehaviour>();
-        _menuStack.Push(_defaultMenu);
+        _NewMenuRoot(_defaultMenu);
     }
 
-    public void GoToMenu(MenuBehaviour pTargetMenu)
+    void Update()
     {
-
-
-        // Hide and disable last menu
-        if (pTargetMenu.options != MenuOptions.OVERLAY)
-            _menuStack.Peek().HideMenu();
-
-        // Enable new menu and add to stack if neccesary
-        if (pTargetMenu.options == MenuOptions.PUSHTOSTACK)
-            _menuStack.Push(pTargetMenu);
-
-        if (pTargetMenu.options == MenuOptions.CLEARSTACK)
+        if (Input.GetKeyDown(KeyCode.Escape) )
         {
-            _menuStack = new Stack<MenuBehaviour>();
-            _menuStack.Push(pTargetMenu);
+            Tween activeTween = LastMenu.activeTween;
+            if (activeTween != null && !activeTween.IsPlaying())
+            Back();
+        }
+           
+    }
+
+    void _NewMenuRoot(MenuBehaviour pTargetRoot)
+    {
+        _rootMenu = pTargetRoot;
+        _menuStack = new Stack<MenuBehaviour>();
+        _animationStack = new Stack<MenuAnimation>();
+    }
+
+
+    public void GoToMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation)
+    {
+        switch (pAnimation.animation)
+        {
+            case AnimationOption.INSTANT:
+                {
+                    pTargetMenu.gameObject.SetActive(true);
+                    LastMenu.gameObject.SetActive(true);
+                }
+                break;
+            case AnimationOption.FADEIN:
+                pTargetMenu.FadeMenu(pAnimation, pAnimation.stackOptions.HasFlag(StackOptions.OVERLAY) ? null : LastMenu, true);
+                break;
+            case AnimationOption.FADEOUT:
+                pTargetMenu.FadeMenu(pAnimation, pAnimation.stackOptions.HasFlag(StackOptions.OVERLAY) ? null : LastMenu, false);
+                break;
+            case AnimationOption.ANIMATE:
+                pTargetMenu.ShowMenu(pAnimation, LastMenu);
+                break;
+            case AnimationOption.DISMISS:
+                pTargetMenu.HideMenu(pAnimation);
+                break;
         }
 
-        pTargetMenu.ShowMenu();
+        if (pAnimation.stackOptions.HasFlag(StackOptions.PUSHTOSTACK))
+        {
+            _menuStack.Push(pTargetMenu);
+            _animationStack.Push(pAnimation);
+        }
+        if (pTargetMenu == _defaultMenu || pAnimation.stackOptions.HasFlag(StackOptions.CLEARSTACK))
+            _NewMenuRoot(pTargetMenu);
     }
+
+
 
     public void Back()
     {
-        // If only one item is in the stack, there is no point going back 
-        if (_menuStack.Count <= 1)
+        // If only one item is in the stack, go back to the root
+        if (_menuStack.Count == 0)
             return;
 
-        // Hide and disable current last menu
-        _menuStack.Peek().HideMenu();
+        MenuAnimation lastAnimation = _animationStack.Peek();
+        MenuBehaviour lastMenu = LastMenu;
+
+
+        // Invert last animation direction, in case it has one
+        MenuAnimation invertedAnimation = new MenuAnimation();
+        switch (lastAnimation.direction)
+        {
+            case Direction.UP:
+                invertedAnimation.direction = Direction.DOWN;
+                break;
+            case Direction.DOWN:
+                invertedAnimation.direction = Direction.UP;
+                break;
+            case Direction.RIGHT:
+                invertedAnimation.direction = Direction.LEFT;
+                break;
+            case Direction.LEFT:
+                invertedAnimation.direction = Direction.RIGHT;
+                break;
+            default:
+                break;
+        }
+
+        // Move back the last menu and its animation
+        lastMenu.HideMenu(invertedAnimation);
         _menuStack.Pop();
-        // Enable last menu
-        _menuStack.Peek().ShowMenu();
+        _animationStack.Pop();
+
+        //// Show the menu before that, in case it was slid back
+        MenuBehaviour newMenu = LastMenu;
+        newMenu.ShowMenu(invertedAnimation, lastMenu);
+
+        if (newMenu == _defaultMenu)
+            _NewMenuRoot(newMenu);
     }
+
+
 }
