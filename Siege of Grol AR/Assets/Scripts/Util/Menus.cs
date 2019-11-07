@@ -1,4 +1,4 @@
-﻿public enum Menus
+﻿public enum MenuTypes
 {
     NARRATIONMENU,
     STARTINGMENU,

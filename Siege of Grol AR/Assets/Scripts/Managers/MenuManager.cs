@@ -65,7 +65,7 @@ public class MenuManager : Singleton<MenuManager>
 
     }
 
-    public void GoToMenu(Menus pMenu = Menus.NARRATIONMENU, MenuAnimation pAnimation = null)
+    public void GoToMenu(MenuTypes pMenu = MenuTypes.NARRATIONMENU, MenuAnimation pAnimation = null)
     {
         if (pAnimation == null)
             pAnimation = _defaultAnimation;
@@ -73,10 +73,10 @@ public class MenuManager : Singleton<MenuManager>
         MenuBehaviour targetMenu = null;
         switch (pMenu)
         {
-            case Menus.NARRATIONMENU:
+            case MenuTypes.NARRATIONMENU:
                 targetMenu = _narrationMenu;
                 break;
-            case Menus.STARTINGMENU:
+            case MenuTypes.STARTINGMENU:
                 targetMenu = _startingMenu;
                 break;
         }
