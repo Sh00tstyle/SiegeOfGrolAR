@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animations: []
+  _canvasScaler: {fileID: 3145951429495993774}
   _canvasGroup: {fileID: 3145951429495993747}
   _canvasRect: {fileID: 3145951430571697229}
 --- !u!225 &3145951429495993747

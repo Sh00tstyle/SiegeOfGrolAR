@@ -8,6 +8,7 @@ public class MenuManager : Singleton<MenuManager>
     Stack<MenuBehaviour> _menuStack;
     Stack<MenuAnimation> _animationStack;
 
+
     MenuBehaviour LastMenu
     {
         get
@@ -26,14 +27,14 @@ public class MenuManager : Singleton<MenuManager>
     MenuBehaviour _rootMenu;
 
     [SerializeField]
-    MenuBehaviour _defaultMenu;
+    MenuBehaviour _startingMenu, _narrationMenu;
 
     [SerializeField]
     MenuAnimation _defaultAnimation;
 
     private void Awake()
     {
-        NewMenuRoot(_defaultMenu);
+        NewMenuRoot(_startingMenu);
     }
 
     void Update()
@@ -42,9 +43,9 @@ public class MenuManager : Singleton<MenuManager>
         {
             Tween activeTween = LastMenu.activeTween;
             if (activeTween != null && !activeTween.IsPlaying())
-            Back();
+                Back();
         }
-           
+
     }
 
     void NewMenuRoot(MenuBehaviour pTargetRoot)
@@ -60,6 +61,31 @@ public class MenuManager : Singleton<MenuManager>
         if (pAnimation == null)
             pAnimation = _defaultAnimation;
 
+        AnimateMenu(pTargetMenu, pAnimation);
+
+    }
+
+    public void GoToMenu(Menus pMenu = Menus.NARRATIONMENU, MenuAnimation pAnimation = null)
+    {
+        if (pAnimation == null)
+            pAnimation = _defaultAnimation;
+
+        MenuBehaviour targetMenu = null;
+        switch (pMenu)
+        {
+            case Menus.NARRATIONMENU:
+                targetMenu = _narrationMenu;
+                break;
+            case Menus.STARTINGMENU:
+                targetMenu = _startingMenu;
+                break;
+        }
+        AnimateMenu(targetMenu, pAnimation);
+
+    }
+
+    void AnimateMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation = null)
+    {
         switch (pAnimation.animation)
         {
             case AnimationOption.INSTANT:
@@ -87,10 +113,9 @@ public class MenuManager : Singleton<MenuManager>
             _menuStack.Push(pTargetMenu);
             _animationStack.Push(pAnimation);
         }
-        if (pTargetMenu == _defaultMenu || pAnimation.stackOptions.HasFlag(StackOptions.CLEARSTACK))
+        if (pTargetMenu == _startingMenu || pAnimation.stackOptions.HasFlag(StackOptions.CLEARSTACK))
             NewMenuRoot(pTargetMenu);
     }
-
 
 
     public void Back()
@@ -132,7 +157,7 @@ public class MenuManager : Singleton<MenuManager>
         MenuBehaviour newMenu = LastMenu;
         newMenu.ShowMenu(invertedAnimation, lastMenu);
 
-        if (newMenu == _defaultMenu)
+        if (newMenu == _startingMenu)
             NewMenuRoot(newMenu);
     }
 

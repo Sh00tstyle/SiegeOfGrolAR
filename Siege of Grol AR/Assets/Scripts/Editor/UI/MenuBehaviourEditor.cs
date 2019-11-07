@@ -14,6 +14,7 @@ public class MenuBehaviourEditor : Editor
 
 
         //EditorGUILayout.PropertyField(serializedObject.FindProperty("_animations"), true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_canvasScaler"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_canvasGroup"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_canvasRect"));
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
@@ -37,6 +38,7 @@ public class MenuBehaviourEditor : Editor
         {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             SerializedProperty animation = pArray.GetArrayElementAtIndex(i);
+
             UnityEngine.Object canvasGroup = animation.FindPropertyRelative("menu").objectReferenceValue;
             AnimationOption animationOption = (AnimationOption)animation.FindPropertyRelative("animation").enumValueIndex;
             SerializedProperty swipeDetection = animation.FindPropertyRelative("swipeDetection");

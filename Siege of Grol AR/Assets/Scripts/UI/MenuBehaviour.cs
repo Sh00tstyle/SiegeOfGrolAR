@@ -6,10 +6,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class MenuBehaviour : MonoBehaviour
 {
     public List<MenuAnimation> animations;
+
+    [SerializeField]
+    CanvasScaler _canvasScaler;
 
     [SerializeField]
     CanvasGroup _canvasGroup;
@@ -99,13 +103,13 @@ public class MenuBehaviour : MonoBehaviour
         switch (direction)
         {
             case Direction.LEFT:
-                return Vector2.left * 300;
+                return Vector2.left * _canvasScaler.referenceResolution.x;
             case Direction.RIGHT:
-                return Vector2.right * 300;
+                return Vector2.right * _canvasScaler.referenceResolution.x;
             case Direction.UP:
-                return Vector2.up * 600;
+                return Vector2.up * _canvasScaler.referenceResolution.y;
             case Direction.DOWN:
-                return Vector2.down * 600;
+                return Vector2.down * _canvasScaler.referenceResolution.y;
         }
         return Vector2.zero;
     }
