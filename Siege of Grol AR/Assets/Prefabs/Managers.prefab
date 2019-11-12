@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5406026185941479752}
   - component: {fileID: 9032188890336476301}
   - component: {fileID: 2083937022}
+  - component: {fileID: 423608960020097757}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -57,5 +58,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e66a6d7b586aeec43b79ec54fbf30939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapCamera: {fileID: 0}
-  _mapTransform: {fileID: 0}
+  _orbitTarget: {fileID: 0}
+  _distance: 6
+  _xSpeed: 100
+  _ySpeed: 100
+  _yMinLimit: -20
+  _yMaxLimit: 80
+--- !u!114 &423608960020097757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4226521800383124955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbfba61f05131a40a65a8192c532f19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  narrationMenu: {fileID: 0}
+  _defaultMenu: {fileID: 0}
+  _defaultAnimation:
+    stackOptions: 4
+    menu: {fileID: 0}
+    animation: 0
+    customCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    direction: 0
+    triggerButton: {fileID: 0}
+    ease: 2
+    easeDuration: 0.5
+    swipeDetection: {fileID: 0}

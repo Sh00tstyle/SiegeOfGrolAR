@@ -11,11 +11,10 @@ public class GameManager : Singleton<GameManager>
     private bool _isHelpingSpy;
 
     private Location _currentLocation;
+    private int _currentLocationIndex;
 
     private Narrator _currentNarrator;
     private Interaction _currentInteraction;
-
-    private int _currentLocationIndex;
 
     private void Awake()
     {

@@ -17,7 +17,28 @@ public class ExampleInteraction : Interaction
     {
         Debug.Log("Starting example interaction coroutine");
 
-        yield return new WaitForSeconds(3.0f);
+        MeshRenderer renderer = GetComponentInParent<MeshRenderer>();
+
+        Color startColor = renderer.material.GetColor("_BaseColor");
+        Color endColor = Color.blue;
+        Color lerpColor = startColor;
+
+        float lerpSpeed = 0.5f;
+        float incrementor = 0.0f;
+
+        yield return null;
+
+        while (incrementor < 1.0f)
+        {
+            incrementor += Time.deltaTime * lerpSpeed;
+            incrementor = Mathf.Clamp01(incrementor);
+
+            lerpColor = Color.Lerp(startColor, endColor, incrementor);
+
+            renderer.material.SetColor("_BaseColor", lerpColor);
+
+            yield return null;
+        }
 
         GameManager.Instance.NextLocation();
     }

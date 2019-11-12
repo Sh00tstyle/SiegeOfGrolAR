@@ -5,37 +5,70 @@ using UnityEngine;
 public class CameraManager : Singleton<CameraManager>
 {
     [SerializeField]
-    private Transform _mapTransform;
+    private Transform _orbitTarget;
 
-    private Camera _mapCamera;
+    [SerializeField]
+    private float _distance = 5.0f;
 
-    private Vector3 _prevMousePosition;
+    [SerializeField]
+    private float _xSpeed = 120.0f;
+
+    [SerializeField]
+    private float _ySpeed = 120.0f;
+
+    [SerializeField]
+    private float _yMinLimit = -20f;
+
+    [SerializeField]
+    private float _yMaxLimit = 80f;
+
+    private Camera _mainCamera;
+
+    private float _rotationYAxis;
+    private float _rotationXAxis;
 
     private void Awake()
     {
-        _mapCamera = Camera.main;
+        _mainCamera = Camera.main;
 
-        _prevMousePosition = Vector3.zero;
+        if (_mainCamera != null)
+        {
+            Vector3 rotationAngles = _mainCamera.transform.eulerAngles;
+
+            _rotationYAxis = rotationAngles.y;
+            _rotationXAxis = rotationAngles.x;
+        }
     }
 
     private void Update()
     {
-        if (_mapCamera == null)
-            return;
-
         HandleCameraInput();
     }
 
     private void HandleCameraInput()
     {
-        // Camera movement code here
+        if (_mainCamera == null || _orbitTarget == null)
+            return;
+
+        if (Input.GetMouseButton(0))
+        {
+            _rotationXAxis += _xSpeed * Input.GetAxis("Mouse X") * _distance * 0.02f;
+            _rotationYAxis -= _ySpeed * Input.GetAxis("Mouse Y") * 0.02f;
+            _rotationYAxis = Util.ClampAngle(_rotationYAxis, _yMinLimit, _yMaxLimit);
+
+            Quaternion rotation = Quaternion.Euler(_rotationYAxis, _rotationXAxis, 0.0f);
+            Vector3 position = rotation * new Vector3(0.0f, 0.0f, -_distance) + _orbitTarget.position;
+
+            _mainCamera.transform.rotation = rotation;
+            _mainCamera.transform.position = position;
+        }
     }
 
     public Camera MainCamera
     {
         get
         {
-            return _mapCamera;
+            return _mainCamera;
         }
     }
 }
