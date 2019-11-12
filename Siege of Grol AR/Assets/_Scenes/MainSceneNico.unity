@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3258,13 +3258,35 @@ PrefabInstance:
       objectReference: {fileID: 1691307904}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1725071946759704ab5c4593e60822ac, type: 3}
+--- !u!1 &423608960020097756 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4226521800383124955, guid: 1725071946759704ab5c4593e60822ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 423608960020097755}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &423608960020097757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423608960020097756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1988ac4f510289e4f9b072ad7e06825f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _useFakeLocation: 1
+  _gpsAccuracyInMeters: 10
+  _gpsUpdateDistanceInMeters: 10
+  _initializationTime: 20
 --- !u!114 &423608960020097759 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9032188890336476301, guid: 1725071946759704ab5c4593e60822ac,
     type: 3}
   m_PrefabInstance: {fileID: 423608960020097755}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 423608960020097756}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08b8e5394bd7d23488a49f1c6a69aa08, type: 3}

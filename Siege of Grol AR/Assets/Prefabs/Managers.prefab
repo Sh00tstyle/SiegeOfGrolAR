@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9032188890336476301}
   - component: {fileID: 2083937022}
   - component: {fileID: 423608960020097757}
+  - component: {fileID: 5355724170515852496}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -59,9 +60,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _orbitTarget: {fileID: 0}
-  _distance: 6
-  _xSpeed: 100
-  _ySpeed: 100
+  _distance: 5
+  _xSpeed: 120
+  _ySpeed: 120
   _yMinLimit: -20
   _yMaxLimit: 80
 --- !u!114 &423608960020097757
@@ -77,7 +78,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   narrationMenu: {fileID: 0}
-  _defaultMenu: {fileID: 0}
+  _startingMenu: {fileID: 0}
+  _narrationMenu: {fileID: 0}
   _defaultAnimation:
     stackOptions: 4
     menu: {fileID: 0}
@@ -93,3 +95,19 @@ MonoBehaviour:
     ease: 2
     easeDuration: 0.5
     swipeDetection: {fileID: 0}
+--- !u!114 &5355724170515852496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4226521800383124955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1988ac4f510289e4f9b072ad7e06825f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _useFakeLocation: 1
+  _gpsAccuracyInMeters: 10
+  _gpsUpdateDistanceInMeters: 10
+  _initializationTime: 20
