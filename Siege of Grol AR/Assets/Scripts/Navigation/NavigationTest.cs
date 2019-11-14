@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -24,29 +25,35 @@ public class NavigationTest : MonoBehaviour
             ));
 
     }
+    [System.Serializable]
+    public struct TestCoordinates
+    {
+        public float[] coordinates;
+    }
+
 
     [System.Serializable]
     public struct GPSLocation
     {
         public double lattitude;
         public double longitude;
-     
+
 
         public GPSLocation(double lattitude, double longitude) : this()
         {
             this.lattitude = lattitude;
             this.longitude = longitude;
         }
-   
+
     }
 
     // Update is called once per frame
     IEnumerator GetNavigation(GPSLocation pStart, GPSLocation pEnd)
     {
-        string request = String.Format("foot-walking?api_key={0}&start={1}&end={2}", apiKey, LocationToString(pStart), LocationToString(pEnd));
+        string request = String.Format("driving-car?api_key={0}&start={1}&end={2}", apiKey, LocationToString(pStart), LocationToString(pEnd));
         using (UnityWebRequest webRequest = UnityWebRequest.Get(baseURI + request))
         {
-            webRequest.SetRequestHeader("Authorization", apiKey);
+            //webRequest.SetRequestHeader("Authorization", apiKey);
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
 
@@ -56,7 +63,8 @@ public class NavigationTest : MonoBehaviour
             }
             else
             {
-                AddLineRenderer(JsonUtility.FromJson<NavigationResponse>(webRequest.downloadHandler.text.ToString(CultureInfo.InvariantCulture)));
+                Debug.Log(webRequest.downloadHandler.text);
+                AddLineRenderer(JsonConvert.DeserializeObject<NavigationResponse>(webRequest.downloadHandler.text));
             }
         }
     }
@@ -64,13 +72,12 @@ public class NavigationTest : MonoBehaviour
     public void AddLineRenderer(NavigationResponse pNavigationResponse)
     {
         Feature road = pNavigationResponse.features.FirstOrDefault();
-        List<GPSLocation> locations = new List<GPSLocation>();
-        //for (int i = 0; i < road.geometry.coordinates.Count; i++)
-        //{
-        //    GPSLocation location = new GPSLocation(road.geometry.coordinates[i][0], road.geometry.coordinates[i][1]);
-        //}
+        Vector3[] locations = new Vector3[road.geometry.coordinates.Count];
+        for (int i = 0; i < road.geometry.coordinates.Count; i++)
+            locations[i] = new Vector3((float)road.geometry.coordinates[i][0] * 180, 0, (float)road.geometry.coordinates[i][1] * 360);
 
-        Debug.Log(locations);
+        _lineRenderer.positionCount = locations.Length;
+        _lineRenderer.SetPositions(locations);
     }
 
     string LocationToString(GPSLocation location)
