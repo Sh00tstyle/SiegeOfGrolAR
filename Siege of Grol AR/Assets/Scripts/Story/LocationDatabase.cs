@@ -16,9 +16,9 @@ public class Location
 
     public string characterName;
 
-    public float longitude;
+    public double latitude;
 
-    public float latitude;
+    public double longitude;
 
     public GameObject locationPrefab;
 

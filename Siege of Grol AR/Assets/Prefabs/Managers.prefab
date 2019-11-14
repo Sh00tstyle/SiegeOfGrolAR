@@ -110,4 +110,8 @@ MonoBehaviour:
   _useFakeLocation: 1
   _gpsAccuracyInMeters: 10
   _gpsUpdateDistanceInMeters: 10
-  _initializationTime: 20
+  _gpsMaxInitializationTime: 20
+  _referenceTransform: {fileID: 0}
+  _referenceLatitude: 52.042944
+  _refereceLongitude: 6.616444
+  _referenceScale: 1117.3

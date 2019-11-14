@@ -23,7 +23,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("The singleton of " + typeof(T) + " was null and could not be found. Make sure the script is present on a GameObject in your scene!");
+                    Debug.LogError("Singleton<" + typeof(T) + ">::The singleton instance was null and could not be found. Make sure the script is present on a GameObject in your scene!");
                 }
             }
 

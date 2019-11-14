@@ -14,7 +14,19 @@ public class GPSManager : Singleton<GPSManager>
     private float _gpsUpdateDistanceInMeters = 10.0f;
 
     [SerializeField]
-    private int _initializationTime = 20;
+    private int _gpsMaxInitializationTime = 20;
+
+    [SerializeField]
+    private Transform _referenceTransform;
+
+    [SerializeField]
+    private double _referenceLatitude = 6.617581;
+
+    [SerializeField]
+    private double _refereceLongitude = 52.042339;
+
+    [SerializeField]
+    private float _referenceScale = 111.0f;
 
     private IEnumerator Start()
     {
@@ -51,7 +63,7 @@ public class GPSManager : Singleton<GPSManager>
         // Trying to initialize the location service
         Input.location.Start(_gpsAccuracyInMeters, _gpsUpdateDistanceInMeters);
 
-        int waitTime = _initializationTime;
+        int waitTime = _gpsMaxInitializationTime;
         WaitForSeconds waitForOneSecond = new WaitForSeconds(1.0f);
 
         // Wait until the service initializes
@@ -79,6 +91,29 @@ public class GPSManager : Singleton<GPSManager>
             Debug.Log("Initialized location services");
             Debug.Log("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
         }
+    }
+
+    public Vector3 GetWorldPosFromGPS(double pLatitude, double pLongitude, float pScale = -1)
+    {
+        Vector3 mapOrigin = _referenceTransform.position;
+
+        double deltaLatitude = pLatitude - _referenceLatitude;
+        double deltaLongitude = pLongitude - _refereceLongitude;
+
+        if(pScale <= 0.0f)
+        {
+            pScale = _referenceScale;
+        }
+
+        double worldXPos = (deltaLatitude - mapOrigin.x);
+        double worldZPos = (deltaLongitude - mapOrigin.z);
+
+        worldXPos *= pScale;
+        worldZPos *= pScale * 0.5f;
+
+        Vector3 newPos = new Vector3((float)worldXPos, 0.0f, (float)worldZPos);
+
+        return newPos;
     }
 
     public LocationInfo? CurrentLocationData // The "?" indicates that the type can be nulled, so in this case the returned struct can be null

@@ -37,6 +37,7 @@ public class MenuManager : Singleton<MenuManager>
     private void Awake()
     {
         NewMenuRoot(_startingMenu);
+        GoToMenu(_startingMenu);
     }
 
     void Update()
@@ -53,8 +54,16 @@ public class MenuManager : Singleton<MenuManager>
     void NewMenuRoot(MenuBehaviour pTargetRoot)
     {
         _rootMenu = pTargetRoot;
-        _menuStack = new Stack<MenuBehaviour>();
-        _animationStack = new Stack<MenuAnimation>();
+
+        if (_menuStack == null)
+            _menuStack = new Stack<MenuBehaviour>();
+        else
+            _menuStack.Clear();
+
+        if (_animationStack == null)
+            _animationStack = new Stack<MenuAnimation>();
+        else
+            _animationStack.Clear();
     }
 
 
@@ -62,6 +71,9 @@ public class MenuManager : Singleton<MenuManager>
     {
         if (pAnimation == null)
             pAnimation = _defaultAnimation;
+
+        if (!pTargetMenu.gameObject.activeSelf)
+            pTargetMenu.gameObject.SetActive(true);
 
         AnimateMenu(pTargetMenu, pAnimation);
 
