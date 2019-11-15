@@ -25,23 +25,29 @@ public class NavigationManager : MonoBehaviour
     [ContextMenu("Request")]
     void Awake()
     {
+        /**
+            StartCoroutine(GetDirections(
+        new GPSLocation(52.041095, 6.617560),
+        new GPSLocation(52.198434, 6.879558)
+        ));
+        /**/
 
-        StartCoroutine(GetDirections(
-            new GPSLocation(6.617560, 52.041095),
-            new GPSLocation(6.879558, 52.198434)
-            ));
+                StartCoroutine(GetDirections(
+        new GPSLocation(6.616444, 52.042944),
+        new GPSLocation(6.6177933, 52.0424283)
+        ));
     }
 
     [System.Serializable]
     public struct GPSLocation
     {
-        public double lattitude;
+        public double latitude;
         public double longitude;
 
 
-        public GPSLocation(double lattitude, double longitude) : this()
+        public GPSLocation(double latitude, double longitude) : this()
         {
-            this.lattitude = lattitude;
+            this.latitude = latitude;
             this.longitude = longitude;
         }
 
@@ -49,7 +55,7 @@ public class NavigationManager : MonoBehaviour
 
     IEnumerator GetDirections(GPSLocation pStart, GPSLocation pEnd)
     {
-        string request = String.Format("driving-car?api_key={0}&start={1}&end={2}", apiKey, LocationToString(pStart), LocationToString(pEnd));
+        string request = String.Format("foot-walking?api_key={0}&start={1}&end={2}", apiKey, LocationToString(pStart), LocationToString(pEnd));
         using (UnityWebRequest webRequest = UnityWebRequest.Get(baseURI + request))
         {
             // In case we will ever switch to JSON POSTs, we would need to use an authorization key instead of ?api_key=
@@ -63,6 +69,25 @@ public class NavigationManager : MonoBehaviour
                 // Parse JSON to class
                 NavigationResponse response = JsonConvert.DeserializeObject<NavigationResponse>(webRequest.downloadHandler.text);
                 // Store received path and apply it to the line renderer
+
+                if(response == null)
+                {
+                    Debug.LogError("The web request response was null");
+                    yield break;
+                }
+
+                if (response.features == null)
+                {
+                    Debug.LogError("The features was null");
+                    yield break;
+                }
+
+                if(response.features != null && response.features.Count <= 0)
+                {
+                    Debug.LogError("Features list was empty");
+                    yield break;
+                }
+
                 _receivedPath = GeometryToVector3(response.features[0]);
                 SetPath(_navigateLR, _receivedPath);
 
@@ -142,15 +167,26 @@ public class NavigationManager : MonoBehaviour
     Vector3[] GeometryToVector3(Feature feature)
     {
         Vector3[] geometry = new Vector3[feature.geometry.coordinates.Count];
+
+        if(GPSManager.Instance == null)
+        {
+            Debug.LogError("The GPSManager was null");
+        }
+
+        for(int i = 0; i < geometry.Length; ++i)
+            geometry[i] = GPSManager.Instance.GetWorldPosFromGPS(feature.geometry.coordinates[i][1], feature.geometry.coordinates[i][0]);
+
+        /**
         for (int i = 0; i < geometry.Length; ++i)
             geometry[i] = new Vector3((float)feature.geometry.coordinates[i][0] * 18, 0, (float)feature.geometry.coordinates[i][1] * 36);
+        /**/
 
         return geometry;
     }
 
     string LocationToString(GPSLocation location)
     {
-        return String.Format("{0},{1}", location.lattitude.ToString(CultureInfo.InvariantCulture), location.longitude.ToString(CultureInfo.InvariantCulture));
+        return String.Format("{0},{1}", location.latitude.ToString(CultureInfo.InvariantCulture), location.longitude.ToString(CultureInfo.InvariantCulture));
     }
 
 
