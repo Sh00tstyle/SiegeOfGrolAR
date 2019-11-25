@@ -65,8 +65,7 @@ public class MenuBehaviourEditor : Editor
             if (animationOption != AnimationOption.INSTANT)
             {
                 EditorGUILayout.PropertyField(animation.FindPropertyRelative("ease"));
-                if (ease == Ease.Unset)
-                    EditorGUILayout.PropertyField(animation.FindPropertyRelative("customCurve"));
+                EditorGUILayout.PropertyField(animation.FindPropertyRelative("customCurve"));
                 EditorGUILayout.PropertyField(animation.FindPropertyRelative("easeDuration"));
                 if (animationOption != AnimationOption.FADEIN)
                     EditorGUILayout.PropertyField(animation.FindPropertyRelative("direction"));
