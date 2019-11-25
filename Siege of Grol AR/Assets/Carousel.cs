@@ -8,6 +8,8 @@ public class Carousel : MonoBehaviour
 {
 
     [Header("Text buttons")]
+    [SerializeField]
+    bool _NextToStart = false;
     [SerializeField] Text _nextText;
     [SerializeField] Text _previousText;
 
@@ -16,8 +18,10 @@ public class Carousel : MonoBehaviour
     [SerializeField] RectTransform _container;
     [SerializeField] Image[] _carouselPanels;
 
-    [Header("Circle indicators")]
+    [Header("Circle and/or Avatar indicators")]
     [SerializeField] Image[] _circleIndicators;
+    [SerializeField] Image[] _inBetweens;
+    [SerializeField] Image[] _avatars;
     [SerializeField] float _maxSize, _minSize, _minAlpha, _maxAlpha, _speed;
 
     [Header("Swiping")]
@@ -26,7 +30,7 @@ public class Carousel : MonoBehaviour
     [SerializeField] Ease _ease;
 
     [Header("Target menu")]
-    [SerializeField] MenuAnimation _menuAnimation;
+    [SerializeField] MenuAnimation[] _menuAnimations;
 
     int _currentIndex = 0;
     float _canvasWidth;
@@ -38,10 +42,13 @@ public class Carousel : MonoBehaviour
     {
         // Store width for animating
         _canvasWidth = _scaling.referenceResolution.x;
-        Debug.Log(_canvasWidth);
+
+
+
         // Change buttons and indicators
         ChangeCircleIndicator();
         ChangeButtonsText();
+        ChangeAvatarIndicators();
 
         // Add listeners for right and left swipe
         _swipeDetection.AddListener(Direction.LEFT, () => ChangePosition(true));
@@ -65,6 +72,7 @@ public class Carousel : MonoBehaviour
         ChangeCircleIndicator();
         ChangeButtonsText();
 
+
         // Tween
         _activeTween = _container.transform.DOLocalMoveX(_currentIndex * -_canvasWidth, _swipeSpeed).SetEase(_ease)
             .OnStart(() =>
@@ -74,8 +82,28 @@ public class Carousel : MonoBehaviour
             ).OnComplete(() =>
             {   //Hide previous image
                 _carouselPanels[pSwipeLeft ? _currentIndex - 1 : _currentIndex + 1].gameObject.SetActive(false);
+                ChangeAvatarIndicators();
             });
     }
+
+    void ChangeAvatarIndicators()
+    {
+        if (_inBetweens == null)
+            return;
+
+        Image inBetweenImage;
+        if (_currentIndex == 0 || _currentIndex == 1)
+            inBetweenImage = _inBetweens[0];
+        else
+            inBetweenImage = _inBetweens[1];
+
+        inBetweenImage.DOFade(0.7f, 0.1f).OnComplete(() =>
+        {
+            inBetweenImage.sprite = _avatars[_currentIndex == 0 ? 1 : 0].sprite;
+        });
+        inBetweenImage.DOFade(1, 0.1f).SetDelay(0.1f);
+    }
+
 
     void ChangeButtonsText()
     {
@@ -89,10 +117,24 @@ public class Carousel : MonoBehaviour
         }
 
         // In case we are at the last page, change 'Next' to 'Start' otherwise to 'Next' 
-        if (_currentIndex >= _carouselPanels.Length - 1)
-            _nextText.text = "Start";
-        else if (_nextText.text == "Start")
-            _nextText.text = "Next";
+
+        if (_NextToStart)
+        {
+            if (_currentIndex >= _carouselPanels.Length - 1)
+                _nextText.text = "Start";
+            else if (_nextText.text == "Start")
+                _nextText.text = "Next";
+        }
+        else
+        {
+            if (_currentIndex >= _carouselPanels.Length - 1)
+                _nextText.DOFade(0, _buttonFadeSpeed).OnComplete(() => _nextText.gameObject.SetActive(false));
+            else if (!_nextText.gameObject.activeSelf)
+            {
+                _nextText.gameObject.SetActive(true);
+                _nextText.DOFade(1, _buttonFadeSpeed);
+            }
+        }
     }
 
 
@@ -109,7 +151,9 @@ public class Carousel : MonoBehaviour
     public void GoToMenu()
     {
         if (_currentIndex == _carouselPanels.Length - 1)
-            MenuManager.Instance.GoToMenu(_menuAnimation.menu, _menuAnimation);
+            for (int i = 0; i < _menuAnimations.Length; i++)
+                MenuManager.Instance.GoToMenu(_menuAnimations[i].menu, _menuAnimations[i]);
+
 
     }
 
