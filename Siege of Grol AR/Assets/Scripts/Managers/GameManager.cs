@@ -16,8 +16,6 @@ public class GameManager : Singleton<GameManager>
     private Narrator _currentNarrator;
     private Interaction _currentInteraction;
 
-    public Transform testLocationTransform;
-
     private void Awake()
     {
         _currentLocationIndex = 0;
@@ -61,10 +59,7 @@ public class GameManager : Singleton<GameManager>
     private void CreateNewLocation()
     {
         Vector3 locationPos = GPSManager.Instance.GetWorldPosFromGPS(_currentLocation.latitude, _currentLocation.longitude, new Vector3(1.25f, 0.0f, 0.4f));
-        //Transform locationTransform = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity).transform;
-
-        testLocationTransform = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity).transform;
-        Transform locationTransform = testLocationTransform;
+        Transform locationTransform = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity).transform;
 
         if (_isHelpingSpy && _currentLocation.helpInteractionPrefab != null)
         {

@@ -9,8 +9,6 @@ public class Geometry
     public string type;
 }
 
-
-
 [Serializable]
 public class Feature
 {
