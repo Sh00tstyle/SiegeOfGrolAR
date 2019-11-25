@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-[System.Serializable]
+[Serializable]
 public class Geometry
 {
     public List<List<double>> coordinates;
@@ -11,7 +11,7 @@ public class Geometry
 
 
 
-[System.Serializable]
+[Serializable]
 public class Feature
 {
     public List<double> bbox;
@@ -19,7 +19,7 @@ public class Feature
     public Geometry geometry;
 }
 
-[System.Serializable]
+[Serializable]
 public class NavigationResponse
 {
     public string type;

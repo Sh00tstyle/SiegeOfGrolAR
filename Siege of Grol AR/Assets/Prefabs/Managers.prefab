@@ -116,7 +116,7 @@ MonoBehaviour:
   _gpsMaxInitializationTime: 20
   _referenceTransform: {fileID: 0}
   _referenceLatitude: 52.042944
-  _refereceLongitude: 6.616444
+  _referenceLongitude: 6.616444
   _referenceScale: 1117.3
 --- !u!114 &5590620943230603776
 MonoBehaviour:
@@ -207,7 +207,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.001
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -334,7 +334,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.001
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:

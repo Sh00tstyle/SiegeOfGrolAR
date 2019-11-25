@@ -20,13 +20,13 @@ public class GPSManager : Singleton<GPSManager>
     private Transform _referenceTransform;
 
     [SerializeField]
-    private double _referenceLatitude = 6.617581;
+    private double _referenceLatitude = 52.042339;
 
     [SerializeField]
-    private double _refereceLongitude = 52.042339;
+    private double _referenceLongitude = 6.616444;
 
     [SerializeField]
-    private float _referenceScale = 111.0f;
+    private float _referenceScale = 1100.0f;
 
     private IEnumerator Start()
     {
@@ -93,23 +93,27 @@ public class GPSManager : Singleton<GPSManager>
         }
     }
 
-    public Vector3 GetWorldPosFromGPS(double pLatitude, double pLongitude, float pScale = -1)
+    public Vector3 GetWorldPosFromGPS(double pLatitude, double pLongitude, Vector3? pScale = null)
     {
+        // Calculate the world position based on a set scale and a reference point in the map that is based on real world GPS coordinates
         Vector3 mapOrigin = _referenceTransform.position;
 
         double deltaLatitude = pLatitude - _referenceLatitude;
-        double deltaLongitude = pLongitude - _refereceLongitude;
-
-        if(pScale <= 0.0f)
-        {
-            pScale = _referenceScale;
-        }
+        double deltaLongitude = pLongitude - _referenceLongitude;
 
         double worldXPos = (deltaLatitude - mapOrigin.x);
         double worldZPos = (deltaLongitude - mapOrigin.z);
 
-        worldXPos *= pScale;
-        worldZPos *= pScale * 0.5f;
+        if(pScale == null)
+        {
+            worldXPos *= _referenceScale;
+            worldZPos *= _referenceScale;
+        }
+        else
+        {
+            worldXPos *= _referenceScale * pScale.Value.x;
+            worldZPos *= _referenceScale * pScale.Value.z;
+        }
 
         Vector3 newPos = new Vector3((float)worldXPos, 0.0f, (float)worldZPos);
 

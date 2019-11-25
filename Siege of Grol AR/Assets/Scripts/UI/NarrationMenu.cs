@@ -1,37 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
 public class NarrationMenu : MonoBehaviour
 {
-
-    [SerializeField]
-    bool _waitForInput = true;
-
-    [SerializeField]
-    Text _narratorField;
-
-    [SerializeField]
-    AudioSource _audioSource;
-
-    [SerializeField]
-    Image _nextButton, _narrationProgress;
-
-    [SerializeField]
-    Button _textButton;
-
-    [SerializeField]
-    Narration[] _narration;
-
-    [SerializeField]
-    float _fadingTime, _nextButtonFadeIn, _nextButtonFadeOut;
-
-    Color _originalColor;
-    int _currentNarrationIndex;
-    Tween _textTween, _buttonTween;
-
-    [System.Serializable]
+    [Serializable]
     public struct Narration
     {
         public string Text;
@@ -40,7 +15,32 @@ public class NarrationMenu : MonoBehaviour
         public AudioClip AudioClip;
     }
 
-    void Awake()
+    [SerializeField]
+    private bool _waitForInput = true;
+
+    [SerializeField]
+    private Text _narratorField;
+
+    [SerializeField]
+    private AudioSource _audioSource;
+
+    [SerializeField]
+    private Image _nextButton, _narrationProgress;
+
+    [SerializeField]
+    private Button _textButton;
+
+    [SerializeField]
+    private Narration[] _narration;
+
+    [SerializeField]
+    private float _fadingTime, _nextButtonFadeIn, _nextButtonFadeOut;
+
+    private Color _originalColor;
+    private int _currentNarrationIndex;
+    private Tween _textTween, _buttonTween;
+    
+    private void Awake()
     {
         _originalColor = _narratorField.color;
         NextNarration();
@@ -79,45 +79,42 @@ public class NarrationMenu : MonoBehaviour
         }));
     }
 
-    IEnumerator StartAudioClip(AudioClip pAudioClip, System.Action<bool> pCallback)
-    {
-        _audioSource.clip = pAudioClip;
-        _audioSource.Play();
-        while (_audioSource.isPlaying)
-        {
-            _narrationProgress.fillAmount = _audioSource.time / pAudioClip.length;
-            yield return null;
-        }
-        _narrationProgress.fillAmount = 1;
-        pCallback(true);
-    }
-
-
-    void FadeNextButton(bool pActive)
-    {
-        // Fade in/out the button
-        _buttonTween = _nextButton.DOFade(pActive ? 1 : 0, pActive ? _nextButtonFadeIn : _nextButtonFadeOut);
-
-
-        // If it's fading in, have the button popup after a delay
-        if (pActive)
-            _buttonTween = _nextButton.transform.DOScale(1.32f, 1f).SetLoops(-1).SetDelay(8);
-
-    }
-
     public void ShowText()
     {
-
         //if (!_textTween.IsPlaying())
         //    return;
 
         _textTween.Kill();
         _narratorField.text = _narration[_currentNarrationIndex].Text;
 
-
         if (!_waitForInput)
             NextNarration();
         else
             _textButton.interactable = false;
+    }
+
+    private IEnumerator StartAudioClip(AudioClip pAudioClip, System.Action<bool> pCallback)
+    {
+        _audioSource.clip = pAudioClip;
+        _audioSource.Play();
+
+        while (_audioSource.isPlaying)
+        {
+            _narrationProgress.fillAmount = _audioSource.time / pAudioClip.length;
+            yield return null;
+        }
+
+        _narrationProgress.fillAmount = 1;
+        pCallback(true);
+    }
+
+    private void FadeNextButton(bool pActive)
+    {
+        // Fade in/out the button
+        _buttonTween = _nextButton.DOFade(pActive ? 1 : 0, pActive ? _nextButtonFadeIn : _nextButtonFadeOut);
+
+        // If it's fading in, have the button popup after a delay
+        if (pActive)
+            _buttonTween = _nextButton.transform.DOScale(1.32f, 1f).SetLoops(-1).SetDelay(8);
     }
 }

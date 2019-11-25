@@ -15,8 +15,8 @@ MonoBehaviour:
   locations:
   - locationName: Church
     characterName: Priest
-    latitude: 52.0424283
-    longitude: 6.6177933
+    latitude: 52.04234
+    longitude: 6.617697
     locationPrefab: {fileID: 6287936002076052214, guid: 4c5fba2df2139524e85ae72dc0306716,
       type: 3}
     sabotageInteractionPrefab: {fileID: 7555471724891556800, guid: 4d9658f610afee64e87cee67dba516e9,

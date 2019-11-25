@@ -38,6 +38,10 @@ public class CameraManager : Singleton<CameraManager>
             _rotationYAxis = rotationAngles.y;
             _rotationXAxis = rotationAngles.x;
         }
+        else
+        {
+            Debug.LogError("CameraManager::The main camera was null");
+        }
     }
 
     private void Update()

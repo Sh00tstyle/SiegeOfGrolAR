@@ -7,40 +7,32 @@ public class MenuManager : Singleton<MenuManager>
 {
     public MenuBehaviour narrationMenu;
 
-    Stack<MenuBehaviour> _menuStack;
-    Stack<MenuAnimation> _animationStack;
-
-
-    MenuBehaviour LastMenu
-    {
-        get
-        {
-            MenuBehaviour previousMenu = null;
-            if (_menuStack.Count > 0)
-                previousMenu = _menuStack.Peek();
-            else
-                previousMenu = _rootMenu;
-
-            return previousMenu;
-        }
-    }
-
-
-    MenuBehaviour _rootMenu;
+    [SerializeField]
+    private MenuBehaviour _startingMenu, _narrationMenu;
 
     [SerializeField]
-    MenuBehaviour _startingMenu, _narrationMenu;
+    private MenuAnimation _defaultAnimation;
 
-    [SerializeField]
-    MenuAnimation _defaultAnimation;
+    private MenuBehaviour _rootMenu;
+    private Stack<MenuBehaviour> _menuStack;
+    private Stack<MenuAnimation> _animationStack;
+
 
     private void Awake()
     {
-        NewMenuRoot(_startingMenu);
-        GoToMenu(_startingMenu);
+        if(_startingMenu != null)
+        {
+            NewMenuRoot(_startingMenu);
+            GoToMenu(_startingMenu);
+        }
+        else
+        {
+            Debug.LogError("Unable to initialize starting menu, the starting menu was null");
+        }
+
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -50,22 +42,6 @@ public class MenuManager : Singleton<MenuManager>
         }
 
     }
-
-    void NewMenuRoot(MenuBehaviour pTargetRoot)
-    {
-        _rootMenu = pTargetRoot;
-
-        if (_menuStack == null)
-            _menuStack = new Stack<MenuBehaviour>();
-        else
-            _menuStack.Clear();
-
-        if (_animationStack == null)
-            _animationStack = new Stack<MenuAnimation>();
-        else
-            _animationStack.Clear();
-    }
-
 
     public void GoToMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation = null)
     {
@@ -79,58 +55,26 @@ public class MenuManager : Singleton<MenuManager>
 
     }
 
-    public void GoToMenu(MenuTypes pMenu = MenuTypes.NARRATIONMENU, MenuAnimation pAnimation = null)
+    public void GoToMenu(MenuTypes pMenu, MenuAnimation pAnimation = null)
     {
         if (pAnimation == null)
             pAnimation = _defaultAnimation;
 
         MenuBehaviour targetMenu = null;
+
         switch (pMenu)
         {
             case MenuTypes.NARRATIONMENU:
                 targetMenu = _narrationMenu;
                 break;
+
             case MenuTypes.STARTINGMENU:
                 targetMenu = _startingMenu;
                 break;
         }
+
         AnimateMenu(targetMenu, pAnimation);
-
     }
-
-    void AnimateMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation = null)
-    {
-        switch (pAnimation.animation)
-        {
-            case AnimationOption.INSTANT:
-                {
-                    pTargetMenu.gameObject.SetActive(true);
-                    LastMenu.gameObject.SetActive(true);
-                }
-                break;
-            case AnimationOption.FADEIN:
-                pTargetMenu.FadeMenu(pAnimation, pAnimation.stackOptions.HasFlag(StackOptions.OVERLAY) ? null : LastMenu, true);
-                break;
-            case AnimationOption.FADEOUT:
-                pTargetMenu.FadeMenu(pAnimation, pAnimation.stackOptions.HasFlag(StackOptions.OVERLAY) ? null : LastMenu, false);
-                break;
-            case AnimationOption.ANIMATE:
-                pTargetMenu.ShowMenu(pAnimation, LastMenu);
-                break;
-            case AnimationOption.DISMISS:
-                pTargetMenu.HideMenu(pAnimation);
-                break;
-        }
-
-        if (pAnimation.stackOptions.HasFlag(StackOptions.PUSHTOSTACK))
-        {
-            _menuStack.Push(pTargetMenu);
-            _animationStack.Push(pAnimation);
-        }
-        if (pTargetMenu == _startingMenu || pAnimation.stackOptions.HasFlag(StackOptions.CLEARSTACK))
-            NewMenuRoot(pTargetMenu);
-    }
-
 
     public void Back()
     {
@@ -141,23 +85,27 @@ public class MenuManager : Singleton<MenuManager>
         MenuAnimation lastAnimation = _animationStack.Peek();
         MenuBehaviour lastMenu = LastMenu;
 
-
         // Invert last animation direction, in case it has one
         MenuAnimation invertedAnimation = new MenuAnimation();
+
         switch (lastAnimation.direction)
         {
             case Direction.UP:
                 invertedAnimation.direction = Direction.DOWN;
                 break;
+
             case Direction.DOWN:
                 invertedAnimation.direction = Direction.UP;
                 break;
+
             case Direction.RIGHT:
                 invertedAnimation.direction = Direction.LEFT;
                 break;
+
             case Direction.LEFT:
                 invertedAnimation.direction = Direction.RIGHT;
                 break;
+
             default:
                 break;
         }
@@ -167,12 +115,75 @@ public class MenuManager : Singleton<MenuManager>
         _menuStack.Pop();
         _animationStack.Pop();
 
-        //// Show the menu before that, in case it was slid back
+        // Show the menu before that, in case it was slid back
         MenuBehaviour newMenu = LastMenu;
         newMenu.ShowMenu(invertedAnimation, lastMenu);
 
         if (newMenu == _startingMenu)
             NewMenuRoot(newMenu);
+    }
+
+    private void NewMenuRoot(MenuBehaviour pTargetRoot)
+    {
+        _rootMenu = pTargetRoot;
+
+        if (_menuStack == null)
+            _menuStack = new Stack<MenuBehaviour>();
+        else
+            _menuStack.Clear();
+
+        if (_animationStack == null)
+            _animationStack = new Stack<MenuAnimation>();
+        else
+            _animationStack.Clear();
+
+    }
+
+    private void AnimateMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation = null)
+    {
+        switch (pAnimation.animation)
+        {
+            case AnimationOption.INSTANT:
+                pTargetMenu.gameObject.SetActive(true);
+                LastMenu.gameObject.SetActive(true);
+                break;
+
+            case AnimationOption.FADEIN:
+                pTargetMenu.FadeMenu(pAnimation, pAnimation.stackOptions.HasFlag(StackOptions.OVERLAY) ? null : LastMenu, true);
+                break;
+
+            case AnimationOption.FADEOUT:
+                pTargetMenu.FadeMenu(pAnimation, pAnimation.stackOptions.HasFlag(StackOptions.OVERLAY) ? null : LastMenu, false);
+                break;
+
+            case AnimationOption.ANIMATE:
+                pTargetMenu.ShowMenu(pAnimation, LastMenu);
+                break;
+
+            case AnimationOption.DISMISS:
+                pTargetMenu.HideMenu(pAnimation);
+                break;
+        }
+
+        if (pAnimation.stackOptions.HasFlag(StackOptions.PUSHTOSTACK))
+        {
+            _menuStack.Push(pTargetMenu);
+            _animationStack.Push(pAnimation);
+        }
+
+        if (pTargetMenu == _startingMenu || pAnimation.stackOptions.HasFlag(StackOptions.CLEARSTACK))
+            NewMenuRoot(pTargetMenu);
+    }
+
+    public MenuBehaviour LastMenu
+    {
+        get
+        {
+            if (_menuStack.Count > 0)
+                return _menuStack.Peek();
+            else
+                return _rootMenu;
+        }
     }
 
 

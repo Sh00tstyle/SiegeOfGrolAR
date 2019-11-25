@@ -11,17 +11,16 @@ using UnityEngine.UI;
 public class MenuBehaviour : MonoBehaviour
 {
     public List<MenuAnimation> animations;
-
-    [SerializeField]
-    CanvasScaler _canvasScaler;
-
-    [SerializeField]
-    CanvasGroup _canvasGroup;
-
-    [SerializeField]
-    RectTransform _canvasRect;
-
     public Tween activeTween;
+
+    [SerializeField]
+    private CanvasScaler _canvasScaler;
+
+    [SerializeField]
+    private CanvasGroup _canvasGroup;
+
+    [SerializeField]
+    private RectTransform _canvasRect;
 
     private void Awake()
     {
@@ -39,7 +38,7 @@ public class MenuBehaviour : MonoBehaviour
         activeTween.Kill();
 
         // Enable GameObject
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
 
         // Check if alpha if 1, in case set it to 0;
         if (pFadeIn)
@@ -53,21 +52,21 @@ public class MenuBehaviour : MonoBehaviour
             if (pLastMenu != null)
                 pLastMenu.gameObject.SetActive(false);
             if(!pFadeIn)
-                this.gameObject.SetActive(false);
+                gameObject.SetActive(false);
         });
 
         // Apply DOTween Ease or custom Curve
-        _SetEase(activeTween, pAnimation);
+        SetEase(activeTween, pAnimation);
     }
 
     public void ShowMenu(MenuAnimation pAnimation, MenuBehaviour pLastMenu)
     {
         // Enable GameObject
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
 
         // In case pLastMenu has an active tween, kill it. Elsewise place it out of frame.
         pLastMenu.activeTween.Kill();
-        _canvasRect.localPosition = -_GetAnimationVector(pAnimation.direction);
+        _canvasRect.localPosition = -GetAnimationVector(pAnimation.direction);
 
         // Kill any previous animations on object
         activeTween.Kill();
@@ -78,11 +77,19 @@ public class MenuBehaviour : MonoBehaviour
         });
 
         // Apply DOTween Ease or custom Curve
-        _SetEase(activeTween, pAnimation);
+        SetEase(activeTween, pAnimation);
 
     }
 
-    void _SetEase(Tween tween, MenuAnimation pAnimation)
+    public Tween HideMenu(MenuAnimation pAnimation)
+    {
+        // Move outside of frame
+        return _canvasRect.DOLocalMove(GetAnimationVector(pAnimation.direction), pAnimation.easeDuration)
+            .SetEase(pAnimation.ease).OnComplete(() => this.gameObject.SetActive(false));
+
+    }
+
+    private void SetEase(Tween tween, MenuAnimation pAnimation)
     {
         if (pAnimation.ease != Ease.Unset)
             tween.SetEase(pAnimation.ease);
@@ -90,28 +97,25 @@ public class MenuBehaviour : MonoBehaviour
             tween.SetEase(pAnimation.customCurve);
     }
 
-    public Tween HideMenu(MenuAnimation pAnimation)
-    {
-        // Move outside of frame
-        return _canvasRect.DOLocalMove(_GetAnimationVector(pAnimation.direction), pAnimation.easeDuration)
-            .SetEase(pAnimation.ease).OnComplete(() => this.gameObject.SetActive(false));
-
-    }
-
-    Vector2 _GetAnimationVector(Direction direction)
+    private Vector2 GetAnimationVector(Direction direction)
     {
         switch (direction)
         {
             case Direction.LEFT:
                 return Vector2.left * _canvasScaler.referenceResolution.x;
+
             case Direction.RIGHT:
                 return Vector2.right * _canvasScaler.referenceResolution.x;
+
             case Direction.UP:
                 return Vector2.up * _canvasScaler.referenceResolution.y;
+
             case Direction.DOWN:
                 return Vector2.down * _canvasScaler.referenceResolution.y;
+
+            default:
+                return Vector2.zero;
         }
-        return Vector2.zero;
     }
 
 }
