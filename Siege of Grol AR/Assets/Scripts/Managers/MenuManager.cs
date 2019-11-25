@@ -27,7 +27,7 @@ public class MenuManager : Singleton<MenuManager>
         }
         else
         {
-            Debug.LogError("Unable to initialize starting menu, the starting menu was null");
+            Debug.LogWarning("MenuManager::Unable to initialize starting menu, the starting menu was null! This could lead to errors in the appliaction.");
         }
 
     }
@@ -179,6 +179,12 @@ public class MenuManager : Singleton<MenuManager>
     {
         get
         {
+            if(_menuStack == null)
+            {
+                Debug.LogError("MenuManager::Unable to retrieve LastMenu, _menuStack was null");
+                return null;
+            }
+
             if (_menuStack.Count > 0)
                 return _menuStack.Peek();
             else

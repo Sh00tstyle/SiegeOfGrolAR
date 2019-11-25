@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7555471724891556801}
-  - component: {fileID: 8346104712885114741}
+  - component: {fileID: -2904983695522314547}
   m_Layer: 0
-  m_Name: Interaction
+  m_Name: ExampleInteractionSabotage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8346104712885114741
+--- !u!114 &-2904983695522314547
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,7 +40,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7555471724891556800}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f852699b216b85d4fa31c2a2b21a25e1, type: 3}
+  m_Script: {fileID: 11500000, guid: ef7bf9859b743ab4cb0a2ecb87b12ee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionName: 
+  interactionName: TestSabotage

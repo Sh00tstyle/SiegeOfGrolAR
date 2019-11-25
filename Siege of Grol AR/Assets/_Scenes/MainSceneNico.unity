@@ -1943,7 +1943,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _startingMenu
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3145951429170911282}
     - target: {fileID: 423608960020097757, guid: 1725071946759704ab5c4593e60822ac,
         type: 3}
       propertyPath: _narrationMenu
