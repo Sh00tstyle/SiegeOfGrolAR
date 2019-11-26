@@ -40,12 +40,20 @@ public class NavigationManager : Singleton<NavigationManager>
     private int index;
 
     [ContextMenu("Request")]
-    void Awake()
+    private void Awake()
     {
         StartCoroutine(GetDirections(
         new GPSLocation(6.616444, 52.042944),
         new GPSLocation(6.617697, 52.04234)
         ));
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+
+        }
     }
 
     public void SetPath(LineRenderer pLineRenderer, Vector3[] pPath)

@@ -124,7 +124,7 @@ public class GPSManager : Singleton<GPSManager>
     {
         get
         {
-            if(Input.location.status == LocationServiceStatus.Running) 
+            if(!_useFakeLocation && Input.location.status == LocationServiceStatus.Running) 
                 return Input.location.lastData;
             else
                 return null;
