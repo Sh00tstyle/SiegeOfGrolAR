@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UserOptions : MonoBehaviour
+public class LanguageFlags : MonoBehaviour
 {
     [SerializeField] Image[] languageFlags;
     [SerializeField] float flagFadeDuration, minimumOpacity;
