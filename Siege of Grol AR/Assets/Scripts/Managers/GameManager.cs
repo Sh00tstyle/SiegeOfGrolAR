@@ -58,7 +58,7 @@ public class GameManager : Singleton<GameManager>
 
     private void CreateNewLocation()
     {
-        Vector3 locationPos = GPSManager.Instance.GetWorldPosFromGPS(_currentLocation.latitude, _currentLocation.longitude, new Vector3(1.25f, 0.0f, 0.4f));
+        Vector3 locationPos = GPSManager.Instance.GetWorldPosFromGPS(_currentLocation.latitude, _currentLocation.longitude);
         Transform locationTransform = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity).transform;
 
         if (_isHelpingSpy && _currentLocation.helpInteractionPrefab != null)

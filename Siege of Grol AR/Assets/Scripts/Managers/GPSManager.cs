@@ -5,6 +5,9 @@ using UnityEngine;
 public class GPSManager : Singleton<GPSManager>
 {
     [SerializeField]
+    private Transform _player;
+
+    [SerializeField]
     private bool _useFakeLocation = true;
 
     [SerializeField]
@@ -26,7 +29,7 @@ public class GPSManager : Singleton<GPSManager>
     private double _referenceLongitude = 6.616444;
 
     [SerializeField]
-    private float _referenceScale = 1100.0f;
+    private double _referenceScale = 1100.0;
 
     private IEnumerator Start()
     {
@@ -47,18 +50,68 @@ public class GPSManager : Singleton<GPSManager>
             Input.location.Stop();
     }
 
+    public Vector3 GetWorldPosFromGPS(double pLatitude, double pLongitude)
+    {
+        // Calculate the world position based on a set scale and a reference point in the map that is based on real world GPS coordinates
+        Vector3 mapOrigin = _referenceTransform.position;
+
+        double worldXPos = pLatitude - _referenceLatitude;
+        double worldZPos = pLongitude - _referenceLongitude;
+
+        worldXPos = worldXPos - mapOrigin.x;
+        worldZPos = worldZPos - mapOrigin.z;
+
+        worldXPos *= _referenceScale;
+        worldZPos *= _referenceScale;
+
+        worldZPos *= 0.5;
+
+        Vector3 newPos = new Vector3((float)worldXPos, 0.0f, (float)worldZPos);
+        newPos.x *= -1;
+        newPos = Quaternion.Euler(0.0f, -90.0f, 0.0f) * newPos;
+
+        return newPos;
+    }
+
+    public GPSLocation GetGPSFromWorldPos(Vector3 pWorldPos)
+    {
+        // Reconstruct the GPS coordinates of a world position based on the reference point on the map
+        Vector3 mapOrigin = _referenceTransform.position;
+
+        pWorldPos.x *= -1;
+        pWorldPos = Quaternion.Euler(0.0f, -90.0f, 0.0f) * pWorldPos;
+
+        double latitude = pWorldPos.x - mapOrigin.x;
+        double longitude = pWorldPos.z - mapOrigin.z;
+
+        longitude *= 2.0;
+
+        latitude *= 1.0 / _referenceScale;
+        longitude *= 1.0 / _referenceScale;
+
+        latitude += _referenceLatitude;
+        longitude += _referenceLongitude;
+
+        return new GPSLocation(longitude, latitude);
+    }
+
     private IEnumerator InitializeMockLocation()
     {
         yield return null;
 
-        Debug.Log("Did not initialize the GPS service, you chose to use a fake location!");
+        Debug.Log("Unable to initialize GPS service, initialized Mock GPS service instead!");
     }
 
     private IEnumerator InitializeLocationService()
     {
 
         if (Input.location.isEnabledByUser) // The GPS service was not enabled in the device settings
+        {
+            Debug.Log("Unable to load GPS service, it was not enabled by the user");
+
+            yield return StartCoroutine(InitializeMockLocation());
             yield break;
+        }
 
         // Trying to initialize the location service
         Input.location.Start(_gpsAccuracyInMeters, _gpsUpdateDistanceInMeters);
@@ -77,12 +130,16 @@ public class GPSManager : Singleton<GPSManager>
         if(waitTime < 1)
         {
             Debug.Log("GPS initialization timed out");
+
+            yield return StartCoroutine(InitializeMockLocation());
             yield break;
         }
 
         if(Input.location.status == LocationServiceStatus.Failed)
         {
             Debug.LogError("Failed to initialize the location service!");
+
+            yield return StartCoroutine(InitializeMockLocation());
             yield break;
         }
         else
@@ -93,41 +150,14 @@ public class GPSManager : Singleton<GPSManager>
         }
     }
 
-    public Vector3 GetWorldPosFromGPS(double pLatitude, double pLongitude, Vector3? pScale = null)
-    {
-        // Calculate the world position based on a set scale and a reference point in the map that is based on real world GPS coordinates
-        Vector3 mapOrigin = _referenceTransform.position;
-
-        double deltaLatitude = pLatitude - _referenceLatitude;
-        double deltaLongitude = pLongitude - _referenceLongitude;
-
-        double worldXPos = (deltaLatitude - mapOrigin.x);
-        double worldZPos = (deltaLongitude - mapOrigin.z);
-
-        if(pScale == null)
-        {
-            worldXPos *= _referenceScale;
-            worldZPos *= _referenceScale;
-        }
-        else
-        {
-            worldXPos *= _referenceScale * pScale.Value.x;
-            worldZPos *= _referenceScale * pScale.Value.z;
-        }
-
-        Vector3 newPos = new Vector3((float)worldXPos, 0.0f, (float)worldZPos);
-
-        return newPos;
-    }
-
-    public LocationInfo? CurrentLocationData // The "?" indicates that the type can be nulled, so in this case the returned struct can be null
+    public GPSLocation CurrentGPSLocation
     {
         get
         {
-            if(!_useFakeLocation && Input.location.status == LocationServiceStatus.Running) 
-                return Input.location.lastData;
+            if(!_useFakeLocation && Input.location.status == LocationServiceStatus.Running)
+                return new GPSLocation(Input.location.lastData.longitude, Input.location.lastData.latitude);
             else
-                return null;
+                return GetGPSFromWorldPos(_player.position);
         }
     }
 }

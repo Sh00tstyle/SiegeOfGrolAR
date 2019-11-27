@@ -10,20 +10,6 @@ using UnityEngine.Networking;
 
 public class NavigationManager : Singleton<NavigationManager>
 {
-    [Serializable]
-    public struct GPSLocation
-    {
-        public double latitude;
-        public double longitude;
-
-
-        public GPSLocation(double latitude, double longitude) : this()
-        {
-            this.latitude = latitude;
-            this.longitude = longitude;
-        }
-    }
-
     const string apiKey = "5b3ce3597851110001cf6248296d7129fb1343a4bf2e43eca3d631a1";
     const string baseURI = "https://api.openrouteservice.org/v2/directions/";
 
@@ -31,28 +17,23 @@ public class NavigationManager : Singleton<NavigationManager>
     private LineRenderer _navigateLR, _pastLR;
 
     [SerializeField] 
-    private GameObject _player;
+    private Transform _player;
 
     private Vector3[] _receivedPath;
     private Tween _movementTween;
 
-    // Testing purpose
-    private int index;
-
-    [ContextMenu("Request")]
-    private void Awake()
-    {
-        StartCoroutine(GetDirections(
-        new GPSLocation(6.616444, 52.042944),
-        new GPSLocation(6.617697, 52.04234)
-        ));
-    }
+    private Coroutine _directionCoroutine;
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
+            GPSLocation reconstructedPlayerLocation = GPSManager.Instance.GetGPSFromWorldPos(_player.position);
+            GPSLocation destinationLocation = new GPSLocation(GameManager.Instance.CurrentLocation);
 
+            GetDirections(reconstructedPlayerLocation, destinationLocation);
+
+            Debug.Log("Started navigation routine");
         }
     }
 
@@ -65,7 +46,7 @@ public class NavigationManager : Singleton<NavigationManager>
     public void UpdateLineRenderers()
     {
         // Check the closest point where the player is
-        int pathIndex = GetPathIndexRelativeToPlayer(_player.transform.position);
+        int pathIndex = GetPathIndexRelativeToPlayer(_player.position);
 
         // Add one extra index for the player's location
         Vector3[] navigated = new Vector3[pathIndex + 1];
@@ -74,6 +55,7 @@ public class NavigationManager : Singleton<NavigationManager>
         // Extract data from receivedPath
         for (int i = 0; i < pathIndex; ++i)
             navigated[i] = _receivedPath[i];
+
         for (int i = 0; i < _receivedPath.Length - pathIndex; ++i)
             toNavigate[i + 1] = _receivedPath[i + pathIndex];
 
@@ -84,25 +66,18 @@ public class NavigationManager : Singleton<NavigationManager>
         ConnectLineRenderers();
     }
 
-    [ContextMenu("Animate player to random location")]
-    public void UpdatePlayerPosition()
+    public void GetDirections(GPSLocation pStart, GPSLocation pEnd)
     {
-        // Testing purpose
-        Vector3 newPosition = _receivedPath[index++];
+        if (_directionCoroutine != null)
+            StopCoroutine(_directionCoroutine);
 
-        _movementTween = _player.transform.DOMove(newPosition, 0.6f).SetEase(Ease.InSine)
-            .OnUpdate(() => ConnectLineRenderers())
-            .OnComplete(() => { UpdateLineRenderers(); UpdatePlayerPosition(); });
+        _directionCoroutine = StartCoroutine(GetDirectionsInternal(pStart, pEnd));
     }
 
-    public string LocationToString(GPSLocation location)
+    private IEnumerator GetDirectionsInternal(GPSLocation pStart, GPSLocation pEnd)
     {
-        return String.Format("{0},{1}", location.latitude.ToString(CultureInfo.InvariantCulture), location.longitude.ToString(CultureInfo.InvariantCulture));
-    }
+        string request = String.Format("foot-walking?api_key={0}&start={1}&end={2}", apiKey, pStart, pEnd);
 
-    private IEnumerator GetDirections(GPSLocation pStart, GPSLocation pEnd)
-    {
-        string request = String.Format("foot-walking?api_key={0}&start={1}&end={2}", apiKey, LocationToString(pStart), LocationToString(pEnd));
         using (UnityWebRequest webRequest = UnityWebRequest.Get(baseURI + request))
         {
             // In case we will ever switch to JSON POSTs, we would need to use an authorization key instead of ?api_key=
@@ -141,14 +116,16 @@ public class NavigationManager : Singleton<NavigationManager>
                 _pastLR.positionCount = 2;
                 _pastLR.SetPosition(0, _receivedPath[0]);
                 _pastLR.SetPosition(1, _receivedPath[0]);
+
+                UpdateLineRenderers();
             }
         }
     }
 
     private void ConnectLineRenderers()
     {
-        _navigateLR.SetPosition(0, _player.transform.position);
-        _pastLR.SetPosition(_pastLR.positionCount - 1, _player.transform.position);
+        _navigateLR.SetPosition(0, _player.position);
+        _pastLR.SetPosition(_pastLR.positionCount - 1, _player.position);
     }
 
     private int GetPathIndexRelativeToPlayer(Vector3 pPlayerPosition)
@@ -191,9 +168,7 @@ public class NavigationManager : Singleton<NavigationManager>
 
         for(int i = 0; i < geometry.Length; ++i)
         {
-            Vector3 worldPos = GPSManager.Instance.GetWorldPosFromGPS(feature.geometry.coordinates[i][1], feature.geometry.coordinates[i][0], new Vector3(1.0f, 0.0f, 0.55f));
-            worldPos.x *= -1;
-            worldPos = Quaternion.Euler(0.0f, -90.0f, 0.0f) * worldPos;
+            Vector3 worldPos = GPSManager.Instance.GetWorldPosFromGPS(feature.geometry.coordinates[i][1], feature.geometry.coordinates[i][0]);
 
             geometry[i] = worldPos;
         }
