@@ -54,7 +54,7 @@ public class CameraManager : Singleton<CameraManager>
         if (_mainCamera == null || _orbitTarget == null)
             return;
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(1))
         {
             _rotationXAxis += _xSpeed * Input.GetAxis("Mouse X") * _distance * 0.02f;
             _rotationYAxis -= _ySpeed * Input.GetAxis("Mouse Y") * 0.02f;

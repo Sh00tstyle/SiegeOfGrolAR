@@ -11,6 +11,9 @@ public class GPSManager : Singleton<GPSManager>
     private bool _useFakeLocation = true;
 
     [SerializeField]
+    private float _movementSpeed = 1.0f;
+
+    [SerializeField]
     private float _gpsAccuracyInMeters = 10.0f;
 
     [SerializeField]
@@ -48,6 +51,12 @@ public class GPSManager : Singleton<GPSManager>
     {
         if (!_useFakeLocation && Input.location.status == LocationServiceStatus.Running)
             Input.location.Stop();
+    }
+
+    public void MoveJoystickPlayer(Vector3 deltaMovement)
+    {
+        Vector3 worldMovement = new Vector3(deltaMovement.x, 0.0f, deltaMovement.y);
+        _player.position += worldMovement * Time.deltaTime * _movementSpeed;
     }
 
     public Vector3 GetWorldPosFromGPS(double pLatitude, double pLongitude)

@@ -110,14 +110,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1988ac4f510289e4f9b072ad7e06825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 0}
   _useFakeLocation: 1
+  _movementSpeed: 0.1
   _gpsAccuracyInMeters: 10
   _gpsUpdateDistanceInMeters: 10
   _gpsMaxInitializationTime: 20
   _referenceTransform: {fileID: 0}
   _referenceLatitude: 52.042944
   _referenceLongitude: 6.616444
-  _referenceScale: 1117.3
+  _referenceScale: 2000
 --- !u!114 &5590620943230603776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +209,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.01
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -334,7 +336,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.01
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:

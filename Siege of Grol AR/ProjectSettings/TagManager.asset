@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Location
+  - Indicator
+  - Part 1
+  - ManipulationSystem
+  - Part 2
+  - Part 3
+  - Joystick
   layers:
   - Default
   - TransparentFX
