@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class GPSManager : Singleton<GPSManager>
 {
     [SerializeField]
-    private Transform _player;
+    private GameObject _debugCanvas;
 
     [SerializeField]
     private bool _useFakeLocation = true;
@@ -22,24 +22,14 @@ public class GPSManager : Singleton<GPSManager>
     [SerializeField]
     private int _gpsMaxInitializationTime = 20;
 
-    [SerializeField]
-    private Transform _referenceTransform;
-
-    [SerializeField]
-    private double _referenceLatitude = 52.042339;
-
-    [SerializeField]
-    private double _referenceLongitude = 6.616444;
-
-    [SerializeField]
-    private double _referenceScale = 1100.0;
-
     private IEnumerator Start()
     {
         if (_useFakeLocation)
             yield return StartCoroutine(InitializeMockLocation());
         else
             yield return StartCoroutine(InitializeLocationService());
+
+        NavigationManager.Instance.RequestNewNavigationPath();
     }
 
     private void OnDestroy()
@@ -56,52 +46,11 @@ public class GPSManager : Singleton<GPSManager>
     public void MoveJoystickPlayer(Vector3 deltaMovement)
     {
         Vector3 worldMovement = new Vector3(deltaMovement.x, 0.0f, deltaMovement.y);
-        _player.position += worldMovement * Time.deltaTime * _movementSpeed;
-    }
+        Quaternion rotation = Quaternion.Euler(0.0f, CameraManager.Instance.RotationXAxis, 0.0f); //align the movement vector to on the camera orientation
 
-    public Vector3 GetWorldPosFromGPS(double pLatitude, double pLongitude)
-    {
-        // Calculate the world position based on a set scale and a reference point in the map that is based on real world GPS coordinates
-        Vector3 mapOrigin = _referenceTransform.position;
+        worldMovement = rotation * worldMovement;
 
-        double worldXPos = pLatitude - _referenceLatitude;
-        double worldZPos = pLongitude - _referenceLongitude;
-
-        worldXPos = worldXPos - mapOrigin.x;
-        worldZPos = worldZPos - mapOrigin.z;
-
-        worldXPos *= _referenceScale;
-        worldZPos *= _referenceScale;
-
-        worldZPos *= 0.5;
-
-        Vector3 newPos = new Vector3((float)worldXPos, 0.0f, (float)worldZPos);
-        newPos.x *= -1;
-        newPos = Quaternion.Euler(0.0f, -90.0f, 0.0f) * newPos;
-
-        return newPos;
-    }
-
-    public GPSLocation GetGPSFromWorldPos(Vector3 pWorldPos)
-    {
-        // Reconstruct the GPS coordinates of a world position based on the reference point on the map
-        Vector3 mapOrigin = _referenceTransform.position;
-
-        pWorldPos.x *= -1;
-        pWorldPos = Quaternion.Euler(0.0f, -90.0f, 0.0f) * pWorldPos;
-
-        double latitude = pWorldPos.x - mapOrigin.x;
-        double longitude = pWorldPos.z - mapOrigin.z;
-
-        longitude *= 2.0;
-
-        latitude *= 1.0 / _referenceScale;
-        longitude *= 1.0 / _referenceScale;
-
-        latitude += _referenceLatitude;
-        longitude += _referenceLongitude;
-
-        return new GPSLocation(longitude, latitude);
+        NavigationManager.Instance.Player.position += worldMovement * Time.deltaTime * _movementSpeed;
     }
 
     private IEnumerator InitializeMockLocation()
@@ -109,11 +58,14 @@ public class GPSManager : Singleton<GPSManager>
         yield return null;
 
         Debug.Log("Unable to initialize GPS service, initialized Mock GPS service instead!");
+
+        // Switch to Debug mode by spawning the debug joystick and moving the player to the world origin
+        Instantiate(_debugCanvas);
+        NavigationManager.Instance.Player.transform.position = new Vector3(0.0f, 0.1f, 0.0f);
     }
 
     private IEnumerator InitializeLocationService()
     {
-
         if (Input.location.isEnabledByUser) // The GPS service was not enabled in the device settings
         {
             Debug.Log("Unable to load GPS service, it was not enabled by the user");
@@ -166,7 +118,7 @@ public class GPSManager : Singleton<GPSManager>
             if(!_useFakeLocation && Input.location.status == LocationServiceStatus.Running)
                 return new GPSLocation(Input.location.lastData.longitude, Input.location.lastData.latitude);
             else
-                return GetGPSFromWorldPos(_player.position);
+                return NavigationManager.Instance.GetGPSFromWorldPos(NavigationManager.Instance.Player.position);
         }
     }
 }

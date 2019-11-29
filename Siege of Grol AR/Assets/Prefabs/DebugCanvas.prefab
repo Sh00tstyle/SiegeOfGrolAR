@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _eventSystem: {fileID: 0}
-  _maxRadius: 15
+  _maxRadius: 30
 --- !u!1 &4925923290793420809
 GameObject:
   m_ObjectHideFlags: 0

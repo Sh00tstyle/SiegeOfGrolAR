@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class JoystickHandler : MonoBehaviour
 {
+    public static bool IsUsingJoystick = false;
+
     [SerializeField]
     private EventSystem _eventSystem;
 
@@ -19,8 +21,6 @@ public class JoystickHandler : MonoBehaviour
 
     private Vector3 _startPosition;
 
-    private bool _isUsingJoystick;
-
     private void Awake()
     {
         _graphicRaycaster = GetComponentInParent<GraphicRaycaster>();
@@ -33,7 +33,7 @@ public class JoystickHandler : MonoBehaviour
 
         _startPosition = transform.position;
 
-        _isUsingJoystick = false;
+        IsUsingJoystick = false;
     }
 
     private void Update()
@@ -44,7 +44,7 @@ public class JoystickHandler : MonoBehaviour
 
     private void HandleJoystickInput()
     {
-        if (Input.GetMouseButtonDown(0) && !_isUsingJoystick)
+        if (Input.GetMouseButtonDown(0) && !IsUsingJoystick)
         {
             _raycastResults.Clear();
 
@@ -61,21 +61,21 @@ public class JoystickHandler : MonoBehaviour
 
                 if(currentResult.gameObject.tag == Tags.Joystick)
                 {
-                    _isUsingJoystick = true;
+                    IsUsingJoystick = true;
                     return;
                 }
             }
         }
-        else if (Input.GetMouseButtonUp(0) && _isUsingJoystick)
+        else if (Input.GetMouseButtonUp(0) && IsUsingJoystick)
         {
-            _isUsingJoystick = false;
+            IsUsingJoystick = false;
             transform.position = _startPosition;
         }
     }
 
     private void EvaluateJoystickInput()
     {
-        if (!_isUsingJoystick) return;
+        if (!IsUsingJoystick) return;
 
         Vector3 deltaMovement = Input.mousePosition - _startPosition;
 
