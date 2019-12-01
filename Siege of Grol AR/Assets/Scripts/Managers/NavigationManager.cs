@@ -96,7 +96,7 @@ public class NavigationManager : Singleton<NavigationManager>
         latitude += _referenceLatitude;
         longitude += _referenceLongitude;
 
-        return new GPSLocation(longitude, latitude);
+        return new GPSLocation(latitude, longitude);
     }
 
     private void InitializePathLineRenderers(Vector3 pDestinationPos)
@@ -295,7 +295,7 @@ public class NavigationManager : Singleton<NavigationManager>
 
         for (int i = 0; i < geometry.Length; ++i) // Fill backwards so we can reuse it in the line renderer
         {
-            worldPos = GetWorldPosFromGPS(feature.geometry.coordinates[geometry.Length - (i + 1)][1], feature.geometry.coordinates[geometry.Length - (i + 1)][0]);
+            worldPos = GetWorldPosFromGPS(feature.geometry.coordinates[geometry.Length - (i + 1)][1], feature.geometry.coordinates[geometry.Length - (i + 1)][0]); // Parse latitude before longitude for our struct
             geometry[i] = worldPos;
         }
 

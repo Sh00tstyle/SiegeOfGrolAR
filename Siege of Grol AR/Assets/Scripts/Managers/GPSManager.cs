@@ -116,7 +116,7 @@ public class GPSManager : Singleton<GPSManager>
         get
         {
             if(!_useFakeLocation && Input.location.status == LocationServiceStatus.Running)
-                return new GPSLocation(Input.location.lastData.longitude, Input.location.lastData.latitude);
+                return new GPSLocation(Input.location.lastData.latitude, Input.location.lastData.longitude);
             else
                 return NavigationManager.Instance.GetGPSFromWorldPos(NavigationManager.Instance.Player.position);
         }

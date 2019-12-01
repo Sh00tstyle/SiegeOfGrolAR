@@ -7,19 +7,19 @@ using UnityEngine;
 [Serializable]
 public struct GPSLocation
 {
-    public double longitude;
     public double latitude;
+    public double longitude;
 
-    public GPSLocation(double pLongitude, double pLatitude)
+    public GPSLocation(double pLatitude, double pLongitude)
     {
-        longitude = pLongitude;
         latitude = pLatitude;
+        longitude = pLongitude;
     }
 
     public GPSLocation(Location location)
     {
-        longitude = location.longitude;
         latitude = location.latitude;
+        longitude = location.longitude;
     }
 
     public override string ToString() // In this case the longitude and the latitude have to be swapped for the API to work correctly
