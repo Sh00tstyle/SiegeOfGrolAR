@@ -10,7 +10,7 @@ using UnityEngine.Networking;
 
 public class NavigationManager : Singleton<NavigationManager>
 {
-    const string apiKey = "5b3ce3597851110001cf62488cba7d2491cc44c19424c9e70c00f54e";
+    const string apiKey = "5b3ce3597851110001cf6248296d7129fb1343a4bf2e43eca3d631a1";
     const string baseURI = "https://api.openrouteservice.org/v2/directions/";
 
     [SerializeField]
@@ -35,7 +35,10 @@ public class NavigationManager : Singleton<NavigationManager>
     private float _maxStrayDistance = 0.5f;
 
     [SerializeField]
-    private float _minSegmentDistance = 0.1f;
+    private float _minSegmentDistance = 0.15f;
+
+    [SerializeField]
+    private float _maxPathUpdateInterval = 2.0f;
 
     private Vector3[] _receivedPath;
 
@@ -160,7 +163,7 @@ public class NavigationManager : Singleton<NavigationManager>
 
                 if (response.features == null)
                 {
-                    Debug.LogError("The features was null");
+                    Debug.LogError("The features was null, make sure a valid API key is in use");
                     yield break;
                 }
 
@@ -195,7 +198,7 @@ public class NavigationManager : Singleton<NavigationManager>
 
     private IEnumerator StrayDetectionRoutine()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(0.1f);
+        WaitForSeconds waitForSeconds = new WaitForSeconds(_maxPathUpdateInterval);
 
         Vector3 closestPathSegmentPos;
         Vector3 distanceVector;
@@ -211,7 +214,7 @@ public class NavigationManager : Singleton<NavigationManager>
                 RequestNewNavigationPath();
                 yield break;
             }
-
+           
             yield return waitForSeconds;
         }
     }
@@ -223,6 +226,17 @@ public class NavigationManager : Singleton<NavigationManager>
 
         while (true)
         {
+            // Always update the player position
+            _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _player.position);
+            _navigatedPathLR.SetPosition(0, _player.position);
+
+            // Update the line renderer if needed
+            if (_remainingPathLR.positionCount < 2)
+            {
+                Debug.Log("No more path segments found");
+                yield break;
+            }
+
             currentSegmentPosition = _remainingPathLR.GetPosition(_remainingPathLR.positionCount - 2); // Take the position in front of the player (player is last)
             distanceVector = _player.position - currentSegmentPosition;
 
@@ -231,16 +245,8 @@ public class NavigationManager : Singleton<NavigationManager>
                 ++_navigatedPathLR.positionCount;
                 _navigatedPathLR.SetPosition(_navigatedPathLR.positionCount - 1, currentSegmentPosition);
 
-                if(_remainingPathLR.positionCount > 1)
-                {
-                    --_remainingPathLR.positionCount;
-                    _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _player.position);
-                }
-                else
-                {
-                    Debug.Log("No more path segments found");
-                    yield break;
-                }
+                --_remainingPathLR.positionCount;
+                _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _player.position);
             }
 
             yield return null;

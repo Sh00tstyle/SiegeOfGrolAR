@@ -1859,11 +1859,6 @@ PrefabInstance:
       propertyPath: _narrationMenu
       value: 
       objectReference: {fileID: 2196791240946770707}
-    - target: {fileID: 5355724170515852496, guid: 1725071946759704ab5c4593e60822ac,
-        type: 3}
-      propertyPath: _player
-      value: 
-      objectReference: {fileID: 1436947921}
     - target: {fileID: 5590620943230603776, guid: 1725071946759704ab5c4593e60822ac,
         type: 3}
       propertyPath: _referenceTransform

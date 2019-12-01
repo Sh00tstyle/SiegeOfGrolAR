@@ -111,7 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1988ac4f510289e4f9b072ad7e06825f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
   _debugCanvas: {fileID: 4925923290793420809, guid: 84950f4c415ce734a968bbdcb131ec71,
     type: 3}
   _useFakeLocation: 1
@@ -139,7 +138,8 @@ MonoBehaviour:
   _navigatedPathLR: {fileID: 8559535449002515501}
   _player: {fileID: 0}
   _maxStrayDistance: 0.5
-  _minSegmentDistance: 0.1
+  _minSegmentDistance: 0.15
+  _maxPathUpdateInterval: 2
 --- !u!1 &5318343718177456014
 GameObject:
   m_ObjectHideFlags: 0
