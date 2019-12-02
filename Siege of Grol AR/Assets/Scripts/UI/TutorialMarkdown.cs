@@ -63,6 +63,11 @@ public class TutorialMarkdown : MonoBehaviour
             ((viewportPosition.y * _canvas.sizeDelta.y) - (_canvas.sizeDelta.y * 0.5f)));
     }
 
+    private float GetCameraDistanceToObject(Vector3 pObject)
+    {
+        return Vector3.Distance(pObject, CameraManager.Instance.MainCamera.gameObject.transform.position);
+    }
+
     public void HighlightClicked()
     {
         ResetCircle();
@@ -89,12 +94,15 @@ public class TutorialMarkdown : MonoBehaviour
 
         // If text is not transparent yet, fade it out first
         if (_hintText.color.a > 0)
-            _activeTween = FadeText(false, Vector2.zero, null);
+            _activeTween = FadeText(false, Vector2.zero, 0, null);
 
-        _activeTween = FocusCircle(true, CanvasPosition, 1).OnComplete(() =>
+        // Get scale
+       float distance = _defaultScale / GetCameraDistanceToObject(pWorldPosition) + 0.2f;
+
+        _activeTween = FocusCircle(true, CanvasPosition, distance).OnComplete(() =>
         {
             //Move Text to location and add text
-            _activeTween = FadeText(true, CanvasPosition, "Click here you piece of shit");
+            _activeTween = FadeText(true, CanvasPosition, distance, "Click here you piece of shit");
             // Bounce if neccesary
             if (pBounce) _activeTween = Punch(_highlightCircle, pBounceInfinite, pBounceLoops).SetDelay(pPunchDelay);
 
@@ -104,10 +112,10 @@ public class TutorialMarkdown : MonoBehaviour
     }
 
 
-    private Tween FadeText(bool pFadeIn, Vector2 position, string pText = null)
+    private Tween FadeText(bool pFadeIn, Vector2 pPosition, float pDistance, string pText = null)
     {
         if (pText != null)
-            _textRect.localPosition = new Vector2(position.x, position.y + _highlightCircle.sizeDelta.y / 2 + _textOffset);
+            _textRect.localPosition = new Vector2(pPosition.x, (pPosition.y + _highlightCircle.sizeDelta.y / 2 + _textOffset) * pDistance);
 
         if (pFadeIn && pText != null)
             _hintText.text = pText;
@@ -136,7 +144,7 @@ public class TutorialMarkdown : MonoBehaviour
         // Disable user input
         _clickRegion.interactable = false;
 
-        FadeText(false, Vector3.zero, null);
+        FadeText(false, Vector3.zero, 0, null);
         FocusCircle(false, Vector2.zero, _defaultScale).OnComplete(() =>
         {
             // Disable gameObjects
