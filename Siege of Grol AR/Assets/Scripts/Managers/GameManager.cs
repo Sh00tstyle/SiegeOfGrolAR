@@ -8,6 +8,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private LocationDatabase _locationDatabase;
 
+    [SerializeField]
+    private float _minInteractionDistance = 1.0f;
+
     private bool _isHelpingSpy;
 
     private Location _currentLocation;
@@ -74,6 +77,14 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleLocationInput()
     {
+        if(_currentLocationTransform != null)
+        {
+            Vector3 distanceVector = NavigationManager.Instance.Player.position - _currentLocationTransform.position;
+
+            if (distanceVector.magnitude > _minInteractionDistance) // Do not allow interaction input if the player is not nearby
+                return;
+        }
+
         if (Input.GetMouseButtonDown(0)) // Detect the location on mouse button press / touch
         {
             RaycastHit hit;

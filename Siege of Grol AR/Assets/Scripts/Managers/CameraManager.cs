@@ -6,8 +6,6 @@ using DG.Tweening;
 
 public class CameraManager : Singleton<CameraManager>
 {
-    public Transform debugTransform;
-
     [SerializeField]
     private Transform _orbitTarget;
 
@@ -33,8 +31,6 @@ public class CameraManager : Singleton<CameraManager>
 
     private Sequence _objectFocusSequence;
 
-    private bool _debugToggle = true;
-
     private void Awake()
     {
         if(_orbitTarget == null)
@@ -52,21 +48,6 @@ public class CameraManager : Singleton<CameraManager>
             return;
 
         HandleCameraInput();
-
-        // DEBUG
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if(_debugToggle)
-            {
-                _debugToggle = false;
-                _objectFocusSequence = SwitchFocusObject(debugTransform, 1.5f, 3.0f, 10.0f, Ease.Linear);
-            }
-            else
-            {
-                _debugToggle = true;
-                _objectFocusSequence = SwitchFocusObject(NavigationManager.Instance.Player, 1.5f, 3.0f, 10.0f, Ease.Linear);
-            }
-        }
     }
 
     public Sequence SwitchFocusObject(Transform pFocusObject, float pDuration, float pZoomInDistance, float pZoomOutDistance, Ease pEase)
@@ -165,5 +146,22 @@ public class CameraManager : Singleton<CameraManager>
         {
             return _rotationXAxis;
         }
+    }
+
+    // DEBUG
+    public void ActivateDemoFocus()
+    {
+        StartCoroutine(PlayDemoSquencesRoutine());
+    }
+
+    private IEnumerator PlayDemoSquencesRoutine()
+    {
+        yield return new WaitForSecondsRealtime(1.0f);
+
+        yield return _objectFocusSequence = SwitchFocusObject(GameManager.Instance.CurrentLocationTransform, 1.5f, 3.0f, 10.0f, Ease.Linear);
+
+        yield return new WaitForSecondsRealtime(3.0f);
+
+        yield return _objectFocusSequence = SwitchFocusObject(NavigationManager.Instance.Player, 1.5f, 3.0f, 10.0f, Ease.Linear);
     }
 }

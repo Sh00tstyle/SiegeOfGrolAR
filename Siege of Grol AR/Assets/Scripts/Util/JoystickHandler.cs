@@ -9,14 +9,10 @@ public class JoystickHandler : MonoBehaviour
     public static bool IsUsingJoystick = false;
 
     [SerializeField]
-    private EventSystem _eventSystem;
-
-    [SerializeField]
-    private float _maxRadius = 30.0f;
+    private float _maxRadius = 150.0f;
 
     private GraphicRaycaster _graphicRaycaster;
     private PointerEventData _pointerEventData;
-
     private List<RaycastResult> _raycastResults;
 
     private Vector3 _startPosition;
@@ -48,7 +44,7 @@ public class JoystickHandler : MonoBehaviour
         {
             _raycastResults.Clear();
 
-            _pointerEventData = new PointerEventData(_eventSystem); //probably does not have to re-created every time
+            _pointerEventData = new PointerEventData(EventSystem.current); //probably does not have to re-created every time
             _pointerEventData.position = Input.mousePosition;
 
             _graphicRaycaster.Raycast(_pointerEventData, _raycastResults);

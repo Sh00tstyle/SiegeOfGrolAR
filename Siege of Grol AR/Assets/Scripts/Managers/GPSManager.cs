@@ -50,7 +50,7 @@ public class GPSManager : Singleton<GPSManager>
 
         worldMovement = rotation * worldMovement;
 
-        NavigationManager.Instance.Player.position += worldMovement * Time.deltaTime * _movementSpeed;
+        NavigationManager.Instance.Player.position += worldMovement * Time.deltaTime * _movementSpeed * 0.2f;
     }
 
     private IEnumerator InitializeMockLocation()

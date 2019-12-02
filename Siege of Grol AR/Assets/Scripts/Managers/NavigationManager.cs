@@ -46,6 +46,8 @@ public class NavigationManager : Singleton<NavigationManager>
     private Coroutine _strayDetectionRoutine;
     private Coroutine _lineRendererUpdateRoutine;
 
+    private int _currentNavigationIndex;
+
     public void RequestNewNavigationPath()
     {
         GPSLocation reconstructedPlayerLocation = GetGPSFromWorldPos(_player.position);
@@ -102,7 +104,7 @@ public class NavigationManager : Singleton<NavigationManager>
     private void InitializePathLineRenderers(Vector3 pDestinationPos)
     {
         // Check the closest point where the player is
-        int pathIndex = GetPathIndexRelativeToPlayer(_player.position);
+        int pathIndex = GetClosestPathIndex(_player.position);
 
         // Add one extra index for the player's location
         Vector3[] remaining = new Vector3[_receivedPath.Length + 2]; // The path and one extra for the player and the destination
@@ -120,6 +122,8 @@ public class NavigationManager : Singleton<NavigationManager>
         // Apply arrays to line renderers
         SetPath(_remainingPathLR, remaining);
         SetPath(_navigatedPathLR, navigated);
+
+        _currentNavigationIndex = _receivedPath.Length - 1; // Take the last position since we filled the path reversed
     }
 
     private void SetPath(LineRenderer pLineRenderer, Vector3[] pPath)
@@ -205,7 +209,7 @@ public class NavigationManager : Singleton<NavigationManager>
 
         while (true)
         {
-            closestPathSegmentPos = _receivedPath[GetPathIndexRelativeToPlayer(_player.position)];
+            closestPathSegmentPos = _receivedPath[GetClosestPathIndex(_player.position, _currentNavigationIndex)];
             distanceVector = _player.position - closestPathSegmentPos;
 
             if(distanceVector.magnitude >= _maxStrayDistance)
@@ -237,23 +241,50 @@ public class NavigationManager : Singleton<NavigationManager>
                 yield break;
             }
 
-            currentSegmentPosition = _remainingPathLR.GetPosition(_remainingPathLR.positionCount - 2); // Take the position in front of the player (player is last)
+            // Check if the line renderer segments have to be updated
+            int closestPathIndex = GetClosestPathIndex(_player.position, _currentNavigationIndex);
+            int difference = _currentNavigationIndex - closestPathIndex;
+
+            currentSegmentPosition = _receivedPath[closestPathIndex]; // Take the position in front of the player (player is last)
             distanceVector = _player.position - currentSegmentPosition;
 
-            if(distanceVector.magnitude <= _minSegmentDistance)
+            if(difference == 0)
             {
-                ++_navigatedPathLR.positionCount;
-                _navigatedPathLR.SetPosition(_navigatedPathLR.positionCount - 1, currentSegmentPosition);
+                if (distanceVector.magnitude <= _minSegmentDistance)
+                {
+                    ++_navigatedPathLR.positionCount;
+                    _navigatedPathLR.SetPosition(_navigatedPathLR.positionCount - 1, currentSegmentPosition);
 
-                --_remainingPathLR.positionCount;
+                    --_remainingPathLR.positionCount;
+                    _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _player.position);
+
+                    if (_currentNavigationIndex > 0)
+                        --_currentNavigationIndex;
+                }
+            }
+            else if(difference > 0) // We navigated one or more segments further
+            {
+                for (int i = closestPathIndex; i < _currentNavigationIndex; ++i)
+                {
+                    if (i == closestPathIndex && difference == 1 && distanceVector.magnitude > _minSegmentDistance) // Skip processing the current index if the threshold was not met yet
+                        continue;
+
+                    // Make more space for another navigation segment 
+                    --_remainingPathLR.positionCount;
+
+                    ++_navigatedPathLR.positionCount;
+                    _navigatedPathLR.SetPosition(_navigatedPathLR.positionCount - 1, _receivedPath[i]); // Always append the position
+                }
+
                 _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _player.position);
+                _currentNavigationIndex = closestPathIndex;
             }
 
             yield return null;
         }
     }
 
-    private int GetPathIndexRelativeToPlayer(Vector3 pPlayerPosition)
+    private int GetClosestPathIndex(Vector3 pPlayerPosition, int pMaxIndex = -1)
     {
         int index = 0;
         float smallestDistance = Mathf.Infinity;
@@ -263,7 +294,10 @@ public class NavigationManager : Singleton<NavigationManager>
         Vector3 currentPosition;
         Vector3 distanceVector;
 
-        for (int i = 0; i < _receivedPath.Length; ++i)
+        if (pMaxIndex < 0)
+            pMaxIndex = _receivedPath.Length - 1;
+
+        for (int i = 0; i <= pMaxIndex; ++i)
         {
             currentPosition = _receivedPath[i];
             currentPosition.y = 0.0f;

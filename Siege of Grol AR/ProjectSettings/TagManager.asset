@@ -11,6 +11,8 @@ TagManager:
   - Part 2
   - Part 3
   - Joystick
+  - InteractButton
+  - ARPawn
   layers:
   - Default
   - TransparentFX
