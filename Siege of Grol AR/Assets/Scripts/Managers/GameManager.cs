@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager>
     private bool _isHelpingSpy;
 
     private Location _currentLocation;
+    private Transform _currentLocationTransform;
     private int _currentLocationIndex;
 
     private Narrator _currentNarrator;
@@ -59,15 +60,15 @@ public class GameManager : Singleton<GameManager>
     private void CreateNewLocation()
     {
         Vector3 locationPos = NavigationManager.Instance.GetWorldPosFromGPS(_currentLocation.latitude, _currentLocation.longitude);
-        Transform locationTransform = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity).transform;
+        _currentLocationTransform = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity).transform;
 
         if (_isHelpingSpy && _currentLocation.helpInteractionPrefab != null)
         {
-            Instantiate(_currentLocation.helpInteractionPrefab, locationTransform);
+            Instantiate(_currentLocation.helpInteractionPrefab, _currentLocationTransform);
         }
         else if(!_isHelpingSpy && _currentLocation.sabotageInteractionPrefab != null)
         {
-            Instantiate(_currentLocation.sabotageInteractionPrefab, locationTransform);
+            Instantiate(_currentLocation.sabotageInteractionPrefab, _currentLocationTransform);
         }
     }
 
@@ -95,11 +96,11 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public Vector3 CurrentLocationPos
+    public Transform CurrentLocationTransform
     {
         get
         {
-            return NavigationManager.Instance.GetWorldPosFromGPS(_currentLocation.latitude, _currentLocation.longitude);
+            return _currentLocationTransform;
         }
     }
 
