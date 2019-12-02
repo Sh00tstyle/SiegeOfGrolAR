@@ -95,6 +95,14 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public Vector3 CurrentLocationPos
+    {
+        get
+        {
+            return NavigationManager.Instance.GetWorldPosFromGPS(_currentLocation.latitude, _currentLocation.longitude);
+        }
+    }
+
     public Location CurrentLocation
     {
         get
