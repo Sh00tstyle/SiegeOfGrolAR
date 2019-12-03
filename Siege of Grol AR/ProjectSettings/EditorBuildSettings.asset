@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Scenes/MainSceneNico.unity
-    guid: 7705be26ac1344047a51b2bad7345815
-  - enabled: 1
-    path: Assets/_Scenes/CrosshairARInteraction.unity
-    guid: 2755b6aa8e0f8484081d8d2a167f713d
+    path: Assets/_Scenes/ABTestAR.unity
+    guid: f894626aad216814b81eeb05eb950adb
   m_configObjects: {}
