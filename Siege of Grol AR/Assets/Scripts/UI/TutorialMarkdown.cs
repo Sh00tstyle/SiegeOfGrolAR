@@ -26,11 +26,6 @@ public class TutorialMarkdown : MonoBehaviour
     [SerializeField] private float _fadeInDuration = 1, _fadeOutDuration = 2, _moveInDuration = 6, _moveOutDuration;
 
 
-
-
-    // Replace later
-    [SerializeField] GameObject _gameObject;
-
     private Tween _activeTween;
 
     private Vector2 _offset;
@@ -47,7 +42,6 @@ public class TutorialMarkdown : MonoBehaviour
         if (!_tutorialRunning)
             UpdatePosition(GameManager.Instance.CurrentLocationTransform);
     }
-
 
     private Vector2 GetCanvasPosition(Vector3 pWorldPosition)
     {
@@ -68,9 +62,6 @@ public class TutorialMarkdown : MonoBehaviour
         CameraManager.Instance.gameObject.SetActive(true);
         ResetCircle();
     }
-
-
-
 
     public void UpdatePosition(Transform pLocation, bool pBounce = true, bool pBounceInfinite = true, int pBounceLoops = 0, float pPunchDelay = 2)
     {
@@ -118,7 +109,7 @@ public class TutorialMarkdown : MonoBehaviour
     private Tween FadeText(bool pFadeIn, Vector2 pPosition, float pDistance, string pText = null)
     {
         if (pText != null)
-            _textRect.localPosition = new Vector2(pPosition.x, (pPosition.y + _highlightCircle.sizeDelta.y / 2 + _textOffset) * pDistance);
+            _textRect.localPosition = new Vector2(pPosition.x, (pPosition.y - _highlightCircle.sizeDelta.y / 2 + _textOffset) * pDistance);
 
         if (pFadeIn && pText != null)
             _hintText.text = pText;
