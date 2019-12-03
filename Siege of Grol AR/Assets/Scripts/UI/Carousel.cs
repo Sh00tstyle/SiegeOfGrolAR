@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +10,8 @@ public class Carousel : MonoBehaviour
 
     [SerializeField]
     bool _NextToStart = false;
-    [SerializeField] Text _nextText;
-    [SerializeField] Text _previousText;
+    [SerializeField] TextMeshProUGUI _nextText;
+    [SerializeField] TextMeshProUGUI _previousText;
 
     [SerializeField] CanvasScaler _scaling;
     [SerializeField] RectTransform _container;

@@ -109,7 +109,7 @@ public class TutorialMarkdown : MonoBehaviour
     private Tween FadeText(bool pFadeIn, Vector2 pPosition, float pDistance, string pText = null)
     {
         if (pText != null)
-            _textRect.localPosition = new Vector2(pPosition.x, (pPosition.y - _highlightCircle.sizeDelta.y / 2 + _textOffset) * pDistance);
+            _textRect.localPosition = new Vector2(pPosition.x, (pPosition.y - _highlightCircle.sizeDelta.y / 2 - _textOffset) * pDistance);
 
         if (pFadeIn && pText != null)
             _hintText.text = pText;
