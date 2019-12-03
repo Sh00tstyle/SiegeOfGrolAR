@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _locationDatabase: {fileID: 11400000, guid: b97a88c313593714d823aee73eec3b3d, type: 2}
+  _minInteractionDistance: 1
 --- !u!114 &2083937022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,13 +63,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e66a6d7b586aeec43b79ec54fbf30939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugTransform: {fileID: 0}
   _orbitTarget: {fileID: 0}
   _distance: 5
-  _xSpeed: 120
-  _ySpeed: 120
-  _yMinLimit: -20
+  _xSpeed: 60
+  _ySpeed: 60
+  _yMinLimit: 10
   _yMaxLimit: 80
+  _minDistance: 2
+  _maxDistance: 15
 --- !u!114 &423608960020097757
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -24,12 +24,20 @@ public class CameraManager : Singleton<CameraManager>
     [SerializeField]
     private float _yMaxLimit = 80f;
 
+    [SerializeField]
+    private float _minDistance = 2.0f;
+
+    [SerializeField]
+    private float _maxDistance = 15.0f;
+
     private Camera _mainCamera;
 
     private float _rotationYAxis;
     private float _rotationXAxis;
 
     private Sequence _objectFocusSequence;
+
+    private float _previousTouchDistance;
 
     private void Awake()
     {
@@ -40,6 +48,8 @@ public class CameraManager : Singleton<CameraManager>
         }
         
         UpdateCameraOrientation(_orbitTarget.position);
+
+        _previousTouchDistance = 0;
     }
 
     private void LateUpdate()
@@ -77,22 +87,47 @@ public class CameraManager : Singleton<CameraManager>
         if (_objectFocusSequence != null && _objectFocusSequence.active)
             return;
 
+#if UNITY_EDITOR
         float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
+        
+        if(!Mathf.Approximately(scrollDelta, 0.0f))
+            _distance -= scrollDelta * 2.0f;
 
-        if(scrollDelta > 0.0f) // Scroll up
-            _distance -= 0.5f;
-        else if (scrollDelta < 0.0f) // Scroll down
-            _distance += 0.5f;
+#else
+        if(Input.touchCount >= 2) // For detecting a pinch gesture we need two or more fingers (but the first two count)
+        {
+            Touch firstTouch = Input.GetTouch(0);
+            Touch secondTouch = Input.GetTouch(1);
 
-        if ((Input.GetMouseButton(0) || Input.touchCount >= 2) && !JoystickHandler.IsUsingJoystick)
-            UpdateCameraOrientation(_orbitTarget.position);
-        else
-            UpdateCameraOrientation(_orbitTarget.position, false); // This is probably irrelevant on mobile
+            Vector2 distanceVector = firstTouch.position - secondTouch.position;
+            float difference = _previousTouchDistance - distanceVector.magnitude;
+
+            if(!Mathf.Approximately(difference, 0.0f)) // Ignore differences that are (almost) zero
+                _distance += difference * 0.005f;
+
+            _previousTouchDistance = distanceVector.magnitude;
+        }
+        else 
+        {
+            _previousTouchDistance = 0.0f;
+        }
+#endif
+
+        _distance = ClampDistance(_distance);
+        UpdateCameraOrientation(_orbitTarget.position); // This is probably irrelevant on mobile
     }
 
-    private void UpdateCameraOrientation(Vector3 pOrbitTargetPos, bool allowInput = true)
+    private void UpdateCameraOrientation(Vector3 pOrbitTargetPos)
     {
-        if(_mainCamera == null)
+        bool allowInput = false;
+
+#if UNITY_EDITOR
+        allowInput = Input.GetMouseButton(0) && !JoystickHandler.IsUsingJoystick;
+#else
+        allowInput = Input.touchCount == 1 && !JoystickHandler.IsUsingJoystick;
+#endif
+
+        if (_mainCamera == null)
         {
             // Lazy initialization
             _mainCamera = Camera.main;
@@ -102,9 +137,18 @@ public class CameraManager : Singleton<CameraManager>
         }
         else if(allowInput)
         {
+#if UNITY_EDITOR
             // Not sure if this works on mobile
             _rotationXAxis += _xSpeed * Input.GetAxis("Mouse X") * _distance * 0.02f;
             _rotationYAxis -= _ySpeed * Input.GetAxis("Mouse Y") * 0.02f;
+
+#else
+            // Move the camera
+            Touch firstTouch = Input.GetTouch(0);
+
+            _rotationXAxis += _xSpeed * firstTouch.deltaPosition.x * _distance * 0.005f;
+            _rotationYAxis -= _ySpeed * firstTouch.deltaPosition.y * 0.005f;
+#endif
         }
 
         _rotationYAxis = Util.ClampAngle(_rotationYAxis, _yMinLimit, _yMaxLimit);
@@ -122,6 +166,10 @@ public class CameraManager : Singleton<CameraManager>
         Vector3 position = rotation * new Vector3(0.0f, 0.0f, - pDistance) + pTargetPos;
 
         return position;
+    }
+
+    private float ClampDistance(float pDistance) {
+        return Mathf.Clamp(pDistance, _minDistance, _maxDistance);
     }
 
     public Camera MainCamera
@@ -151,7 +199,7 @@ public class CameraManager : Singleton<CameraManager>
     // DEBUG
     public void ActivateDemoFocus()
     {
-        StartCoroutine(PlayDemoSquencesRoutine());
+        //StartCoroutine(PlayDemoSquencesRoutine());
     }
 
     private IEnumerator PlayDemoSquencesRoutine()
