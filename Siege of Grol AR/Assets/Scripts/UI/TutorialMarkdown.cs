@@ -45,13 +45,7 @@ public class TutorialMarkdown : MonoBehaviour
     public void ReplayLastTutorial()
     {
         if (!_tutorialRunning)
-            UpdatePosition(_gameObject.transform.position);
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            UpdatePosition(_gameObject.transform.position);
+            UpdatePosition(GameManager.Instance.CurrentLocationTransform);
     }
 
 
@@ -70,44 +64,53 @@ public class TutorialMarkdown : MonoBehaviour
 
     public void HighlightClicked()
     {
+        // Enable camera movement
+        CameraManager.Instance.gameObject.SetActive(true);
         ResetCircle();
     }
 
 
-    public void UpdatePosition(Vector3 pWorldPosition, bool pBounce = true, bool pBounceInfinite = true, int pBounceLoops = 0, float pPunchDelay = 2)
+
+
+    public void UpdatePosition(Transform pLocation, bool pBounce = true, bool pBounceInfinite = true, int pBounceLoops = 0, float pPunchDelay = 2)
     {
+        // Disable camera movement
+        CameraManager.Instance.gameObject.SetActive(false);
+
+
         // Wait for Camera to move and focus on object
-        // CameraManager.Instance.Focus();
-
-        //Translate Vector3 WorldPosition to Vector2 UI Space
-        Vector2 CanvasPosition = GetCanvasPosition(pWorldPosition);
-
-        // Enable gameObjects
-        _highlightCircle.gameObject.SetActive(true);
-        _textRect.gameObject.SetActive(true);
-
-        _tutorialRunning = true;
-
-        // Fade in the canvas, if not faded in yet
-        if (_canvasGroup.alpha < 1)
-            _activeTween = FadeCircle(true);
-
-        // If text is not transparent yet, fade it out first
-        if (_hintText.color.a > 0)
-            _activeTween = FadeText(false, Vector2.zero, 0, null);
-
-        // Get scale
-       float distance = _defaultScale / GetCameraDistanceToObject(pWorldPosition) + 0.2f;
-
-        _activeTween = FocusCircle(true, CanvasPosition, distance).OnComplete(() =>
+        CameraManager.Instance.SwitchFocusObject(pLocation, 5, 5, 3, _fadeInEase).OnComplete(() =>
         {
-            //Move Text to location and add text
-            _activeTween = FadeText(true, CanvasPosition, distance, "Click here you piece of shit");
-            // Bounce if neccesary
-            if (pBounce) _activeTween = Punch(_highlightCircle, pBounceInfinite, pBounceLoops).SetDelay(pPunchDelay);
+            //Translate Vector3 WorldPosition to Vector2 UI Space
+            Vector2 CanvasPosition = GetCanvasPosition(pLocation.position);
 
-            //Enable user input
-            _clickRegion.interactable = true;
+            // Enable gameObjects
+            _highlightCircle.gameObject.SetActive(true);
+            _textRect.gameObject.SetActive(true);
+
+            _tutorialRunning = true;
+
+            // Fade in the canvas, if not faded in yet
+            if (_canvasGroup.alpha < 1)
+                _activeTween = FadeCircle(true);
+
+            // If text is not transparent yet, fade it out first
+            if (_hintText.color.a > 0)
+                _activeTween = FadeText(false, Vector2.zero, 0, null);
+
+            // Get scale
+            float distance = _defaultScale / GetCameraDistanceToObject(pLocation.position) + 0.2f;
+
+            _activeTween = FocusCircle(true, CanvasPosition, distance).OnComplete(() =>
+            {
+                //Move Text to location and add text
+                _activeTween = FadeText(true, CanvasPosition, distance, "Click here you piece of shit");
+                // Bounce if neccesary
+                if (pBounce) _activeTween = Punch(_highlightCircle, pBounceInfinite, pBounceLoops).SetDelay(pPunchDelay);
+
+                //Enable user input
+                _clickRegion.interactable = true;
+            });
         });
     }
 
