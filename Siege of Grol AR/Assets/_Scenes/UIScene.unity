@@ -298,6 +298,33 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 423608960020097757, guid: 1725071946759704ab5c4593e60822ac,
+        type: 3}
+      propertyPath: _popupAnimation.stackOptions
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 423608960020097757, guid: 1725071946759704ab5c4593e60822ac,
+        type: 3}
+      propertyPath: _popupAnimation.animation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 423608960020097757, guid: 1725071946759704ab5c4593e60822ac,
+        type: 3}
+      propertyPath: _popupMenu
+      value: 
+      objectReference: {fileID: 3560608276620467050, guid: 602fad633585130479b72b2533ebd1c3,
+        type: 3}
+    - target: {fileID: 423608960020097757, guid: 1725071946759704ab5c4593e60822ac,
+        type: 3}
+      propertyPath: _popupAnimation.easeDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 423608960020097757, guid: 1725071946759704ab5c4593e60822ac,
+        type: 3}
+      propertyPath: _popupPrefab
+      value: 
+      objectReference: {fileID: 3560608276620467050, guid: 602fad633585130479b72b2533ebd1c3,
+        type: 3}
     - target: {fileID: 2083937022, guid: 1725071946759704ab5c4593e60822ac, type: 3}
       propertyPath: debugTransform
       value: 
@@ -555,6 +582,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 3133077567344626980, guid: 0deb1bb3442b20b48a2698be5ad8d4bf,
+        type: 3}
+      propertyPath: animations.Array.data[0].menu
+      value: 
+      objectReference: {fileID: 3108070516574024715}
+    - target: {fileID: 3133077567344626980, guid: 0deb1bb3442b20b48a2698be5ad8d4bf,
+        type: 3}
+      propertyPath: animations.Array.data[1].menu
+      value: 
+      objectReference: {fileID: 174715865}
     - target: {fileID: 3133077567344626982, guid: 0deb1bb3442b20b48a2698be5ad8d4bf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -660,16 +697,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3133077567344626980, guid: 0deb1bb3442b20b48a2698be5ad8d4bf,
-        type: 3}
-      propertyPath: animations.Array.data[0].menu
-      value: 
-      objectReference: {fileID: 3108070516574024715}
-    - target: {fileID: 3133077567344626980, guid: 0deb1bb3442b20b48a2698be5ad8d4bf,
-        type: 3}
-      propertyPath: animations.Array.data[1].menu
-      value: 
-      objectReference: {fileID: 174715865}
     - target: {fileID: 1947399717, guid: 0deb1bb3442b20b48a2698be5ad8d4bf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -967,6 +994,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Letter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7138548608156982759, guid: b667bcb50ab9df443b023b0e5054f923,
+        type: 3}
+      propertyPath: animations.Array.data[0].stackOptions
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7138548608156982757, guid: b667bcb50ab9df443b023b0e5054f923,
         type: 3}
@@ -1415,6 +1447,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Start menu
       objectReference: {fileID: 0}
+    - target: {fileID: 6416509256293171212, guid: bb79c53e86a3c6a4486f75db53ee9a00,
+        type: 3}
+      propertyPath: animations.Array.data[0].menu
+      value: 
+      objectReference: {fileID: 1212991902}
     - target: {fileID: 6416509256293171214, guid: bb79c53e86a3c6a4486f75db53ee9a00,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1520,10 +1557,5 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6416509256293171212, guid: bb79c53e86a3c6a4486f75db53ee9a00,
-        type: 3}
-      propertyPath: animations.Array.data[0].menu
-      value: 
-      objectReference: {fileID: 1212991902}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb79c53e86a3c6a4486f75db53ee9a00, type: 3}

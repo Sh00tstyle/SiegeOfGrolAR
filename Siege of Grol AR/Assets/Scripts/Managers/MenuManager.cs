@@ -1,6 +1,8 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.EventSystems;
 
 public class MenuManager : Singleton<MenuManager>
@@ -8,19 +10,24 @@ public class MenuManager : Singleton<MenuManager>
     public MenuBehaviour narrationMenu;
 
     [SerializeField]
-    private MenuBehaviour _startingMenu, _narrationMenu;
+    private MenuBehaviour _startingMenu, _narrationMenu, _popupPrefab;
 
     [SerializeField]
-    private MenuAnimation _defaultAnimation;
+    private MenuAnimation _defaultAnimation, _popupAnimation;
 
     private MenuBehaviour _rootMenu;
     private Stack<MenuBehaviour> _menuStack;
     private Stack<MenuAnimation> _animationStack;
 
+    private MenuBehaviour _popupMenu;
+    private Popup _popupScript;
+
+
+    private bool _InsidePopup;
 
     private void Awake()
     {
-        if(_startingMenu != null)
+        if (_startingMenu != null)
         {
             NewMenuRoot(_startingMenu);
             GoToMenu(_startingMenu);
@@ -34,11 +41,19 @@ public class MenuManager : Singleton<MenuManager>
 
     private void Update()
     {
+        if (_InsidePopup)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Tween activeTween = LastMenu.activeTween;
             if (activeTween != null && !activeTween.IsPlaying())
                 Back();
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            ShowPopup("Header", "Body", "Open settings", null);
         }
 
     }
@@ -136,7 +151,6 @@ public class MenuManager : Singleton<MenuManager>
             _animationStack = new Stack<MenuAnimation>();
         else
             _animationStack.Clear();
-
     }
 
     private void AnimateMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation = null)
@@ -179,7 +193,7 @@ public class MenuManager : Singleton<MenuManager>
     {
         get
         {
-            if(_menuStack == null)
+            if (_menuStack == null)
             {
                 Debug.LogError("MenuManager::Unable to retrieve LastMenu, _menuStack was null");
                 return null;
@@ -191,6 +205,42 @@ public class MenuManager : Singleton<MenuManager>
                 return _rootMenu;
         }
     }
+
+    public void ShowPopup(string pPopupHeader, string pPopupBody, string pButtonText, Action pAction)
+    {
+        // Instantiate menu if _popupObject is non existent in scene
+        if (_popupScript == null || _popupMenu == null)
+        {
+            // Instantiate the GameObject
+            _popupMenu = Instantiate(_popupPrefab).GetComponent<MenuBehaviour>();
+            // Get popup script
+            _popupScript = _popupMenu.GetComponentInChildren<Popup>();
+        }
+
+
+        // Show the popup menu
+        _popupMenu.FadeMenu(_popupAnimation, null, true);
+        _InsidePopup = true;
+
+        // Set text to popup
+        _popupScript.buttonText.text = pButtonText;
+        _popupScript.popupHeader.text = pPopupHeader;
+        _popupScript.popupBody.text = pPopupBody;
+
+        // Clear all previously used actions
+        _popupScript.button.onClick.RemoveAllListeners();
+
+        // Add action to button onClick, also add the hiding of the menu
+        _popupScript.button.onClick.AddListener(() =>
+        {
+            // Fade out Menu
+            _popupMenu.FadeMenu(_popupAnimation, null, false);
+            _InsidePopup = false;
+        });
+        if (pAction != null)
+            _popupScript.button.onClick.AddListener(() => pAction());
+    }
+
 
 
 }
