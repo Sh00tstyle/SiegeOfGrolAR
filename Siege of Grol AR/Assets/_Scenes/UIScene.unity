@@ -292,7 +292,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _startingMenu
       value: 
-      objectReference: {fileID: 1687887713}
+      objectReference: {fileID: 91692344}
     - target: {fileID: 423608960020097757, guid: 1725071946759704ab5c4593e60822ac,
         type: 3}
       propertyPath: m_Enabled
@@ -522,18 +522,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1687887713 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6416509256293171212, guid: bb79c53e86a3c6a4486f75db53ee9a00,
-    type: 3}
-  m_PrefabInstance: {fileID: 8260920050240383742}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72edc8c9d5cb95840a92343cc551ace2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1768422175 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1638098599452928857, guid: 4603039d19e40f54086fec294d4d18d5,
@@ -701,6 +689,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1860783889}
+    - target: {fileID: 673172234, guid: 0deb1bb3442b20b48a2698be5ad8d4bf, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 673172234, guid: 0deb1bb3442b20b48a2698be5ad8d4bf, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0deb1bb3442b20b48a2698be5ad8d4bf, type: 3}
 --- !u!1001 &1638098599864429674
@@ -1446,6 +1442,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Start menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6416509256293171250, guid: bb79c53e86a3c6a4486f75db53ee9a00,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6416509256293171212, guid: bb79c53e86a3c6a4486f75db53ee9a00,
         type: 3}
