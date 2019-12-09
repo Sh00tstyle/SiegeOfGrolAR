@@ -7,11 +7,8 @@ using UnityEngine.UI;
 
 public class Carousel : MonoBehaviour
 {
-
-    [SerializeField]
-    bool _NextToStart = false;
-    [SerializeField] TextMeshProUGUI _nextText;
-    [SerializeField] TextMeshProUGUI _previousText;
+    [SerializeField] bool _keepNextButton;
+    [SerializeField] Button _nextButton, _prevButton;
 
     [SerializeField] CanvasScaler _scaling;
     [SerializeField] RectTransform _container;
@@ -65,6 +62,7 @@ public class Carousel : MonoBehaviour
         _rightAnchorMin = new Vector2(1, _avatars[0].anchorMin.y);
         _rightAnchorMax = new Vector2(1, _avatars[0].anchorMax.y);
     }
+
 
     public void ChangePosition(bool pSwipeLeft)
     {
@@ -129,34 +127,9 @@ public class Carousel : MonoBehaviour
 
     void ChangeButtonsText()
     {
-        // Remove previous in case we're at the first page, otherwise show it if not active
-        if (_currentIndex <= 0)
-            _previousText.DOFade(0, _buttonFadeSpeed).OnComplete(() => _previousText.gameObject.SetActive(false));
-        else if (!_previousText.gameObject.activeSelf)
-        {
-            _previousText.gameObject.SetActive(true);
-            _previousText.DOFade(1, _buttonFadeSpeed);
-        }
-
-        // In case we are at the last page, change 'Next' to 'Start' otherwise to 'Next' 
-
-        if (_NextToStart)
-        {
-            if (_currentIndex >= _carouselPanels.Length - 1)
-                _nextText.text = "Start";
-            else if (_nextText.text == "Start")
-                _nextText.text = "Next";
-        }
-        else
-        {
-            if (_currentIndex >= _carouselPanels.Length - 1)
-                _nextText.DOFade(0, _buttonFadeSpeed).OnComplete(() => _nextText.gameObject.SetActive(false));
-            else if (!_nextText.gameObject.activeSelf)
-            {
-                _nextText.gameObject.SetActive(true);
-                _nextText.DOFade(1, _buttonFadeSpeed);
-            }
-        }
+        _prevButton.gameObject.SetActive(_currentIndex > 0);
+        if (!_keepNextButton)
+            _nextButton.gameObject.SetActive(_currentIndex < _carouselPanels.Length - 1);
     }
 
 
