@@ -278,6 +278,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 2794901218943914285}
   _canvas: {fileID: 2794901218943914287}
+  _bottomMenu: {fileID: 0}
+  _dissmissAnimation:
+    stackOptions: 2
+    menu: {fileID: 0}
+    animation: 3
+    customCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    direction: 1
+    triggerButton: {fileID: 0}
+    ease: 2
+    easeDuration: 0.5
+    swipeDetection: {fileID: 0}
   _hintText: {fileID: 2794901218416835062}
   _textOffset: 20
   _textRect: {fileID: 2794901218416835063}
@@ -293,10 +309,10 @@ MonoBehaviour:
   _fadeOutEase: 2
   _moveInEase: 2
   _moveOutEase: 2
-  _fadeInDuration: 1
-  _fadeOutDuration: 2
-  _moveInDuration: 2
-  _moveOutDuration: 2.5
+  _fadeInDuration: 0.2
+  _fadeOutDuration: 0.5
+  _moveInDuration: 0.3
+  _moveOutDuration: 0.9
 --- !u!1 &2794901219036808582
 GameObject:
   m_ObjectHideFlags: 0

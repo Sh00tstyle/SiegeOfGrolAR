@@ -9,6 +9,8 @@ public class TutorialMarkdown : MonoBehaviour
     [Header("Canvas")]
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private RectTransform _canvas;
+    [SerializeField] private MenuBehaviour _bottomMenu;
+    [SerializeField] private MenuAnimation _dissmissAnimation;
 
     [Header("Text")]
     [SerializeField] private Text _hintText;
@@ -65,6 +67,10 @@ public class TutorialMarkdown : MonoBehaviour
 
     public void UpdatePosition(Transform pLocation, bool pBounce = true, bool pBounceInfinite = true, int pBounceLoops = 0, float pPunchDelay = 2)
     {
+        // If bottom menu is activated, dismiss it.
+        if (_bottomMenu.gameObject.activeSelf)
+            _bottomMenu.HideMenu(_dissmissAnimation);
+
         // Disable camera movement
         CameraManager.Instance.gameObject.SetActive(false);
 
