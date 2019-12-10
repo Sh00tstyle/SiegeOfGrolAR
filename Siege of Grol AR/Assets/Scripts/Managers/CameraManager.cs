@@ -132,7 +132,7 @@ public class CameraManager : Singleton<CameraManager>
             // Lazy initialization
             _mainCamera = Camera.main;
 
-            _rotationXAxis = 0.0f;
+            _rotationXAxis = 180.0f;
             _rotationYAxis = _yMaxLimit;
         }
         else if(allowInput)
@@ -210,6 +210,6 @@ public class CameraManager : Singleton<CameraManager>
 
         yield return new WaitForSecondsRealtime(3.0f);
 
-        yield return _objectFocusSequence = SwitchFocusObject(NavigationManager.Instance.Player, 1.5f, 3.0f, 10.0f, Ease.Linear);
+        yield return _objectFocusSequence = SwitchFocusObject(NavigationManager.Instance.PlayerTransform, 1.5f, 3.0f, 10.0f, Ease.Linear);
     }
 }

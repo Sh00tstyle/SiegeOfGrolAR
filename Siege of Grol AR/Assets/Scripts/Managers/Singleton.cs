@@ -6,7 +6,7 @@
 /// </summary>
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static T _Instance;
+    protected static T _Instance;
 
     public static T Instance 
     {
@@ -19,11 +19,10 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                 if(potentialInstance != null)
                 {
                     _Instance = potentialInstance;
-                    DontDestroyOnLoad(_Instance.gameObject);
                 }
                 else
                 {
-                    Debug.LogError("Singleton<" + typeof(T) + ">::The singleton instance was null and could not be found. Make sure the script is present on a GameObject in your scene!");
+                    Debug.LogWarning("Singleton<" + typeof(T) + ">::The singleton instance was null and could not be found. Make sure the script is present on a GameObject in your scene!");
                 }
             }
 

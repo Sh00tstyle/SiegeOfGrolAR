@@ -14,7 +14,10 @@ public class NavigationManager : Singleton<NavigationManager>
     const string baseURI = "https://api.openrouteservice.org/v2/directions/";
 
     [SerializeField]
-    private Transform _referenceTransform;
+    private Transform _mapTransform;
+
+    [SerializeField]
+    private Transform _playerTransform;
 
     [SerializeField]
     private double _referenceLatitude = 52.042944;
@@ -27,9 +30,6 @@ public class NavigationManager : Singleton<NavigationManager>
 
     [SerializeField] 
     private LineRenderer _remainingPathLR, _navigatedPathLR;
-
-    [SerializeField] 
-    private Transform _player;
 
     [SerializeField]
     private float _maxStrayDistance = 0.5f;
@@ -50,7 +50,7 @@ public class NavigationManager : Singleton<NavigationManager>
 
     public void RequestNewNavigationPath()
     {
-        GPSLocation reconstructedPlayerLocation = GetGPSFromWorldPos(_player.position);
+        GPSLocation reconstructedPlayerLocation = GetGPSFromWorldPos(_playerTransform.position);
         GPSLocation destinationLocation = new GPSLocation(GameManager.Instance.CurrentLocation);
 
         GetDirections(reconstructedPlayerLocation, destinationLocation);
@@ -58,8 +58,10 @@ public class NavigationManager : Singleton<NavigationManager>
 
     public Vector3 GetWorldPosFromGPS(double pLatitude, double pLongitude)
     {
+        // Change to: https://answers.unity.com/questions/1011674/gps-coordinates-latlongaltitude-to-unity-3d-coordi.html
+
         // Calculate the world position based on a set scale and a reference point in the map that is based on real world GPS coordinates
-        Vector3 mapOrigin = _referenceTransform.position;
+        Vector3 mapOrigin = _mapTransform.position;
 
         double worldXPos = pLatitude - _referenceLatitude;
         double worldZPos = pLongitude - _referenceLongitude;
@@ -81,8 +83,10 @@ public class NavigationManager : Singleton<NavigationManager>
 
     public GPSLocation GetGPSFromWorldPos(Vector3 pWorldPos)
     {
+        // Change to: https://answers.unity.com/questions/1011674/gps-coordinates-latlongaltitude-to-unity-3d-coordi.html
+
         // Reconstruct the GPS coordinates of a world position based on the reference point on the map
-        Vector3 mapOrigin = _referenceTransform.position;
+        Vector3 mapOrigin = _mapTransform.position;
 
         pWorldPos.x *= -1;
         pWorldPos = Quaternion.Euler(0.0f, -90.0f, 0.0f) * pWorldPos;
@@ -104,7 +108,7 @@ public class NavigationManager : Singleton<NavigationManager>
     private void InitializePathLineRenderers(Vector3 pDestinationPos)
     {
         // Check the closest point where the player is
-        int pathIndex = GetClosestPathIndex(_player.position);
+        int pathIndex = GetClosestPathIndex(_playerTransform.position);
 
         // Add one extra index for the player's location
         Vector3[] remaining = new Vector3[_receivedPath.Length + 2]; // The path and one extra for the player and the destination
@@ -112,12 +116,12 @@ public class NavigationManager : Singleton<NavigationManager>
 
         // Extract data from receivedPath
         remaining[0] = pDestinationPos;
-        remaining[remaining.Length - 1] = _player.position;
+        remaining[remaining.Length - 1] = _playerTransform.position;
 
         for (int i = 0; i < _receivedPath.Length; ++i)
             remaining[i + 1] = _receivedPath[i];
 
-        navigated[0] = _player.position;
+        navigated[0] = _playerTransform.position;
 
         // Apply arrays to line renderers
         SetPath(_remainingPathLR, remaining);
@@ -134,8 +138,8 @@ public class NavigationManager : Singleton<NavigationManager>
 
     private void GetDirections(GPSLocation pStart, GPSLocation pEnd)
     {
-        if (_directionRoutine != null)
-            StopCoroutine(_directionRoutine);
+        if (_directionRoutine != null) // The routine is still running, so don't disrupt it
+            return;
 
         _directionRoutine = StartCoroutine(GetDirectionsInternal(pStart, pEnd));
     }
@@ -198,6 +202,8 @@ public class NavigationManager : Singleton<NavigationManager>
                 _lineRendererUpdateRoutine = StartCoroutine(LineRendererUpdateRoutine());
             }
         }
+
+        _directionRoutine = null;
     }
 
     private IEnumerator StrayDetectionRoutine()
@@ -209,8 +215,8 @@ public class NavigationManager : Singleton<NavigationManager>
 
         while (true)
         {
-            closestPathSegmentPos = _receivedPath[GetClosestPathIndex(_player.position, _currentNavigationIndex)];
-            distanceVector = _player.position - closestPathSegmentPos;
+            closestPathSegmentPos = _receivedPath[GetClosestPathIndex(_playerTransform.position, _currentNavigationIndex)];
+            distanceVector = _playerTransform.position - closestPathSegmentPos;
 
             if(distanceVector.magnitude >= _maxStrayDistance)
             {
@@ -231,8 +237,8 @@ public class NavigationManager : Singleton<NavigationManager>
         while (true)
         {
             // Always update the player position
-            _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _player.position);
-            _navigatedPathLR.SetPosition(0, _player.position);
+            _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _playerTransform.position);
+            _navigatedPathLR.SetPosition(0, _playerTransform.position);
 
             // Update the line renderer if needed
             if (_remainingPathLR.positionCount < 2)
@@ -242,11 +248,11 @@ public class NavigationManager : Singleton<NavigationManager>
             }
 
             // Check if the line renderer segments have to be updated
-            int closestPathIndex = GetClosestPathIndex(_player.position, _currentNavigationIndex);
+            int closestPathIndex = GetClosestPathIndex(_playerTransform.position, _currentNavigationIndex);
             int difference = _currentNavigationIndex - closestPathIndex;
 
             currentSegmentPosition = _receivedPath[closestPathIndex]; // Take the position in front of the player (player is last)
-            distanceVector = _player.position - currentSegmentPosition;
+            distanceVector = _playerTransform.position - currentSegmentPosition;
 
             if(difference == 0)
             {
@@ -256,7 +262,7 @@ public class NavigationManager : Singleton<NavigationManager>
                     _navigatedPathLR.SetPosition(_navigatedPathLR.positionCount - 1, currentSegmentPosition);
 
                     --_remainingPathLR.positionCount;
-                    _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _player.position);
+                    _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _playerTransform.position);
 
                     if (_currentNavigationIndex > 0)
                         --_currentNavigationIndex;
@@ -276,7 +282,7 @@ public class NavigationManager : Singleton<NavigationManager>
                     _navigatedPathLR.SetPosition(_navigatedPathLR.positionCount - 1, _receivedPath[i]); // Always append the position
                 }
 
-                _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _player.position);
+                _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _playerTransform.position);
                 _currentNavigationIndex = closestPathIndex;
             }
 
@@ -315,9 +321,9 @@ public class NavigationManager : Singleton<NavigationManager>
         return index;
     }
 
-    private Vector3[] GeometryToVector3(Feature feature)
+    private Vector3[] GeometryToVector3(Feature pFeature)
     {
-        Vector3[] geometry = new Vector3[feature.geometry.coordinates.Count];
+        Vector3[] geometry = new Vector3[pFeature.geometry.coordinates.Count];
 
         if(GPSManager.Instance == null)
         {
@@ -329,18 +335,18 @@ public class NavigationManager : Singleton<NavigationManager>
 
         for (int i = 0; i < geometry.Length; ++i) // Fill backwards so we can reuse it in the line renderer
         {
-            worldPos = GetWorldPosFromGPS(feature.geometry.coordinates[geometry.Length - (i + 1)][1], feature.geometry.coordinates[geometry.Length - (i + 1)][0]); // Parse latitude before longitude for our struct
+            worldPos = GetWorldPosFromGPS(pFeature.geometry.coordinates[geometry.Length - (i + 1)][1], pFeature.geometry.coordinates[geometry.Length - (i + 1)][0]); // Parse latitude before longitude for our struct
             geometry[i] = worldPos;
         }
 
         return geometry;
     }
 
-    public Transform Player
+    public Transform PlayerTransform
     {
         get
         {
-            return _player;
+            return _playerTransform;
         }
     }
 }

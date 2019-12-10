@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e66a6d7b586aeec43b79ec54fbf30939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _orbitTarget: {fileID: 0}
+  orbitTarget: {fileID: 0}
   _distance: 5
   _xSpeed: 60
   _ySpeed: 60
@@ -83,10 +83,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbfba61f05131a40a65a8192c532f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  narrationMenu: {fileID: 0}
-  _startingMenu: {fileID: 0}
+  startingMenu: {fileID: 0}
   _narrationMenu: {fileID: 0}
+  _popupPrefab: {fileID: 3560608276620467050, guid: 602fad633585130479b72b2533ebd1c3,
+    type: 3}
   _defaultAnimation:
+    stackOptions: 4
+    menu: {fileID: 0}
+    animation: 0
+    customCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    direction: 0
+    triggerButton: {fileID: 0}
+    ease: 2
+    easeDuration: 0.5
+    swipeDetection: {fileID: 0}
+  _popupAnimation:
     stackOptions: 4
     menu: {fileID: 0}
     animation: 0
@@ -116,7 +132,7 @@ MonoBehaviour:
   _debugCanvas: {fileID: 4925923290793420809, guid: 84950f4c415ce734a968bbdcb131ec71,
     type: 3}
   _useFakeLocation: 1
-  _movementSpeed: 0.03
+  _movementSpeed: 0.02
   _gpsAccuracyInMeters: 10
   _gpsUpdateDistanceInMeters: 10
   _gpsMaxInitializationTime: 20
@@ -132,16 +148,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3872d5a3ae88bff4ea61a895d9e2309b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _referenceTransform: {fileID: 0}
+  mapTransform: {fileID: 0}
+  playerTransform: {fileID: 0}
   _referenceLatitude: 52.042944
   _referenceLongitude: 6.616444
   _referenceScale: 2000
   _remainingPathLR: {fileID: 1968794117709613818}
   _navigatedPathLR: {fileID: 8559535449002515501}
-  _player: {fileID: 0}
   _maxStrayDistance: 0.5
   _minSegmentDistance: 0.15
-  _maxPathUpdateInterval: 2
+  _maxPathUpdateInterval: 5
 --- !u!1 &5318343718177456014
 GameObject:
   m_ObjectHideFlags: 0

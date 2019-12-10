@@ -22,14 +22,9 @@ public class GPSManager : Singleton<GPSManager>
     [SerializeField]
     private int _gpsMaxInitializationTime = 20;
 
-    private IEnumerator Start()
+    private void Awake()
     {
-        if (_useFakeLocation)
-            yield return StartCoroutine(InitializeMockLocation());
-        else
-            yield return StartCoroutine(InitializeLocationService());
-
-        NavigationManager.Instance.RequestNewNavigationPath();
+        StartCoroutine(InitializeInternally());
     }
 
     private void OnDestroy()
@@ -50,7 +45,17 @@ public class GPSManager : Singleton<GPSManager>
 
         worldMovement = rotation * worldMovement;
 
-        NavigationManager.Instance.Player.position += worldMovement * Time.deltaTime * _movementSpeed * 0.2f;
+        NavigationManager.Instance.PlayerTransform.position += worldMovement * Time.deltaTime * _movementSpeed * 0.2f;
+    }
+
+    private IEnumerator InitializeInternally()
+    {
+        if (_useFakeLocation)
+            yield return StartCoroutine(InitializeMockLocation());
+        else
+            yield return StartCoroutine(InitializeLocationService());
+
+        NavigationManager.Instance.RequestNewNavigationPath();
     }
 
     private IEnumerator InitializeMockLocation()
@@ -61,7 +66,7 @@ public class GPSManager : Singleton<GPSManager>
 
         // Switch to Debug mode by spawning the debug joystick and moving the player to the world origin
         Instantiate(_debugCanvas);
-        NavigationManager.Instance.Player.transform.position = new Vector3(0.0f, 0.1f, 0.0f);
+        NavigationManager.Instance.PlayerTransform.transform.position = new Vector3(0.0f, 0.1f, 0.0f);
     }
 
     private IEnumerator InitializeLocationService()
@@ -118,7 +123,7 @@ public class GPSManager : Singleton<GPSManager>
             if(!_useFakeLocation && Input.location.status == LocationServiceStatus.Running)
                 return new GPSLocation(Input.location.lastData.latitude, Input.location.lastData.longitude);
             else
-                return NavigationManager.Instance.GetGPSFromWorldPos(NavigationManager.Instance.Player.position);
+                return NavigationManager.Instance.GetGPSFromWorldPos(NavigationManager.Instance.PlayerTransform.position);
         }
     }
 }

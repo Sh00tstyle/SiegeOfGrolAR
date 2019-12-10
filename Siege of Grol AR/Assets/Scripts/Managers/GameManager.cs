@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,6 +23,9 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
+
         _currentLocationIndex = 0;
 
         _currentLocation = _locationDatabase.locations[_currentLocationIndex];
@@ -38,6 +42,11 @@ public class GameManager : Singleton<GameManager>
         _isHelpingSpy = pIsHelpingSpy;
 
         // Could notify other entities at this point, but not sure if it is needed since it is probably set by an interaction/behaviour
+    }
+
+    public void SetProgress(int pProgressIndex)
+    {
+        throw new NotImplementedException();
     }
 
     public void NextLocation()
@@ -79,7 +88,7 @@ public class GameManager : Singleton<GameManager>
     {
         if(_currentLocationTransform != null)
         {
-            Vector3 distanceVector = NavigationManager.Instance.Player.position - _currentLocationTransform.position;
+            Vector3 distanceVector = NavigationManager.Instance.PlayerTransform.position - _currentLocationTransform.position;
 
             if (distanceVector.magnitude > _minInteractionDistance) // Do not allow interaction input if the player is not nearby
                 return;
@@ -104,6 +113,14 @@ public class GameManager : Singleton<GameManager>
                         _currentNarrator.OpenMenu();
                 }
             }
+        }
+    }
+
+    public bool IsHelpingSpy
+    {
+        get
+        {
+            return _isHelpingSpy;
         }
     }
 
