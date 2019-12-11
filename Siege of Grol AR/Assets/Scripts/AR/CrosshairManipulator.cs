@@ -22,6 +22,10 @@ public class CrosshairManipulator : Manipulator
     private Transform _manipulationAnchor;
     private Transform _currentManipulationTransform;
 
+    public Transform Part1;
+    public Transform Part2;
+    public Transform Part3;
+
     private void Awake()
     {
         // Setup manipulation transform
@@ -116,25 +120,39 @@ public class CrosshairManipulator : Manipulator
             else
             {
                 // Instantiate game object at the hit pose.
-                GameObject gameObject = Instantiate(_pawnPrefab, hit.Pose.position, hit.Pose.rotation);
+                //GameObject gameObject = Instantiate(_pawnPrefab, hit.Pose.position, hit.Pose.rotation);
+                _pawnPrefab.SetActive(true);
+                _pawnPrefab.transform.position = hit.Pose.position;
+                _pawnPrefab.transform.rotation = hit.Pose.rotation;
 
-                // Instantiate manipulator.
-                GameObject manipulator = Instantiate(_manipulatorPrefab, hit.Pose.position, hit.Pose.rotation);
-
-                // Make game object a child of the manipulator.
-                gameObject.transform.parent = manipulator.transform;
+                addManipulator(Part1, hit);
+                addManipulator(Part2, hit);
+                addManipulator(Part3, hit);
 
                 // Create an anchor to allow ARCore to track the hitpoint as understanding of
                 // the physical world evolves.
                 Anchor anchor = hit.Trackable.CreateAnchor(hit.Pose);
 
                 // Make manipulator a child of the anchor.
-                manipulator.transform.parent = anchor.transform;
-
-                // Select the placed object.
-                manipulator.GetComponent<Manipulator>().Select();
+                _pawnPrefab.transform.parent = anchor.transform;
             }
         }
+    }
+
+    private void addManipulator (Transform pgameObject, TrackableHit pHit)
+    {
+        // Instantiate manipulator.
+        GameObject manipulator = Instantiate(_manipulatorPrefab, pgameObject.position, pgameObject.rotation);
+
+        // Make game object a child of the manipulator.
+        pgameObject.transform.parent = manipulator.transform;
+
+        // Create an anchor to allow ARCore to track the hitpoint as understanding of
+        // the physical world evolves.
+        Anchor anchor = pHit.Trackable.CreateAnchor(pHit.Pose);
+
+        // Make manipulator a child of the anchor.
+        manipulator.transform.parent = anchor.transform;
     }
 
     /**
