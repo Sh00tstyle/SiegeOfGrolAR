@@ -2,4 +2,5 @@
 {
     NARRATIONMENU,
     STARTINGMENU,
+    MAINMENU,
 }
