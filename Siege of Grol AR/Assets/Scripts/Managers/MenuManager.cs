@@ -48,12 +48,6 @@ public class MenuManager : Singleton<MenuManager>
             if (activeTween != null && !activeTween.IsPlaying())
                 Back();
         }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            ShowPopup("Header", "Body", "Open settings", null);
-        }
-
     }
 
     public void GoToMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation = null)
