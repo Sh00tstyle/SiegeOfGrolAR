@@ -1,11 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class GPSManager : Singleton<GPSManager>
 {
     [SerializeField]
+    private GameObject _debugCanvas;
+
+    [SerializeField]
     private bool _useFakeLocation = true;
+
+    [SerializeField]
+    private float _movementSpeed = 1.0f;
 
     [SerializeField]
     private float _gpsAccuracyInMeters = 10.0f;
@@ -16,24 +22,9 @@ public class GPSManager : Singleton<GPSManager>
     [SerializeField]
     private int _gpsMaxInitializationTime = 20;
 
-    [SerializeField]
-    private Transform _referenceTransform;
-
-    [SerializeField]
-    private double _referenceLatitude = 52.042339;
-
-    [SerializeField]
-    private double _referenceLongitude = 6.616444;
-
-    [SerializeField]
-    private float _referenceScale = 1100.0f;
-
-    private IEnumerator Start()
+    private void Awake()
     {
-        if (_useFakeLocation)
-            yield return StartCoroutine(InitializeMockLocation());
-        else
-            yield return StartCoroutine(InitializeLocationService());
+        StartCoroutine(InitializeInternally());
     }
 
     private void OnDestroy()
@@ -47,18 +38,46 @@ public class GPSManager : Singleton<GPSManager>
             Input.location.Stop();
     }
 
+    public void MoveJoystickPlayer(Vector3 deltaMovement)
+    {
+        Vector3 worldMovement = new Vector3(deltaMovement.x, 0.0f, deltaMovement.y);
+        Quaternion rotation = Quaternion.Euler(0.0f, CameraManager.Instance.RotationXAxis, 0.0f); //align the movement vector to on the camera orientation
+
+        worldMovement = rotation * worldMovement;
+
+        NavigationManager.Instance.PlayerTransform.position += worldMovement * Time.deltaTime * _movementSpeed * 0.2f;
+    }
+
+    private IEnumerator InitializeInternally()
+    {
+        if (_useFakeLocation)
+            yield return StartCoroutine(InitializeMockLocation());
+        else
+            yield return StartCoroutine(InitializeLocationService());
+
+        NavigationManager.Instance.RequestNewNavigationPath();
+    }
+
     private IEnumerator InitializeMockLocation()
     {
         yield return null;
 
-        Debug.Log("Did not initialize the GPS service, you chose to use a fake location!");
+        Debug.Log("Unable to initialize GPS service, initialized Mock GPS service instead!");
+
+        // Switch to Debug mode by spawning the debug joystick and moving the player to the world origin
+        Instantiate(_debugCanvas);
+        NavigationManager.Instance.PlayerTransform.transform.position = new Vector3(0.0f, 0.1f, 0.0f);
     }
 
     private IEnumerator InitializeLocationService()
     {
-
         if (Input.location.isEnabledByUser) // The GPS service was not enabled in the device settings
+        {
+            Debug.Log("Unable to load GPS service, it was not enabled by the user");
+
+            yield return StartCoroutine(InitializeMockLocation());
             yield break;
+        }
 
         // Trying to initialize the location service
         Input.location.Start(_gpsAccuracyInMeters, _gpsUpdateDistanceInMeters);
@@ -77,12 +96,16 @@ public class GPSManager : Singleton<GPSManager>
         if(waitTime < 1)
         {
             Debug.Log("GPS initialization timed out");
+
+            yield return StartCoroutine(InitializeMockLocation());
             yield break;
         }
 
         if(Input.location.status == LocationServiceStatus.Failed)
         {
             Debug.LogError("Failed to initialize the location service!");
+
+            yield return StartCoroutine(InitializeMockLocation());
             yield break;
         }
         else
@@ -93,41 +116,14 @@ public class GPSManager : Singleton<GPSManager>
         }
     }
 
-    public Vector3 GetWorldPosFromGPS(double pLatitude, double pLongitude, Vector3? pScale = null)
-    {
-        // Calculate the world position based on a set scale and a reference point in the map that is based on real world GPS coordinates
-        Vector3 mapOrigin = _referenceTransform.position;
-
-        double deltaLatitude = pLatitude - _referenceLatitude;
-        double deltaLongitude = pLongitude - _referenceLongitude;
-
-        double worldXPos = (deltaLatitude - mapOrigin.x);
-        double worldZPos = (deltaLongitude - mapOrigin.z);
-
-        if(pScale == null)
-        {
-            worldXPos *= _referenceScale;
-            worldZPos *= _referenceScale;
-        }
-        else
-        {
-            worldXPos *= _referenceScale * pScale.Value.x;
-            worldZPos *= _referenceScale * pScale.Value.z;
-        }
-
-        Vector3 newPos = new Vector3((float)worldXPos, 0.0f, (float)worldZPos);
-
-        return newPos;
-    }
-
-    public LocationInfo? CurrentLocationData // The "?" indicates that the type can be nulled, so in this case the returned struct can be null
+    public GPSLocation CurrentGPSLocation
     {
         get
         {
-            if(!_useFakeLocation && Input.location.status == LocationServiceStatus.Running) 
-                return Input.location.lastData;
+            if(!_useFakeLocation && Input.location.status == LocationServiceStatus.Running)
+                return new GPSLocation(Input.location.lastData.latitude, Input.location.lastData.longitude);
             else
-                return null;
+                return NavigationManager.Instance.GetGPSFromWorldPos(NavigationManager.Instance.PlayerTransform.position);
         }
     }
 }

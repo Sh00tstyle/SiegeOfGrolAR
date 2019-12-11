@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CameraManager : Singleton<CameraManager>
 {
@@ -8,7 +10,7 @@ public class CameraManager : Singleton<CameraManager>
     private Transform _orbitTarget;
 
     [SerializeField]
-    private float _distance = 5.0f;
+    private float _distance = 5.0f; 
 
     [SerializeField]
     private float _xSpeed = 120.0f;
@@ -22,50 +24,152 @@ public class CameraManager : Singleton<CameraManager>
     [SerializeField]
     private float _yMaxLimit = 80f;
 
+    [SerializeField]
+    private float _minDistance = 2.0f;
+
+    [SerializeField]
+    private float _maxDistance = 15.0f;
+
     private Camera _mainCamera;
 
     private float _rotationYAxis;
     private float _rotationXAxis;
 
+    private Sequence _objectFocusSequence;
+
+    private float _previousTouchDistance;
+
     private void Awake()
     {
-        _mainCamera = Camera.main;
-
-        if (_mainCamera != null)
+        if(_orbitTarget == null)
         {
-            Vector3 rotationAngles = _mainCamera.transform.eulerAngles;
+            Debug.LogError("CameraManager::The orbit target was null, make sure it is assigned in the inspector of " + name);
+            return;
+        }
+        
+        UpdateCameraOrientation(_orbitTarget.position);
 
-            _rotationYAxis = rotationAngles.y;
-            _rotationXAxis = rotationAngles.x;
-        }
-        else
-        {
-            Debug.LogError("CameraManager::The main camera was null");
-        }
+        _previousTouchDistance = 0;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
+        if (_orbitTarget == null)
+            return;
+
         HandleCameraInput();
+    }
+
+    public Sequence SwitchFocusObject(Transform pFocusObject, float pDuration, float pZoomInDistance, float pZoomOutDistance, Ease pEase)
+    {
+        Sequence focusSwitchSequence = DOTween.Sequence();
+
+        // Append the zoom out tweening animation
+        Vector3 zoomOutPos = GetCameraPosForTarget(_orbitTarget.position, pZoomOutDistance);
+        focusSwitchSequence.Append(_mainCamera.transform.DOMove(zoomOutPos, pDuration / 3.0f).SetEase(pEase));
+
+        // Append the movement tweening animation
+        Vector3 moveTargetPos = GetCameraPosForTarget(pFocusObject.position, pZoomOutDistance);
+        focusSwitchSequence.Append(_mainCamera.transform.DOMove(moveTargetPos, pDuration / 3.0f).SetEase(pEase));
+
+        // Append the zoom in tweening animation
+        Vector3 zoomInTargetPos = GetCameraPosForTarget(pFocusObject.position, pZoomInDistance);
+        focusSwitchSequence.Append(_mainCamera.transform.DOMove(zoomInTargetPos, pDuration / 3.0f).SetEase(pEase));
+
+        _distance = pZoomInDistance;
+        _orbitTarget = pFocusObject;
+
+        return focusSwitchSequence;
     }
 
     private void HandleCameraInput()
     {
-        if (_mainCamera == null || _orbitTarget == null)
+        if (_objectFocusSequence != null && _objectFocusSequence.active)
             return;
 
-        if (Input.GetMouseButton(0))
+#if UNITY_EDITOR
+        float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
+        
+        if(!Mathf.Approximately(scrollDelta, 0.0f))
+            _distance -= scrollDelta * 2.0f;
+
+#else
+        if(Input.touchCount >= 2) // For detecting a pinch gesture we need two or more fingers (but the first two count)
         {
+            Touch firstTouch = Input.GetTouch(0);
+            Touch secondTouch = Input.GetTouch(1);
+
+            Vector2 distanceVector = firstTouch.position - secondTouch.position;
+            float difference = _previousTouchDistance - distanceVector.magnitude;
+
+            if(!Mathf.Approximately(difference, 0.0f)) // Ignore differences that are (almost) zero
+                _distance += difference * 0.005f;
+
+            _previousTouchDistance = distanceVector.magnitude;
+        }
+        else 
+        {
+            _previousTouchDistance = 0.0f;
+        }
+#endif
+
+        _distance = ClampDistance(_distance);
+        UpdateCameraOrientation(_orbitTarget.position); // This is probably irrelevant on mobile
+    }
+
+    private void UpdateCameraOrientation(Vector3 pOrbitTargetPos)
+    {
+        bool allowInput = false;
+
+#if UNITY_EDITOR
+        allowInput = Input.GetMouseButton(0) && !JoystickHandler.IsUsingJoystick;
+#else
+        allowInput = Input.touchCount == 1 && !JoystickHandler.IsUsingJoystick;
+#endif
+
+        if (_mainCamera == null)
+        {
+            // Lazy initialization
+            _mainCamera = Camera.main;
+
+            _rotationXAxis = 180.0f;
+            _rotationYAxis = _yMaxLimit;
+        }
+        else if(allowInput)
+        {
+#if UNITY_EDITOR
+            // Not sure if this works on mobile
             _rotationXAxis += _xSpeed * Input.GetAxis("Mouse X") * _distance * 0.02f;
             _rotationYAxis -= _ySpeed * Input.GetAxis("Mouse Y") * 0.02f;
-            _rotationYAxis = Util.ClampAngle(_rotationYAxis, _yMinLimit, _yMaxLimit);
 
-            Quaternion rotation = Quaternion.Euler(_rotationYAxis, _rotationXAxis, 0.0f);
-            Vector3 position = rotation * new Vector3(0.0f, 0.0f, -_distance) + _orbitTarget.position;
+#else
+            // Move the camera
+            Touch firstTouch = Input.GetTouch(0);
 
-            _mainCamera.transform.rotation = rotation;
-            _mainCamera.transform.position = position;
+            _rotationXAxis += _xSpeed * firstTouch.deltaPosition.x * _distance * 0.005f;
+            _rotationYAxis -= _ySpeed * firstTouch.deltaPosition.y * 0.005f;
+#endif
         }
+
+        _rotationYAxis = Util.ClampAngle(_rotationYAxis, _yMinLimit, _yMaxLimit);
+
+        Quaternion rotation = Quaternion.Euler(_rotationYAxis, _rotationXAxis, 0.0f);
+        Vector3 position = rotation * new Vector3(0.0f, 0.0f, -_distance) + pOrbitTargetPos;
+
+        _mainCamera.transform.rotation = rotation;
+        _mainCamera.transform.position = position;
+    }
+
+    private Vector3 GetCameraPosForTarget(Vector3 pTargetPos, float pDistance)
+    {
+        Quaternion rotation = Quaternion.Euler(_rotationYAxis, _rotationXAxis, 0.0f);
+        Vector3 position = rotation * new Vector3(0.0f, 0.0f, - pDistance) + pTargetPos;
+
+        return position;
+    }
+
+    private float ClampDistance(float pDistance) {
+        return Mathf.Clamp(pDistance, _minDistance, _maxDistance);
     }
 
     public Camera MainCamera
@@ -74,5 +178,38 @@ public class CameraManager : Singleton<CameraManager>
         {
             return _mainCamera;
         }
+    }
+
+    public float RotationYAxis
+    {
+        get
+        {
+            return _rotationYAxis;
+        }
+    }
+
+    public float RotationXAxis
+    {
+        get
+        {
+            return _rotationXAxis;
+        }
+    }
+
+    // DEBUG
+    public void ActivateDemoFocus()
+    {
+        //StartCoroutine(PlayDemoSquencesRoutine());
+    }
+
+    private IEnumerator PlayDemoSquencesRoutine()
+    {
+        yield return new WaitForSecondsRealtime(1.0f);
+
+        yield return _objectFocusSequence = SwitchFocusObject(GameManager.Instance.CurrentLocationTransform, 1.5f, 3.0f, 10.0f, Ease.Linear);
+
+        yield return new WaitForSecondsRealtime(3.0f);
+
+        yield return _objectFocusSequence = SwitchFocusObject(NavigationManager.Instance.PlayerTransform, 1.5f, 3.0f, 10.0f, Ease.Linear);
     }
 }
