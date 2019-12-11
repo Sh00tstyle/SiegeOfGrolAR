@@ -44,6 +44,11 @@ namespace GoogleARCore.Examples.ObjectManipulation
         /// </summary>
         public GameObject ManipulatorPrefab;
 
+        public Transform Part1;
+        public Transform Part2;
+        public Transform Part3;
+        //public GameObject CanonParent;
+
         /// <summary>
         /// Returns true if the manipulation can be started for the given gesture.
         /// </summary>
@@ -94,14 +99,36 @@ namespace GoogleARCore.Examples.ObjectManipulation
                 else
                 {
                     // Instantiate game object at the hit pose.
-                    var gameObject = Instantiate(PawnPrefab, hit.Pose.position, hit.Pose.rotation);
+                    //var gameObject = Instantiate(PawnPrefab, hit.Pose.position, hit.Pose.rotation);
+                    //Part1.SetActive(true);
+                    //Part1.transform.position = hit.Pose.position;
+                    //Part1.transform.rotation = hit.Pose.rotation;
+                    //Part2.SetActive(true);
+                    //Part2.transform.position = hit.Pose.position;
+                    //Part2.transform.rotation = hit.Pose.rotation;
+                    //Part3.SetActive(true);
+                    //Part3.transform.position = hit.Pose.position;
+                    //Part3.transform.rotation = hit.Pose.rotation;
+                    //CanonParent.SetActive(true);
+                    //CanonParent.transform.position = hit.Pose.position;
+                    //CanonParent.transform.rotation = hit.Pose.rotation;
+                    PawnPrefab.SetActive(true);
+                    PawnPrefab.transform.position = hit.Pose.position;
+                    PawnPrefab.transform.rotation = hit.Pose.rotation;
+                    Part1.SetParent(null);
+                    Part2.SetParent(null);
+                    Part3.SetParent(null);
+
 
                     // Instantiate manipulator.
                     var manipulator =
                         Instantiate(ManipulatorPrefab, hit.Pose.position, hit.Pose.rotation);
 
                     // Make game object a child of the manipulator.
-                    gameObject.transform.parent = manipulator.transform;
+                    PawnPrefab.transform.parent = manipulator.transform;
+                    //Part1.transform.parent = manipulator.transform;
+                    //Part2.transform.parent = manipulator.transform;
+                    //Part3.transform.parent = manipulator.transform;
 
                     // Create an anchor to allow ARCore to track the hitpoint as understanding of
                     // the physical world evolves.

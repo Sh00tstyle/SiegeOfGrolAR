@@ -24,7 +24,6 @@ public class AddPartScript : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        Debug.Log("Suuh Dood I'm working!");
 
         if (col.gameObject.name == "Part1")
         {

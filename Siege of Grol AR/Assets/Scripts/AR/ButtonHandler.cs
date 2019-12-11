@@ -7,9 +7,9 @@ public class ButtonHandler : MonoBehaviour
 {
     GameObject controller;
     PawnManipulator scriptPlaceObject;
-    GameObject Part1Go;
-    GameObject Part2Go;
-    GameObject Part3Go;
+    public GameObject Part1;
+    public GameObject Part2;
+    public GameObject Part3;
     //public GameObject sphereIndicator;
     //public GameObject cubeIndicator;
     //public GameObject canonIndicator;
@@ -17,30 +17,30 @@ public class ButtonHandler : MonoBehaviour
     {
         controller = GameObject.Find("PawnGenerator");
         scriptPlaceObject = controller.GetComponent<PawnManipulator> ();
-        Part1Go = GameObject.Find("Part1");
+        
         //cubeIndicator.SetActive(true);
         //canonIndicator.SetActive(false);
         //sphereIndicator.SetActive(false);
-        scriptPlaceObject.PawnPrefab = Part1Go;
+        scriptPlaceObject.PawnPrefab = Part1;
     }
     public void ChangeObjectTypeToPart2()
     {
         controller = GameObject.Find("PawnGenerator");
         scriptPlaceObject = controller.GetComponent<PawnManipulator> ();
-        Part2Go = GameObject.Find("Part2");
+        
         //cubeIndicator.SetActive(false);
         //canonIndicator.SetActive(false);
         //sphereIndicator.SetActive(true);
-        scriptPlaceObject.PawnPrefab = Part2Go;
+        scriptPlaceObject.PawnPrefab = Part2;
     }
     public void ChangeObjectTypeToPart3()
     {
         controller = GameObject.Find("PawnGenerator");
         scriptPlaceObject = controller.GetComponent<PawnManipulator>();
-        Part3Go = GameObject.Find("Part3");
+        
         //cubeIndicator.SetActive(false);
         //canonIndicator.SetActive(true);
         //sphereIndicator.SetActive(false);
-        scriptPlaceObject.PawnPrefab = Part3Go;
+        scriptPlaceObject.PawnPrefab = Part3;
     }
 }

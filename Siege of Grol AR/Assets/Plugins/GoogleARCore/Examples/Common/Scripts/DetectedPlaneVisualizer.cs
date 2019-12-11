@@ -43,6 +43,7 @@ namespace GoogleARCore.Examples.Common
         private Mesh m_Mesh;
 
         private MeshRenderer m_MeshRenderer;
+        private MeshCollider ar_meshCollider;
 
         /// <summary>
         /// The Unity Awake() method.
@@ -51,6 +52,14 @@ namespace GoogleARCore.Examples.Common
         {
             m_Mesh = GetComponent<MeshFilter>().mesh;
             m_MeshRenderer = GetComponent<UnityEngine.MeshRenderer>();
+
+            ar_meshCollider = GetComponent<MeshCollider>();
+            //Assign as shared mesh inside _UpdateMeshIfNeeded() function
+            if (ar_meshCollider != null)
+            {
+                ar_meshCollider.sharedMesh = m_Mesh;            //(used for collision detection)
+            }
+            
         }
 
         /// <summary>
