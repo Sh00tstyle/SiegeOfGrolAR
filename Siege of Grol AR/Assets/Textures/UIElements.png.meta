@@ -50,6 +50,9 @@ TextureImporter:
   - first:
       213: 3978156490039471001
     second: Input_roundest_stroke
+  - first:
+      213: 8316150575541490755
+    second: Input_rounded_sharpbottom
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -288,6 +291,27 @@ TextureImporter:
       bones: []
       spriteID: 1b13da847ba6c5b45ba270aa7faa6703
       internalID: 3978156490039471001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Input_rounded_sharpbottom
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 120, y: 0, z: 120, w: 120}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8da044dea9667984da464574ca2fe8de
+      internalID: 8316150575541490755
       vertices: []
       indices: 
       edges: []

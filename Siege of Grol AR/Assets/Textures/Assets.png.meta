@@ -29,6 +29,12 @@ TextureImporter:
   - first:
       213: -4213078718187347345
     second: icon_settings
+  - first:
+      213: 2347532270071011419
+    second: Assets_0
+  - first:
+      213: -5231283455002343986
+    second: Arrow_up
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -309,6 +315,48 @@ TextureImporter:
       bones: []
       spriteID: acf89f7d1b2fe884a9cd30c634380de0
       internalID: -4213078718187347345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Assets_0
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 3
+        width: 212
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 12, y: 10, z: 12, w: 12}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78b8ab67327fe86479b4a8671f2e7c7a
+      internalID: 2347532270071011419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow_up
+      rect:
+        serializedVersion: 2
+        x: 935
+        y: 627
+        width: 58
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d03e71407a1c184d89c0609c1b6964f
+      internalID: -5231283455002343986
       vertices: []
       indices: 
       edges: []
