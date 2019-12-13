@@ -7,8 +7,6 @@ using UnityEngine.EventSystems;
 
 public class MenuManager : Singleton<MenuManager>
 {
-    public MenuBehaviour narrationMenu;
-
     [SerializeField]
     private MenuBehaviour _startingMenu, _narrationMenu, _popupPrefab;
 

@@ -8,6 +8,14 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     protected static T _Instance;
 
+    protected void SetDontDestroyOnLoad()
+    {
+        if (_Instance != null)
+            Destroy(gameObject);
+        else
+            DontDestroyOnLoad(gameObject);
+    }
+
     public static T Instance 
     {
         get 

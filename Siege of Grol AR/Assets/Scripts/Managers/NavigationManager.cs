@@ -20,13 +20,13 @@ public class NavigationManager : Singleton<NavigationManager>
     private Transform _playerTransform;
 
     [SerializeField]
-    private double _referenceLatitude = 52.042944;
+    private double _referenceLatitude = 52.042947;
 
     [SerializeField]
-    private double _referenceLongitude = 6.616444;
+    private double _referenceLongitude = 6.616385;
 
     [SerializeField]
-    private double _referenceScale = 2000.0;
+    private float _worldScale = 1.0f;
 
     [SerializeField] 
     private LineRenderer _remainingPathLR, _navigatedPathLR;
@@ -48,61 +48,55 @@ public class NavigationManager : Singleton<NavigationManager>
 
     private int _currentNavigationIndex;
 
+    private MapPoint _convertedReferencePos;
+
+    private void Awake()
+    {
+        _convertedReferencePos = Util.GPS2MapPoint(_referenceLatitude, _referenceLongitude);
+    }
+
     public void RequestNewNavigationPath()
     {
         GPSLocation reconstructedPlayerLocation = GetGPSFromWorldPos(_playerTransform.position);
         GPSLocation destinationLocation = new GPSLocation(GameManager.Instance.CurrentLocation);
-
+        
         GetDirections(reconstructedPlayerLocation, destinationLocation);
     }
 
     public Vector3 GetWorldPosFromGPS(double pLatitude, double pLongitude)
     {
-        // Change to: https://answers.unity.com/questions/1011674/gps-coordinates-latlongaltitude-to-unity-3d-coordi.html
+        // Project the GPS position on a plane
+        MapPoint projectedPoint = Util.GPS2MapPoint(pLatitude, pLongitude);
 
-        // Calculate the world position based on a set scale and a reference point in the map that is based on real world GPS coordinates
-        Vector3 mapOrigin = _mapTransform.position;
+        // Get the position on the map by using a reference GPS position
+        projectedPoint.x -= _convertedReferencePos.x;
+        projectedPoint.y -= _convertedReferencePos.y;
 
-        double worldXPos = pLatitude - _referenceLatitude;
-        double worldZPos = pLongitude - _referenceLongitude;
+        projectedPoint.x *= _worldScale;
+        projectedPoint.y *= _worldScale * 0.5;
 
-        worldXPos = worldXPos - mapOrigin.x;
-        worldZPos = worldZPos - mapOrigin.z;
+        // Convert the resulting position from RH to LH
+        Vector3 worldPos = new Vector3((float)projectedPoint.x, 0.0f, (float)projectedPoint.y);
+        worldPos.x *= -1;
+        worldPos = Quaternion.Euler(0.0f, -90.0f, 0.0f) * worldPos;
 
-        worldXPos *= _referenceScale;
-        worldZPos *= _referenceScale;
-
-        worldZPos *= 0.5;
-
-        Vector3 newPos = new Vector3((float)worldXPos, 0.0f, (float)worldZPos);
-        newPos.x *= -1;
-        newPos = Quaternion.Euler(0.0f, -90.0f, 0.0f) * newPos;
-
-        return newPos;
+        return worldPos;
     }
 
     public GPSLocation GetGPSFromWorldPos(Vector3 pWorldPos)
     {
-        // Change to: https://answers.unity.com/questions/1011674/gps-coordinates-latlongaltitude-to-unity-3d-coordi.html
-
-        // Reconstruct the GPS coordinates of a world position based on the reference point on the map
-        Vector3 mapOrigin = _mapTransform.position;
-
+        pWorldPos = Quaternion.Euler(0.0f, 90.0f, 0.0f) * pWorldPos;
         pWorldPos.x *= -1;
-        pWorldPos = Quaternion.Euler(0.0f, -90.0f, 0.0f) * pWorldPos;
 
-        double latitude = pWorldPos.x - mapOrigin.x;
-        double longitude = pWorldPos.z - mapOrigin.z;
+        MapPoint absoluteWorldPos = new MapPoint(pWorldPos.x, pWorldPos.z);
 
-        longitude *= 2.0;
+        absoluteWorldPos.x /= _worldScale;
+        absoluteWorldPos.y /= _worldScale * 0.5f;
 
-        latitude *= 1.0 / _referenceScale;
-        longitude *= 1.0 / _referenceScale;
+        absoluteWorldPos.x += _convertedReferencePos.x;
+        absoluteWorldPos.y += _convertedReferencePos.y;
 
-        latitude += _referenceLatitude;
-        longitude += _referenceLongitude;
-
-        return new GPSLocation(latitude, longitude);
+        return Util.MapPoint2GPS(absoluteWorldPos.x, absoluteWorldPos.y);
     }
 
     private void InitializePathLineRenderers(Vector3 pDestinationPos)

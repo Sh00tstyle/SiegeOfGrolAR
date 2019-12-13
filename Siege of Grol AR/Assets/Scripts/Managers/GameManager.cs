@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 public class GameManager : Singleton<GameManager>
 {
+    public string playerName;
+
     [SerializeField]
     private LocationDatabase _locationDatabase;
 
@@ -24,12 +26,12 @@ public class GameManager : Singleton<GameManager>
     private void Awake()
     {
         Application.targetFrameRate = 60;
-        QualitySettings.vSyncCount = 0;
+        QualitySettings.vSyncCount = 0;;
+    }
 
-        _currentLocationIndex = 0;
-
-        _currentLocation = _locationDatabase.locations[_currentLocationIndex];
-        CreateNewLocation();
+    private void Start()
+    {
+        LoadStoryProgress();
     }
 
     private void Update()
@@ -40,27 +42,28 @@ public class GameManager : Singleton<GameManager>
     public void SetStoryDecision(bool pIsHelpingSpy)
     {
         _isHelpingSpy = pIsHelpingSpy;
-
-        // Could notify other entities at this point, but not sure if it is needed since it is probably set by an interaction/behaviour
     }
 
-    public void SetProgress(int pProgressIndex)
+    public void LoadStoryProgress()
     {
-        throw new NotImplementedException();
+        _currentLocationIndex = 0;
+        int currentProgressIndex = ProgressHandler.Instance.StoryProgress;
+
+        for (int i = 0; i <= currentProgressIndex; ++i) // Create the location for each progress point that was reached
+            CreateLocation(i);
+
+        if (currentProgressIndex > 0)
+            MenuManager.Instance.GoToMenu(MenuTypes.STARTINGMENU); // TODO: Replace with main menu
     }
 
-    public void NextLocation()
+    public void NextStorySegment()
     {
-        ++_currentLocationIndex;
-
-        if(_currentLocationIndex >= _locationDatabase.locations.Length)
+        if (IncreaseLocationIndex()) // Create the next location if there is one remaining
         {
-            _currentLocation = null; // no more locations left
-            return;
+            CreateLocation(_currentLocationIndex);
         }
 
-        _currentLocation = _locationDatabase.locations[_currentLocationIndex];
-        CreateNewLocation();
+        ProgressHandler.Instance.IncreaseStoryProgress(); // Update the story progress as well
     }
 
     public void StartInteraction()
@@ -69,8 +72,22 @@ public class GameManager : Singleton<GameManager>
             _currentInteraction.Activate();
     }
 
-    private void CreateNewLocation()
+    private bool IncreaseLocationIndex()
     {
+        if (_currentLocationIndex >= _locationDatabase.locations.Length - 1)
+            return false; // No more locations left
+
+        ++_currentLocationIndex;
+        return true;
+    }
+
+    private void CreateLocation(int pIndex)
+    {
+        if (pIndex >= _locationDatabase.locations.Length)
+            return;
+
+        _currentLocation = _locationDatabase.locations[pIndex]; // Store the latest created location as current one
+
         Vector3 locationPos = NavigationManager.Instance.GetWorldPosFromGPS(_currentLocation.latitude, _currentLocation.longitude);
         _currentLocationTransform = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity).transform;
 
@@ -114,6 +131,7 @@ public class GameManager : Singleton<GameManager>
                 }
             }
         }
+
     }
 
     public bool IsHelpingSpy
@@ -150,7 +168,8 @@ public class GameManager : Singleton<GameManager>
 
     public Interaction CurrentInteraction
     {
-        get { 
+        get 
+        { 
             return _currentInteraction; 
         }
     }

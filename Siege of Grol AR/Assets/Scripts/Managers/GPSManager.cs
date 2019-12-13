@@ -22,9 +22,9 @@ public class GPSManager : Singleton<GPSManager>
     [SerializeField]
     private int _gpsMaxInitializationTime = 20;
 
-    private void Awake()
+    private IEnumerator Start()
     {
-        StartCoroutine(InitializeInternally());
+        yield return StartCoroutine(InitializeInternally());
     }
 
     private void OnDestroy()

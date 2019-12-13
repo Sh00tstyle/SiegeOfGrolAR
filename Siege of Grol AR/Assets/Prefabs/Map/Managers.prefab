@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b8e5394bd7d23488a49f1c6a69aa08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: 
   _locationDatabase: {fileID: 11400000, guid: b97a88c313593714d823aee73eec3b3d, type: 2}
   _minInteractionDistance: 1
 --- !u!114 &2083937022
@@ -63,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e66a6d7b586aeec43b79ec54fbf30939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbitTarget: {fileID: 0}
+  _orbitTarget: {fileID: 0}
   _distance: 5
   _xSpeed: 60
   _ySpeed: 60
@@ -83,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbfba61f05131a40a65a8192c532f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingMenu: {fileID: 0}
+  _startingMenu: {fileID: 0}
   _narrationMenu: {fileID: 0}
   _popupPrefab: {fileID: 3560608276620467050, guid: 602fad633585130479b72b2533ebd1c3,
     type: 3}
@@ -132,7 +133,7 @@ MonoBehaviour:
   _debugCanvas: {fileID: 4925923290793420809, guid: 84950f4c415ce734a968bbdcb131ec71,
     type: 3}
   _useFakeLocation: 1
-  _movementSpeed: 0.02
+  _movementSpeed: 0.03
   _gpsAccuracyInMeters: 10
   _gpsUpdateDistanceInMeters: 10
   _gpsMaxInitializationTime: 20
@@ -148,11 +149,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3872d5a3ae88bff4ea61a895d9e2309b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapTransform: {fileID: 0}
-  playerTransform: {fileID: 0}
-  _referenceLatitude: 52.042944
-  _referenceLongitude: 6.616444
-  _referenceScale: 2000
+  _mapTransform: {fileID: 0}
+  _playerTransform: {fileID: 0}
+  _referenceLatitude: 52.042947
+  _referenceLongitude: 6.616385
+  _worldScale: 0.02
   _remainingPathLR: {fileID: 1968794117709613818}
   _navigatedPathLR: {fileID: 8559535449002515501}
   _maxStrayDistance: 0.5

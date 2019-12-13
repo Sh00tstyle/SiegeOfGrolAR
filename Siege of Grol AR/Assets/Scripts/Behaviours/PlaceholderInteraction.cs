@@ -10,6 +10,6 @@ public class PlaceholderInteraction : Interaction
         Debug.Log("Starting example interaction: " + interactionName);
         Debug.Log("Loading AR example scene (build index scene 1...");
 
-        SceneLoader.Instance.LoadScene(1);
+        SceneHandler.Instance.LoadScene(1);
     }
 }

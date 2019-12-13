@@ -2,16 +2,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : Singleton<SceneLoader>
+public class SceneHandler : Singleton<SceneHandler>
 {
     private bool _debugToggle = false;
 
     private void Awake()
     {
-        if (_Instance != null)
-            Destroy(gameObject);
-        else
-            DontDestroyOnLoad(gameObject);
+        SetDontDestroyOnLoad();
     }
 
     private void Update()
