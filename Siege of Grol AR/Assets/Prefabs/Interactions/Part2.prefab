@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7316251735085570532}
   m_Layer: 0
   m_Name: Part2
-  m_TagString: Part 2
+  m_TagString: ARPawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

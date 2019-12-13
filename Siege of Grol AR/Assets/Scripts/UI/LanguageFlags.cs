@@ -12,6 +12,11 @@ public class LanguageFlags : MonoBehaviour
     Tween[] _activeTweens = new Tween[3];
     int _currentIndex = 4;
 
+
+    void Awake()
+    {
+        ChangeLanguage(0);
+    }
     public void ChangeLanguage(int index)
     {
         if (_currentIndex == index) return;

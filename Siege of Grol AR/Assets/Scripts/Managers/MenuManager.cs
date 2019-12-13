@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class MenuManager : Singleton<MenuManager>
 {
     [SerializeField]
-    private MenuBehaviour _startingMenu, _narrationMenu, _popupPrefab;
+    private MenuBehaviour _startingMenu, _narrationMenu, _popupPrefab, _mainMenu;
 
     [SerializeField]
     private MenuAnimation _defaultAnimation, _popupAnimation;
@@ -48,12 +48,6 @@ public class MenuManager : Singleton<MenuManager>
             if (activeTween != null && !activeTween.IsPlaying())
                 Back();
         }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            ShowPopup("Header", "Body", "Open settings", null);
-        }
-
     }
 
     public void GoToMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation = null)
@@ -83,6 +77,9 @@ public class MenuManager : Singleton<MenuManager>
 
             case MenuTypes.STARTINGMENU:
                 targetMenu = _startingMenu;
+                break;
+            case MenuTypes.MAINMENU:
+                targetMenu = _mainMenu;
                 break;
         }
 
