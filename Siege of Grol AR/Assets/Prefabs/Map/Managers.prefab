@@ -71,7 +71,7 @@ MonoBehaviour:
   _yMinLimit: 10
   _yMaxLimit: 80
   _minDistance: 2
-  _maxDistance: 15
+  _maxDistance: 10
 --- !u!114 &423608960020097757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,6 +88,7 @@ MonoBehaviour:
   _narrationMenu: {fileID: 0}
   _popupPrefab: {fileID: 3560608276620467050, guid: 602fad633585130479b72b2533ebd1c3,
     type: 3}
+  _mainMenu: {fileID: 0}
   _defaultAnimation:
     stackOptions: 4
     menu: {fileID: 0}
@@ -151,9 +152,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapTransform: {fileID: 0}
   _playerTransform: {fileID: 0}
-  _referenceLatitude: 52.042947
-  _referenceLongitude: 6.616385
-  _worldScale: 0.02
+  _referenceLatitude: 52.042414
+  _referenceLongitude: 6.617232
+  _worldScale: 0.048
   _remainingPathLR: {fileID: 1968794117709613818}
   _navigatedPathLR: {fileID: 8559535449002515501}
   _maxStrayDistance: 0.5
@@ -184,7 +185,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5318343718177456014}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5406026185941479752}
@@ -233,7 +234,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.05
+    widthMultiplier: 0.15
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -360,7 +361,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.05
+    widthMultiplier: 0.15
     widthCurve:
       serializedVersion: 2
       m_Curve:

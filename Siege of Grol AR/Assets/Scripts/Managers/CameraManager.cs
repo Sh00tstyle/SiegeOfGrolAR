@@ -114,6 +114,9 @@ public class CameraManager : Singleton<CameraManager>
 #endif
 
         _distance = ClampDistance(_distance);
+
+        RenderSettings.fogDensity = _distance / _maxDistance * 0.75f;
+
         UpdateCameraOrientation(_orbitTarget.position); // This is probably irrelevant on mobile
     }
 

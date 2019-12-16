@@ -53,7 +53,7 @@ public class GameManager : Singleton<GameManager>
             CreateLocation(i);
 
         if (currentProgressIndex > 0)
-            MenuManager.Instance.GoToMenu(MenuTypes.STARTINGMENU); // TODO: Replace with main menu
+            MenuManager.Instance.GoToMenu(MenuTypes.MAINMENU);
     }
 
     public void NextStorySegment()

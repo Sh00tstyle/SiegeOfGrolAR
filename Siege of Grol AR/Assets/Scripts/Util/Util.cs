@@ -42,7 +42,7 @@ public static class Util
         latitude *= degreesPerRadians;
         
         double longitude = 2.0 * Math.Atan(Math.Exp(pY / EarthRadius)) - Math.PI / 2.0;
-        longitude *= degreesPerRadians;;
+        longitude *= degreesPerRadians;
 
         return new GPSLocation(latitude, longitude);
     }

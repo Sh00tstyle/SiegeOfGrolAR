@@ -73,10 +73,10 @@ public class NavigationManager : Singleton<NavigationManager>
         projectedPoint.y -= _convertedReferencePos.y;
 
         projectedPoint.x *= _worldScale;
-        projectedPoint.y *= _worldScale * 0.5;
+        projectedPoint.y *= _worldScale * 0.6;
 
         // Convert the resulting position from RH to LH
-        Vector3 worldPos = new Vector3((float)projectedPoint.x, 0.0f, (float)projectedPoint.y);
+        Vector3 worldPos = new Vector3((float)projectedPoint.x, 0.01f, (float)projectedPoint.y);
         worldPos.x *= -1;
         worldPos = Quaternion.Euler(0.0f, -90.0f, 0.0f) * worldPos;
 
@@ -91,7 +91,7 @@ public class NavigationManager : Singleton<NavigationManager>
         MapPoint absoluteWorldPos = new MapPoint(pWorldPos.x, pWorldPos.z);
 
         absoluteWorldPos.x /= _worldScale;
-        absoluteWorldPos.y /= _worldScale * 0.5f;
+        absoluteWorldPos.y /= _worldScale * 0.6;
 
         absoluteWorldPos.x += _convertedReferencePos.x;
         absoluteWorldPos.y += _convertedReferencePos.y;
@@ -207,19 +207,23 @@ public class NavigationManager : Singleton<NavigationManager>
         Vector3 closestPathSegmentPos;
         Vector3 distanceVector;
 
+        float timer = 0.0f;
+
         while (true)
         {
             closestPathSegmentPos = _receivedPath[GetClosestPathIndex(_playerTransform.position, _currentNavigationIndex)];
             distanceVector = _playerTransform.position - closestPathSegmentPos;
 
-            if(distanceVector.magnitude >= _maxStrayDistance)
+            timer += Time.deltaTime;
+
+            if(distanceVector.magnitude >= _maxStrayDistance && timer >= _maxPathUpdateInterval)
             {
                 // Player strayed outside of the max stray radius
                 RequestNewNavigationPath();
                 yield break;
             }
-           
-            yield return waitForSeconds;
+
+            yield return null;
         }
     }
 
@@ -300,7 +304,7 @@ public class NavigationManager : Singleton<NavigationManager>
         for (int i = 0; i <= pMaxIndex; ++i)
         {
             currentPosition = _receivedPath[i];
-            currentPosition.y = 0.0f;
+            currentPosition.y = 0.1f;
 
             distanceVector = currentPosition - pPlayerPosition;
             float sqrDistance = distanceVector.sqrMagnitude;

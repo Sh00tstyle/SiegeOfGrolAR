@@ -66,7 +66,7 @@ public class GPSManager : Singleton<GPSManager>
 
         // Switch to Debug mode by spawning the debug joystick and moving the player to the world origin
         Instantiate(_debugCanvas);
-        NavigationManager.Instance.PlayerTransform.transform.position = new Vector3(0.0f, 0.1f, 0.0f);
+        NavigationManager.Instance.PlayerTransform.transform.position = new Vector3(0.0f, 0.3f, 0.0f);
     }
 
     private IEnumerator InitializeLocationService()
