@@ -4,4 +4,5 @@
     public static readonly string Joystick = "Joystick";
     public static readonly string InteractButton = "InteractButton";
     public static readonly string ARPawn = "ARPawn";
+    public static readonly string ARCharacter = "ARCharacter";
 }

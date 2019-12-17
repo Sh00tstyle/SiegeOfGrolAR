@@ -31,10 +31,22 @@ TextureImporter:
     second: icon_settings
   - first:
       213: 2347532270071011419
-    second: Assets_0
+    second: Dialog_name
   - first:
       213: -5231283455002343986
     second: Arrow_up
+  - first:
+      213: 6838938952469157096
+    second: Unlocked
+  - first:
+      213: -6625599668839533493
+    second: Locked
+  - first:
+      213: 7425206629761489299
+    second: Dialog_background
+  - first:
+      213: -3741109556946786936
+    second: Button_next
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -320,7 +332,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Assets_0
+      name: Dialog_name
       rect:
         serializedVersion: 2
         x: 542
@@ -349,7 +361,7 @@ TextureImporter:
         width: 58
         height: 35
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -357,6 +369,90 @@ TextureImporter:
       bones: []
       spriteID: 6d03e71407a1c184d89c0609c1b6964f
       internalID: -5231283455002343986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unlocked
+      rect:
+        serializedVersion: 2
+        x: 799
+        y: 19
+        width: 47
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02851d34b20d0af489ed8730b50e2fa8
+      internalID: 6838938952469157096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Locked
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 32
+        width: 35
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8049a54d0d582e54e886c9b8719655bb
+      internalID: -6625599668839533493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dialog_background
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 528
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63afb22ed8733e94aaf89dbb7af9ecaa
+      internalID: 7425206629761489299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_next
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 55
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 776f0a6426246fc45a3e757f6fd3a9b4
+      internalID: -3741109556946786936
       vertices: []
       indices: 
       edges: []

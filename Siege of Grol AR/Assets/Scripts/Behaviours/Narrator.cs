@@ -19,7 +19,7 @@ public class Narrator : MonoBehaviour
     {
         Debug.Log("Opening Narration of " + name);
 
-        MenuManager.Instance.GoToMenu(MenuTypes.NARRATIONMENU); // This will be changed to use an enum in the future
+        MenuManager.Instance.GoToMenu(MenuTypes.NARRATIONMENU);
     }
 
     public string GetNextText()

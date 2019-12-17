@@ -104,9 +104,14 @@ public class Carousel : MonoBehaviour
         // Set new avatar to center
         ChangeAnchor(_avatars[_currentIndex], _centerAnchorMin, _centerAnchorMax, true);
 
+        // Needs a bit more optimisation
+        _avatars[0].gameObject.SetActive(_currentIndex <= 1);
+        _avatars[_avatars.Length - 1].gameObject.SetActive(_currentIndex >= 1);
+
         if (_currentIndex > 0)
             ChangeAnchor(_avatars[_currentIndex - 1], _leftAnchorMin, _leftAnchorMax);
         if (_currentIndex < _avatars.Length - 1)
+
             ChangeAnchor(_avatars[_currentIndex + 1], _rightAnchorMin, _rightAnchorMax);
     }
 
@@ -127,6 +132,9 @@ public class Carousel : MonoBehaviour
 
     void ChangeButtonsText()
     {
+        if (_prevButton == null && _nextButton == null)
+            return;
+
         _prevButton.gameObject.SetActive(_currentIndex > 0);
         if (!_keepNextButton)
             _nextButton.gameObject.SetActive(_currentIndex < _carouselPanels.Length - 1);
