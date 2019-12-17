@@ -98,6 +98,8 @@ public class AddPartScript : MonoBehaviour
             Debug.Log("Part 3 detected! +1 to ObjectIndex");
 
             ObjectIndex++;
+
+            SceneHandler.Instance.LoadSceneWithDelay(0, 3.0f);
         }
         else
         {

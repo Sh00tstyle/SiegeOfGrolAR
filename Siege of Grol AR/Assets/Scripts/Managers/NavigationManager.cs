@@ -76,7 +76,7 @@ public class NavigationManager : Singleton<NavigationManager>
         projectedPoint.y *= _worldScale * 0.6;
 
         // Convert the resulting position from RH to LH
-        Vector3 worldPos = new Vector3((float)projectedPoint.x, 0.01f, (float)projectedPoint.y);
+        Vector3 worldPos = new Vector3((float)projectedPoint.x, 0.005f, (float)projectedPoint.y);
         worldPos.x *= -1;
         worldPos = Quaternion.Euler(0.0f, -90.0f, 0.0f) * worldPos;
 
@@ -109,13 +109,17 @@ public class NavigationManager : Singleton<NavigationManager>
         Vector3[] navigated = new Vector3[1]; // Only one for the player
 
         // Extract data from receivedPath
+        Vector3 playerPos = _playerTransform.transform.position;
+        playerPos.y = 0.05f;
+        pDestinationPos.y = 0.05f;
+
         remaining[0] = pDestinationPos;
-        remaining[remaining.Length - 1] = _playerTransform.position;
+        remaining[remaining.Length - 1] = playerPos;
 
         for (int i = 0; i < _receivedPath.Length; ++i)
             remaining[i + 1] = _receivedPath[i];
 
-        navigated[0] = _playerTransform.position;
+        navigated[0] = playerPos;
 
         // Apply arrays to line renderers
         SetPath(_remainingPathLR, remaining);

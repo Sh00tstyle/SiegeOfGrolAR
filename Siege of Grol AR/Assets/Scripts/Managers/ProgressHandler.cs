@@ -26,7 +26,7 @@ public class ProgressHandler : Singleton<ProgressHandler>
             ++_StoryProgress;
     }
 
-    public int StoryProgress
+    public int StoryProgressIndex
     {
         get
         {

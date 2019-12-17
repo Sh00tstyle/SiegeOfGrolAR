@@ -154,7 +154,7 @@ MonoBehaviour:
   _playerTransform: {fileID: 0}
   _referenceLatitude: 52.042414
   _referenceLongitude: 6.617232
-  _worldScale: 0.048
+  _worldScale: 0.024
   _remainingPathLR: {fileID: 1968794117709613818}
   _navigatedPathLR: {fileID: 8559535449002515501}
   _maxStrayDistance: 0.5

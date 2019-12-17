@@ -17,11 +17,8 @@ public class GameManager : Singleton<GameManager>
     private bool _isHelpingSpy;
 
     private Location _currentLocation;
-    private Transform _currentLocationTransform;
+    private GameObject _currentLocationObject;
     private int _currentLocationIndex;
-
-    private Narrator _currentNarrator;
-    private Interaction _currentInteraction;
 
     private void Awake()
     {
@@ -47,7 +44,7 @@ public class GameManager : Singleton<GameManager>
     public void LoadStoryProgress()
     {
         _currentLocationIndex = 0;
-        int currentProgressIndex = ProgressHandler.Instance.StoryProgress;
+        int currentProgressIndex = ProgressHandler.Instance.StoryProgressIndex;
 
         for (int i = 0; i <= currentProgressIndex; ++i) // Create the location for each progress point that was reached
             CreateLocation(i);
@@ -58,18 +55,14 @@ public class GameManager : Singleton<GameManager>
 
     public void NextStorySegment()
     {
+        // Only needed if the progress is increased outside of an AR interaction
+
         if (IncreaseLocationIndex()) // Create the next location if there is one remaining
         {
             CreateLocation(_currentLocationIndex);
         }
 
         ProgressHandler.Instance.IncreaseStoryProgress(); // Update the story progress as well
-    }
-
-    public void StartInteraction()
-    {
-        if (_currentInteraction != null)
-            _currentInteraction.Activate();
     }
 
     private bool IncreaseLocationIndex()
@@ -89,23 +82,16 @@ public class GameManager : Singleton<GameManager>
         _currentLocation = _locationDatabase.locations[pIndex]; // Store the latest created location as current one
 
         Vector3 locationPos = NavigationManager.Instance.GetWorldPosFromGPS(_currentLocation.latitude, _currentLocation.longitude);
-        _currentLocationTransform = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity).transform;
+        locationPos.y = 0.1f;
 
-        if (_isHelpingSpy && _currentLocation.helpInteractionPrefab != null)
-        {
-            Instantiate(_currentLocation.helpInteractionPrefab, _currentLocationTransform);
-        }
-        else if(!_isHelpingSpy && _currentLocation.sabotageInteractionPrefab != null)
-        {
-            Instantiate(_currentLocation.sabotageInteractionPrefab, _currentLocationTransform);
-        }
+        _currentLocationObject = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity);
     }
 
     private void HandleLocationInput()
     {
-        if(_currentLocationTransform != null)
+        if(_currentLocationObject != null)
         {
-            Vector3 distanceVector = NavigationManager.Instance.PlayerTransform.position - _currentLocationTransform.position;
+            Vector3 distanceVector = NavigationManager.Instance.PlayerTransform.position - _currentLocationObject.transform.position;
 
             if (distanceVector.magnitude > _minInteractionDistance) // Do not allow interaction input if the player is not nearby
                 return;
@@ -118,16 +104,9 @@ public class GameManager : Singleton<GameManager>
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.tag == Tags.Location)
+                if (hit.transform.tag == Tags.Location && hit.transform.gameObject == _currentLocationObject)
                 {
-                    Debug.Log("Clicked location");
-
-                    // Store the currently selected narration and interaction
-                    _currentNarrator = hit.transform.GetComponent<Narrator>();
-                    _currentInteraction = _currentNarrator.GetComponentInChildren<Interaction>();
-
-                    if (_currentNarrator != null)
-                        _currentNarrator.OpenMenu();
+                    SceneHandler.Instance.LoadScene(1); // Dialog scene
                 }
             }
         }
@@ -146,7 +125,7 @@ public class GameManager : Singleton<GameManager>
     {
         get
         {
-            return _currentLocationTransform;
+            return _currentLocationObject.transform;
         }
     }
 
@@ -155,22 +134,6 @@ public class GameManager : Singleton<GameManager>
         get
         {
             return _currentLocation;
-        }
-    }
-
-    public Narrator CurrentNarrator
-    {
-        get
-        {
-            return _currentNarrator;
-        }
-    }
-
-    public Interaction CurrentInteraction
-    {
-        get 
-        { 
-            return _currentInteraction; 
         }
     }
 }

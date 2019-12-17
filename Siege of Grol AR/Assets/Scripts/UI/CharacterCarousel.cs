@@ -21,7 +21,7 @@ public class CharacterCarousel : MonoBehaviour
 
     private void Awake()
     {
-        int locationIndex = ProgressHandler.Instance.StoryProgress;
+        int locationIndex = ProgressHandler.Instance.StoryProgressIndex;
 
         // Also needs some optimisation
         for (int i = 0; i < _panels.Length; ++i)
