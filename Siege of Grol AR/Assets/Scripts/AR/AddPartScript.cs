@@ -42,8 +42,10 @@ public class AddPartScript : MonoBehaviour
         //CrosshairManipulator = GameObject.Find("CrosshairManipulator");
         //scriptCrossMani = CrosshairManipulator.GetComponent<CrosshairManipulator>();
 
-        if (col.gameObject == PartOrder[ObjectIndex])
+        if (ObjectIndex == 0 && col.gameObject == PartOrder[ObjectIndex])
         {
+
+
             BarrelTextured.SetActive(true);
             BarrelUnTextured.SetActive(false);
             col.transform.parent.gameObject.SetActive(false);
@@ -61,7 +63,7 @@ public class AddPartScript : MonoBehaviour
 
 
 
-        if (col.gameObject == PartOrder[ObjectIndex])
+        if (ObjectIndex == 1 && col.gameObject == PartOrder[ObjectIndex])
         {
             CartTextured.SetActive(true);
             CartUnTextured.SetActive(false);
@@ -78,7 +80,7 @@ public class AddPartScript : MonoBehaviour
             Debug.Log("This is the wrong part (2)");
         }
 
-        if (col.gameObject == PartOrder[ObjectIndex])
+        if (ObjectIndex == 2 && col.gameObject == PartOrder[ObjectIndex])
         {
             Wheel1Textured.SetActive(true);
             Wheel1UnTextured.SetActive(false);

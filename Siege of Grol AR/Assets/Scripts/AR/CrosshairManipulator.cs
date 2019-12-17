@@ -30,6 +30,8 @@ public class CrosshairManipulator : Manipulator
     private int HowManyMani;
     private int ManiMax = 3;
 
+    private bool _hasPlacedPawn;
+
     private void Awake()
     {
         // Setup manipulation transform
@@ -37,6 +39,8 @@ public class CrosshairManipulator : Manipulator
 
         _manipulationAnchor.position = _firstPersonCamera.transform.position + _firstPersonCamera.transform.forward * 5.0f;
         _manipulationAnchor.parent = _firstPersonCamera.transform;
+
+        _hasPlacedPawn = false;
     }
 
     protected override void Update()
@@ -50,8 +54,6 @@ public class CrosshairManipulator : Manipulator
     {
         // Try to manipulate an object first
         ManipulateExistingObject();
-
-        Debug.Log("Start mani");
     }
 
     public void UpdateManipulatingObject()
@@ -63,12 +65,11 @@ public class CrosshairManipulator : Manipulator
 
     public void StopManipulatingObject()
     {
-        Debug.Log("Stop mani");
         _manipulationLineRenderer.enabled = false;
 
         if (_currentManipulationTransform != null)
             ResetObjectManipulation();
-        else
+        else if(!_hasPlacedPawn)
             CreateNewObject(); // No manipulation was happening, so try to spawn an object
     }
 
@@ -133,8 +134,6 @@ public class CrosshairManipulator : Manipulator
                 }
                 _pawnPrefab.SetActive(true);
                 
-                
-
                 addManipulator(Part1, hit);
                 addManipulator(Part2, hit);
                 addManipulator(Part3, hit);
@@ -145,24 +144,26 @@ public class CrosshairManipulator : Manipulator
 
                 // Make manipulator a child of the anchor.
                 _pawnPrefab.transform.parent = anchor.transform;
+
+                _hasPlacedPawn = true;
             }
         }
     }
 
-    private void addManipulator (Transform pgameObject, TrackableHit pHit)
+    private void addManipulator (Transform pGameObject, TrackableHit pHit)
     {
         ManiCount = GameObject.FindGameObjectsWithTag("Manipulator");
         HowManyMani = ManiCount.Length;
         // Instantiate manipulator.
         if (HowManyMani < ManiMax)
         {
-            GameObject manipulator = Instantiate(_manipulatorPrefab, pgameObject.position, pgameObject.rotation);
+            GameObject manipulator = Instantiate(_manipulatorPrefab, pGameObject.position, pGameObject.rotation);
             //_manipulatorPrefab.SetActive(true);
             //_manipulatorPrefab.transform.position = pgameObject.position;
             //_manipulatorPrefab.transform.rotation = pgameObject.rotation;
 
             // Make game object a child of the manipulator.
-            pgameObject.transform.parent = manipulator.transform;
+            pGameObject.transform.parent = manipulator.transform;
 
             // Create an anchor to allow ARCore to track the hitpoint as understanding of
             // the physical world evolves.
