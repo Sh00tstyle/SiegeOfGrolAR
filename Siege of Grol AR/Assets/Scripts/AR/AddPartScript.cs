@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AddPartScript : MonoBehaviour
 {
-    public GameObject Part1;
-    public GameObject Part2;
-    public GameObject Part3;
+    //public GameObject Part1;
+    //public GameObject Part2;
+    //public GameObject Part3;
 
     public GameObject BarrelTextured;
     public GameObject CartTextured;
@@ -22,28 +22,63 @@ public class AddPartScript : MonoBehaviour
     public GameObject Wheel3UnTextured;
     public GameObject Wheel4UnTextured;
 
+    [SerializeField]
+    private GameObject CanonUnTextured;
+
+    public GameObject[] PartOrder;
+
+    int ObjectIndex = 0;
+
+    
+
+    //private GameObject manipulator;
+
+    //GameObject CrosshairManipulator;
+    //CrosshairManipulator scriptCrossMani;
+
     void OnCollisionEnter(Collision col)
     {
 
-        if (col.gameObject.name == "Part1")
+        //CrosshairManipulator = GameObject.Find("CrosshairManipulator");
+        //scriptCrossMani = CrosshairManipulator.GetComponent<CrosshairManipulator>();
+
+        if (col.gameObject == PartOrder[ObjectIndex])
         {
             BarrelTextured.SetActive(true);
             BarrelUnTextured.SetActive(false);
+            col.transform.parent.gameObject.SetActive(false);
             Destroy(col.gameObject);
+            //col.gameObject.transform.parent.SetParent(CanonUnTextured.transform);
+            // scriptCrossMani._manipulationLineRenderer.enabled = (false);
+            Debug.Log("Part 1 detected! +1 to ObjectIndex");
 
-            Debug.Log("Part 1 detected!");
+            ObjectIndex++;
+        }
+        else
+        {
+            Debug.Log("This is the wrong part");
         }
 
-        if (col.gameObject.name == "Part2")
+
+
+        if (col.gameObject == PartOrder[ObjectIndex])
         {
             CartTextured.SetActive(true);
             CartUnTextured.SetActive(false);
+            col.transform.parent.gameObject.SetActive(false);
             Destroy(col.gameObject);
+            //col.gameObject.transform.parent.SetParent(CanonUnTextured.transform);
 
-            Debug.Log("Part 2 detected!");
+            Debug.Log("Part 2 detected! +1 to ObjectIndex");
+
+            ObjectIndex++;
+        }
+        else
+        {
+            Debug.Log("This is the wrong part (2)");
         }
 
-        if (col.gameObject.name == "Part3")
+        if (col.gameObject == PartOrder[ObjectIndex])
         {
             Wheel1Textured.SetActive(true);
             Wheel1UnTextured.SetActive(false);
@@ -53,9 +88,18 @@ public class AddPartScript : MonoBehaviour
             Wheel3UnTextured.SetActive(false);
             Wheel4Textured.SetActive(true);
             Wheel4UnTextured.SetActive(false);
+            col.transform.parent.gameObject.SetActive(false);
             Destroy(col.gameObject);
+            //col.gameObject.transform.parent.SetParent(CanonUnTextured.transform);
+            
 
-            Debug.Log("Part 3 detected!");
+            Debug.Log("Part 3 detected! +1 to ObjectIndex");
+
+            ObjectIndex++;
+        }
+        else
+        {
+            Debug.Log("This is the wrong part (3)");
         }
     }
 }
