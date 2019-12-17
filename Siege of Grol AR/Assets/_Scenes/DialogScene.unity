@@ -207,7 +207,7 @@ Transform:
   m_GameObject: {fileID: 157753145}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 92.47664, y: 190.13354, z: -85.402916}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 1.8, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 13
@@ -311,7 +311,7 @@ Transform:
   m_GameObject: {fileID: 408221348}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 92.47664, y: 190.13354, z: -85.402916}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 1.8, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
@@ -751,7 +751,7 @@ MonoBehaviour:
   _priest: {fileID: 1717342970}
   _drunkard: {fileID: 408221348}
   _cannonCommander: {fileID: 157753145}
-  firstPersonCamera: {fileID: 646831371}
+  _firstPersonCamera: {fileID: 646831371}
   _narrationTextField: {fileID: 371839041}
   _narratorNameField: {fileID: 638312190}
   _narrationCanvas: {fileID: 1512770042}
@@ -1047,7 +1047,7 @@ Transform:
   m_GameObject: {fileID: 1717342970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 92.47664, y: 190.13354, z: -85.402916}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 1.8, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
