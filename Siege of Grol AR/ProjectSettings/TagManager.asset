@@ -13,6 +13,7 @@ TagManager:
   - Joystick
   - InteractButton
   - ARPawn
+  - ARCharacter
   layers:
   - Default
   - TransparentFX

@@ -19,12 +19,10 @@ public class CharacterCarousel : MonoBehaviour
         public TextMeshProUGUI text;
     }
 
-    int locationIndex = 1;
-
-
-
     private void Awake()
     {
+        int locationIndex = ProgressHandler.Instance.StoryProgress;
+
         // Also needs some optimisation
         for (int i = 0; i < _panels.Length; ++i)
         {
@@ -40,12 +38,8 @@ public class CharacterCarousel : MonoBehaviour
             // Set text to "?" when it is outside of the index
             if (i > locationIndex)
             {
-                //panel.name.gameObject.SetActive(false);
-                //panel.name.gameObject.SetActive(false);
                 panel.name.gameObject.SetActive(false);
                 panel.text.gameObject.SetActive(false);
-                //panel.text.text = "?";
-                //panel.text.alignment = TextAlignmentOptions.Center;
             }
                
         }
