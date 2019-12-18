@@ -164,9 +164,9 @@ public class CharacterDialog : MonoBehaviour
         _narrationCanvas.SetActive(false);
 
         yield return StartCoroutine(animationPlayer.PlayAnimationClipRoutine()); // Wait until the video has finished playing
-        Debug.Log("Finished playing animation, loading the next scene with 3s delay...");
+        Debug.Log("Finished playing animation, loading the next scene...");
 
-        yield return new WaitForSecondsRealtime(3.0f);
+        yield return new WaitForSecondsRealtime(0.5f);
 
         SceneHandler.Instance.LoadScene(2);
     }

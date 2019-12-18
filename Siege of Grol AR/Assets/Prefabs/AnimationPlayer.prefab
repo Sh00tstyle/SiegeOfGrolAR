@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationClip: {fileID: 32900000, guid: 99f462c4360fda94995332b5a4761508, type: 3}
+  _backgroundCanvas: {fileID: 0}

@@ -79,6 +79,7 @@ public class CameraManager : Singleton<CameraManager>
         _distance = pZoomInDistance;
         _orbitTarget = pFocusObject;
 
+        _objectFocusSequence = focusSwitchSequence;
         return focusSwitchSequence;
     }
 
@@ -201,22 +202,5 @@ public class CameraManager : Singleton<CameraManager>
         {
             return _rotationXAxis;
         }
-    }
-
-    // DEBUG
-    public void ActivateDemoFocus()
-    {
-        //StartCoroutine(PlayDemoSquencesRoutine());
-    }
-
-    private IEnumerator PlayDemoSquencesRoutine()
-    {
-        yield return new WaitForSecondsRealtime(1.0f);
-
-        yield return _objectFocusSequence = SwitchFocusObject(GameManager.Instance.CurrentLocationTransform, 1.5f, 3.0f, 10.0f, Ease.Linear);
-
-        yield return new WaitForSecondsRealtime(3.0f);
-
-        yield return _objectFocusSequence = SwitchFocusObject(NavigationManager.Instance.PlayerTransform, 1.5f, 3.0f, 10.0f, Ease.Linear);
     }
 }

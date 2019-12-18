@@ -6,9 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneHandler : Singleton<SceneHandler>
 {
-    private bool _debugToggle = false;
-
     private Coroutine _sceneLoadingRoutine = null;
+    private bool _debug = false;
 
     private void Awake()
     {
@@ -18,19 +17,16 @@ public class SceneHandler : Singleton<SceneHandler>
     private void Update()
     {
         // DEBUG
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || (Input.touchCount >= 4 && !_debug))
         {
-            if (!_debugToggle)
-            {
-                LoadScene(1);
-            }
-            else
-            {
-                LoadScene(0);
-            }
+            _debug = true;
 
-            _debugToggle = !_debugToggle;
+            ProgressHandler.Instance.IncreaseStoryProgress();
+            LoadScene(0);
         }
+
+        if (Input.touchCount <= 3 && _debug)
+            _debug = false;
     }
 
     public void LoadSceneWithDelay(int pSceneBuildIndex, float pDelay)

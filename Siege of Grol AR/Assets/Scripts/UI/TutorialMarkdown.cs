@@ -74,10 +74,6 @@ public class TutorialMarkdown : MonoBehaviour
         if (_bottomMenu != null && _bottomMenu.gameObject.activeSelf)
             _bottomMenu.HideMenu(_dissmissAnimation);
 
-        // Disable camera movement
-        CameraManager.Instance.gameObject.SetActive(false);
-
-
         // Now navigate from player to the location
         CameraManager.Instance.SwitchFocusObject(pLocation, 5, 5, 3, _fadeInEase).OnComplete(() =>
         {
@@ -160,16 +156,9 @@ public class TutorialMarkdown : MonoBehaviour
             _tutorialRunning = false;
 
             // Move back to the player
-            CameraManager.Instance.SwitchFocusObject(NavigationManager.Instance.PlayerTransform, 5, 5, 3, _fadeInEase).OnComplete(() =>
-            {
-                CameraManager.Instance.gameObject.SetActive(true);
-            });
+            CameraManager.Instance.SwitchFocusObject(NavigationManager.Instance.PlayerTransform, 5, 5, 3, _fadeInEase);
         });
-
-
-
     }
-
 
     private Tween Punch(RectTransform pRect, bool pBounceInfinite, int pBounceLoops)
     {

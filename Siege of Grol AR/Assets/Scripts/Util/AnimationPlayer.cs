@@ -9,6 +9,12 @@ public class AnimationPlayer : MonoBehaviour
     [SerializeField]
     private VideoClip _animationClip;
 
+    [SerializeField]
+    private GameObject _background;
+
+    [SerializeField]
+    private GameObject _arCanvas;
+
     private VideoPlayer _videoPlayer;
     private Coroutine _preparationRoutine;
 
@@ -29,7 +35,9 @@ public class AnimationPlayer : MonoBehaviour
 
     public IEnumerator PlayAnimationClipRoutine()
     {
-        if(!_videoPlayer.isPrepared)
+        _videoPlayer.enabled = true;
+
+        if (!_videoPlayer.isPrepared)
         {
             Debug.LogError("AnimationPlayer::Unable to play animation clip " + _animationClip.name + ", the clip has not been prepared yet!");
             yield break;
@@ -41,12 +49,16 @@ public class AnimationPlayer : MonoBehaviour
             yield break;
         }
 
+        _background.SetActive(true);
+        _arCanvas.SetActive(false);
         _videoPlayer.Play();
 
         while(_videoPlayer.isPlaying)
-        {
             yield return null;
-        }
+
+        _background.SetActive(false);
+        _arCanvas.SetActive(true);
+        _videoPlayer.enabled = false;
     }
 
     private void InitializeVideoPlayer()
@@ -85,10 +97,5 @@ public class AnimationPlayer : MonoBehaviour
 
         Debug.Log("Successfully prepared clip " + _animationClip.name);
         _preparationRoutine = null;
-    }
-
-    private void DisableVideoPlayer()
-    {
-        _videoPlayer.enabled = false;
     }
 }
