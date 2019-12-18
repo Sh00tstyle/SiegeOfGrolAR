@@ -21,8 +21,4 @@ public class Location
     public double longitude;
 
     public GameObject locationPrefab;
-
-    public GameObject sabotageInteractionPrefab;
-
-    public GameObject helpInteractionPrefab;
 }

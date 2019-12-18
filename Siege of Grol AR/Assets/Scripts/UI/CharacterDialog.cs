@@ -24,14 +24,19 @@ public class CharacterDialog : MonoBehaviour
         //public float Time, TimeAfter;
         //public AudioClip AudioClip;
     }
+
     private GameObject _currentObject;
     private Narration[] _currentNaration;
     private int _currentNarationIndex;
 
-    private bool _hasPlaced, _inNarration;
+    private bool _hasPlaced;
+
     void Awake()
     {
-        Progress storyProgress = (Progress)ProgressHandler.Instance.StoryProgress;
+        _hasPlaced = false;
+        _currentNarationIndex = 0;
+
+        Progress storyProgress = (Progress)ProgressHandler.Instance.StoryProgressIndex;
         switch (storyProgress)
         {
             case Progress.Priest:
@@ -48,42 +53,38 @@ public class CharacterDialog : MonoBehaviour
                 break;
         }
 
-        _narratorNameField.text = GameManager.Instance.CurrentLocation.characterName;
+        _narratorNameField.text = storyProgress.ToString();
     }
 
     void Update()
     {
-        if (_inNarration)
+        if (_hasPlaced)
+        {
+            DetectCharacterSelect();
             return;
+        }
 
         if (!_hasPlaced)
             PlacePreview();
-        else
-            DetectCharacterSelect();
+
     }
 
     void DetectCharacterSelect()
     {
-        if (Input.touchCount == 1)
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                {
-                    if (hit.transform.gameObject.tag == Tags.ARCharacter)
-                    {
-                        _inNarration = true;
-                        _narrationCanvas.gameObject.SetActive(true);
-                        ChangeText();
-                    }
-                }
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                if (hit.transform.gameObject.tag == Tags.ARCharacter)
+                    NextNarration();
             }
         }
 
     }
+
     void PlacePreview()
     {
         TrackableHit hit;
@@ -102,10 +103,13 @@ public class CharacterDialog : MonoBehaviour
                     _currentObject.gameObject.SetActive(true);
 
                 // Place object in center of the screen
-                PositionCharacter(hit);
+                if (Input.GetMouseButtonDown(0) && !_hasPlaced)
+                    PlaceCharacter(hit);
+                else
+                    PositionCharacter(hit);
             }
-
         }
+
     }
 
 
@@ -127,6 +131,7 @@ public class CharacterDialog : MonoBehaviour
 
         _hasPlaced = true;
         _narrationCanvas.SetActive(true);
+        ChangeText();
     }
 
     private void ChangeText()
@@ -138,9 +143,9 @@ public class CharacterDialog : MonoBehaviour
     public void NextNarration()
     {
         _currentNarationIndex++;
-        if (_currentNarationIndex > _currentNaration.Length)
-            Debug.Log("Change scene");
-        //SceneHandler.Instance.LoadScene(index);
+
+        if (_currentNarationIndex >= _currentNaration.Length)
+            SceneHandler.Instance.LoadScene(2);
         else
             ChangeText();
 

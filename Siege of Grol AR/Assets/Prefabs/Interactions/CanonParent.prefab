@@ -968,9 +968,9 @@ Transform:
   - {fileID: 5197297567979514872}
   - {fileID: 6316784545855185704}
   - {fileID: 5916538296447312474}
-  - {fileID: 8803041906658084379}
-  - {fileID: 288460008686856303}
-  - {fileID: 5932812006720356511}
+  - {fileID: 6229904524866895743}
+  - {fileID: 2493384267812329792}
+  - {fileID: 6902927762175971705}
   m_Father: {fileID: 7594629773993488261}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1025,13 +1025,13 @@ GameObject:
   - component: {fileID: 4090196259362394657}
   - component: {fileID: 4752868293640754086}
   - component: {fileID: 6874614309006514589}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CanonParent
   m_TagString: Indicator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7594629773993488261
 Transform:
   m_ObjectHideFlags: 0
@@ -1060,9 +1060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a134997082bf9bc45a3767563f9e9597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Part1: {fileID: 8803041906658084362}
-  Part2: {fileID: 288460008686856314}
-  Part3: {fileID: 5932812006720356586}
   BarrelTextured: {fileID: 108438415202644582}
   CartTextured: {fileID: 1249505881286206653}
   Wheel1Textured: {fileID: 6810972804731636973}
@@ -1075,6 +1072,11 @@ MonoBehaviour:
   Wheel2UnTextured: {fileID: 6196736004348993891}
   Wheel3UnTextured: {fileID: 7178432894920462276}
   Wheel4UnTextured: {fileID: 6382209714164082163}
+  CanonUnTextured: {fileID: 7278876664424664466}
+  PartOrder:
+  - {fileID: 2276178028051401554}
+  - {fileID: 7745542319635476886}
+  - {fileID: 7460622972316872832}
 --- !u!65 &4752868293640754086
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1099,8 +1101,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -1251,13 +1253,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e61f943ceed42c844abecb0c55b03f99, type: 3}
---- !u!1 &288460008686856314 stripped
+--- !u!1 &7745542319635476886 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8033684421532916139, guid: e61f943ceed42c844abecb0c55b03f99,
     type: 3}
   m_PrefabInstance: {fileID: 288460008686856253}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &288460008686856303 stripped
+--- !u!4 &2493384267812329792 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2781701877345022333, guid: e61f943ceed42c844abecb0c55b03f99,
     type: 3}
@@ -1332,13 +1334,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec90cb051aa84ac45b8ab4699d1404b2, type: 3}
---- !u!1 &5932812006720356586 stripped
+--- !u!1 &7460622972316872832 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3881223297537257554, guid: ec90cb051aa84ac45b8ab4699d1404b2,
     type: 3}
   m_PrefabInstance: {fileID: 5932812006720356562}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &5932812006720356511 stripped
+--- !u!4 &6902927762175971705 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 980013610704245163, guid: ec90cb051aa84ac45b8ab4699d1404b2,
     type: 3}
@@ -1413,13 +1415,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80e196841a7687c4284909a9e70b76f0, type: 3}
---- !u!1 &8803041906658084362 stripped
+--- !u!1 &2276178028051401554 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7330791615876173082, guid: 80e196841a7687c4284909a9e70b76f0,
     type: 3}
   m_PrefabInstance: {fileID: 8803041906658084424}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8803041906658084379 stripped
+--- !u!4 &6229904524866895743 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3197484066663414071, guid: 80e196841a7687c4284909a9e70b76f0,
     type: 3}
