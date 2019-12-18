@@ -22,6 +22,11 @@ public class AddPartScript : MonoBehaviour
     public GameObject Wheel3UnTextured;
     public GameObject Wheel4UnTextured;
 
+    public GameObject PanelWrongPart;
+    public GameObject PanelCompletion;
+    public GameObject CrossHair;
+    public GameObject ManipulationButton;
+
     [SerializeField]
     private GameObject CanonUnTextured;
 
@@ -56,9 +61,10 @@ public class AddPartScript : MonoBehaviour
 
             ObjectIndex++;
         }
-        else
+        else if (ObjectIndex == 0 && col.gameObject != PartOrder[ObjectIndex])
         {
             Debug.Log("This is the wrong part");
+            PanelWrongPart.SetActive(true);
         }
 
 
@@ -75,9 +81,10 @@ public class AddPartScript : MonoBehaviour
 
             ObjectIndex++;
         }
-        else
+        else if (ObjectIndex == 1 && !col.gameObject != PartOrder[ObjectIndex])
         {
             Debug.Log("This is the wrong part (2)");
+            PanelWrongPart.SetActive(true);
         }
 
         if (ObjectIndex == 2 && col.gameObject == PartOrder[ObjectIndex])
@@ -99,9 +106,22 @@ public class AddPartScript : MonoBehaviour
 
             ObjectIndex++;
         }
-        else
+        else if (ObjectIndex == 2 && !col.gameObject != PartOrder[ObjectIndex])
         {
             Debug.Log("This is the wrong part (3)");
+            PanelWrongPart.SetActive(true);
         }
+
+        if (ObjectIndex == 3)
+        {
+            Invoke("CompletedAssembly", 2.0f);
+        }
+    }
+
+    void CompletedAssembly ()
+    {
+        PanelCompletion.SetActive(true);
+        CrossHair.SetActive(false);
+        ManipulationButton.SetActive(false);
     }
 }
