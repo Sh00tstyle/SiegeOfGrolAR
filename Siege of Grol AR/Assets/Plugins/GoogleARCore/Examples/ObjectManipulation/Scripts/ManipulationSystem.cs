@@ -143,7 +143,7 @@ namespace GoogleARCore.Examples.ObjectManipulation
                 return;
             }
 
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
 
         /// <summary>
