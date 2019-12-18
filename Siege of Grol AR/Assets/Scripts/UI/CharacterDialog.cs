@@ -145,9 +145,29 @@ public class CharacterDialog : MonoBehaviour
         _currentNarationIndex++;
 
         if (_currentNarationIndex >= _currentNaration.Length)
-            SceneHandler.Instance.LoadScene(2);
+            StartCoroutine(FinishDialog());
         else
             ChangeText();
 
+    }
+
+    private IEnumerator FinishDialog()
+    {
+        AnimationPlayer animationPlayer = Camera.main.GetComponentInChildren<AnimationPlayer>();
+
+        if(animationPlayer == null)
+        {
+            Debug.LogError("CharacterDialog::Unable to get the animation player so the animation will not be played");
+            yield break;
+        }
+
+        _narrationCanvas.SetActive(false);
+
+        yield return StartCoroutine(animationPlayer.PlayAnimationClipRoutine()); // Wait until the video has finished playing
+        Debug.Log("Finished playing animation, loading the next scene with 3s delay...");
+
+        yield return new WaitForSecondsRealtime(3.0f);
+
+        SceneHandler.Instance.LoadScene(2);
     }
 }

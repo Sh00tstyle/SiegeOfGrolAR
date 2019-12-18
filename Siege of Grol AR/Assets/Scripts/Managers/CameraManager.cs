@@ -100,10 +100,14 @@ public class CameraManager : Singleton<CameraManager>
             Touch secondTouch = Input.GetTouch(1);
 
             Vector2 distanceVector = firstTouch.position - secondTouch.position;
+
+            if (Mathf.Approximately(_previousTouchDistance, 0.0f))
+                _previousTouchDistance = distanceVector.magnitude;
+
             float difference = _previousTouchDistance - distanceVector.magnitude;
 
-            if(!Mathf.Approximately(difference, 0.0f)) // Ignore differences that are (almost) zero
-                _distance += difference * 0.005f;
+            if (!Mathf.Approximately(difference, 0.0f)) // Ignore differences that are (almost) zero
+            _distance += difference * 0.005f;
 
             _previousTouchDistance = distanceVector.magnitude;
         }

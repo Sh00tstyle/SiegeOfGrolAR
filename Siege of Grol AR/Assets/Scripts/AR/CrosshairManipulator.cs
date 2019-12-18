@@ -76,7 +76,7 @@ public class CrosshairManipulator : Manipulator
     private void ManipulateExistingObject()
     {
         RaycastHit hit;
-        Ray ray = _firstPersonCamera.ScreenPointToRay(new Vector3(Screen.width * 0.5f, 0.0f, 0.0f)); // Middle of the screen
+        Ray ray = _firstPersonCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f)); // Middle of the screen
 
         if (Physics.Raycast(ray, out hit))
         {
@@ -106,7 +106,7 @@ public class CrosshairManipulator : Manipulator
 
     private void UpdateLineRendererPositions()
     {
-        _manipulationLineRenderer.SetPosition(0, _firstPersonCamera.ScreenToWorldPoint(new Vector3(0.5f, 0.0f, 0.5f))); // The ray should come out at the bottom of the screen
+        _manipulationLineRenderer.SetPosition(0, _firstPersonCamera.ScreenToWorldPoint(new Vector3(0.5f, 0.0f, 0.0f))); // The ray should come out at the bottom of the screen
         _manipulationLineRenderer.SetPosition(1, _currentManipulationTransform.position);
     }
 
