@@ -24,8 +24,6 @@ public class AddPartScript : MonoBehaviour
 
     public GameObject PanelWrongPart;
     public GameObject PanelCompletion;
-    public GameObject CrossHair;
-    public GameObject ManipulationButton;
 
     [SerializeField]
     private GameObject CanonUnTextured;
@@ -34,96 +32,119 @@ public class AddPartScript : MonoBehaviour
 
     int ObjectIndex = 0;
 
-    
-
-    //private GameObject manipulator;
-
-    //GameObject CrosshairManipulator;
-    //CrosshairManipulator scriptCrossMani;
-
     void OnCollisionEnter(Collision col)
     {
-
-        //CrosshairManipulator = GameObject.Find("CrosshairManipulator");
-        //scriptCrossMani = CrosshairManipulator.GetComponent<CrosshairManipulator>();
-
-        if (ObjectIndex == 0 && col.gameObject == PartOrder[ObjectIndex])
+        bool isCorrectObject = col.gameObject == PartOrder[ObjectIndex];
+        if (isCorrectObject)
         {
+            //Plaatsen
 
 
-            BarrelTextured.SetActive(true);
-            BarrelUnTextured.SetActive(false);
-            col.transform.parent.gameObject.SetActive(false);
-            Destroy(col.gameObject);
-            //col.gameObject.transform.parent.SetParent(CanonUnTextured.transform);
-            // scriptCrossMani._manipulationLineRenderer.enabled = (false);
-            Debug.Log("Part 1 detected! +1 to ObjectIndex");
-
-            ObjectIndex++;
+            if (ObjectIndex == 0)
+            {
+                // Part 0
+                BarrelTextured.SetActive(true);
+                BarrelUnTextured.SetActive(false);
+                Debug.Log("Part 1 detected! +1 to ObjectIndex");
+            }
+            else if (ObjectIndex == 1)
+            {
+                CartTextured.SetActive(true);
+                CartUnTextured.SetActive(false);
+                Debug.Log("Part 2 detected! +1 to ObjectIndex");
+            }
+            else if (ObjectIndex == 2)
+            {
+                Wheel1Textured.SetActive(true);
+                Wheel1UnTextured.SetActive(false);
+                Wheel2Textured.SetActive(true);
+                Wheel2UnTextured.SetActive(false);
+                Wheel3Textured.SetActive(true);
+                Wheel3UnTextured.SetActive(false);
+                Wheel4Textured.SetActive(true);
+                Wheel4UnTextured.SetActive(false);
+                Debug.Log("Part 3 detected! +1 to ObjectIndex");
+                Invoke("CompletedAssembly", 2.0f);
+                //SceneHandler.Instance.LoadSceneWithDelay(0, 3.0f);
+            }
+            if (ObjectIndex < PartOrder.Length)
+            {
+                ObjectIndex++;
+                col.transform.parent.gameObject.SetActive(false);
+                Destroy(col.gameObject);
+            }    
         }
-        else if (ObjectIndex == 0 && col.gameObject != PartOrder[ObjectIndex])
+        else
         {
+            // Error
             Debug.Log("This is the wrong part");
             PanelWrongPart.SetActive(true);
         }
 
+        //    if (ObjectIndex == 0 && col.gameObject == PartOrder[ObjectIndex])
+        //    {
 
+        //        BarrelTextured.SetActive(true);
+        //        BarrelUnTextured.SetActive(false);
+        //        col.transform.parent.gameObject.SetActive(false);
+        //        Destroy(col.gameObject);
+        //        Debug.Log("Part 1 detected! +1 to ObjectIndex");
+        //    }
+        //    else if (ObjectIndex == 0 && col.gameObject != PartOrder[ObjectIndex])
+        //    {
+        //        Debug.Log("This is the wrong part");
+        //        PanelWrongPart.SetActive(true);
+        //        CrossHair.SetActive(false);
+        //        ManipulationButton.SetActive(false);
+        //    }
 
-        if (ObjectIndex == 1 && col.gameObject == PartOrder[ObjectIndex])
-        {
-            CartTextured.SetActive(true);
-            CartUnTextured.SetActive(false);
-            col.transform.parent.gameObject.SetActive(false);
-            Destroy(col.gameObject);
-            //col.gameObject.transform.parent.SetParent(CanonUnTextured.transform);
+        //    if (ObjectIndex == 1 && col.gameObject == PartOrder[ObjectIndex])
+        //    {
 
-            Debug.Log("Part 2 detected! +1 to ObjectIndex");
+        //        CartTextured.SetActive(true);
+        //        CartUnTextured.SetActive(false);
+        //        col.transform.parent.gameObject.SetActive(false);
+        //        Destroy(col.gameObject);
+        //        Debug.Log("Part 2 detected! +1 to ObjectIndex");
+        //    }
+        //    else if (ObjectIndex == 1 && col.gameObject != PartOrder[ObjectIndex])
+        //    {
+        //        Debug.Log("This is the wrong part (2)");
+        //        PanelWrongPart.SetActive(true);
+        //        CrossHair.SetActive(false);
+        //        ManipulationButton.SetActive(false);
+        //    }
 
-            ObjectIndex++;
-        }
-        else if (ObjectIndex == 1 && !col.gameObject != PartOrder[ObjectIndex])
-        {
-            Debug.Log("This is the wrong part (2)");
-            PanelWrongPart.SetActive(true);
-        }
+        //    if (ObjectIndex == 2 && col.gameObject == PartOrder[ObjectIndex])
+        //    {
 
-        if (ObjectIndex == 2 && col.gameObject == PartOrder[ObjectIndex])
-        {
-            Wheel1Textured.SetActive(true);
-            Wheel1UnTextured.SetActive(false);
-            Wheel2Textured.SetActive(true);
-            Wheel2UnTextured.SetActive(false);
-            Wheel3Textured.SetActive(true);
-            Wheel3UnTextured.SetActive(false);
-            Wheel4Textured.SetActive(true);
-            Wheel4UnTextured.SetActive(false);
-            col.transform.parent.gameObject.SetActive(false);
-            Destroy(col.gameObject);
-            //col.gameObject.transform.parent.SetParent(CanonUnTextured.transform);
-            
+        //        Wheel1Textured.SetActive(true);
+        //        Wheel1UnTextured.SetActive(false);
+        //        Wheel2Textured.SetActive(true);
+        //        Wheel2UnTextured.SetActive(false);
+        //        Wheel3Textured.SetActive(true);
+        //        Wheel3UnTextured.SetActive(false);
+        //        Wheel4Textured.SetActive(true);
+        //        Wheel4UnTextured.SetActive(false);
+        //        col.transform.parent.gameObject.SetActive(false);
+        //        Destroy(col.gameObject);
+        //        Debug.Log("Part 3 detected! +1 to ObjectIndex");
+        //        Invoke("CompletedAssembly", 2.0f);
+        //        SceneHandler.Instance.LoadSceneWithDelay(0, 3.0f);
+        //    }
+        //    else if (ObjectIndex == 2 && col.gameObject != PartOrder[ObjectIndex])
+        //    {
+        //        Debug.Log("This is the wrong part (3)");
+        //        PanelWrongPart.SetActive(true);
+        //        CrossHair.SetActive(false);
+        //        ManipulationButton.SetActive(false);
+        //    }
 
-            Debug.Log("Part 3 detected! +1 to ObjectIndex");
-
-            ObjectIndex++;
-
-            SceneHandler.Instance.LoadSceneWithDelay(0, 3.0f);
-        }
-        else if (ObjectIndex == 2 && !col.gameObject != PartOrder[ObjectIndex])
-        {
-            Debug.Log("This is the wrong part (3)");
-            PanelWrongPart.SetActive(true);
-        }
-
-        if (ObjectIndex == 3)
-        {
-            Invoke("CompletedAssembly", 2.0f);
-        }
+        //    ObjectIndex++;
     }
 
-    void CompletedAssembly ()
+    void CompletedAssembly()
     {
         PanelCompletion.SetActive(true);
-        CrossHair.SetActive(false);
-        ManipulationButton.SetActive(false);
     }
 }
