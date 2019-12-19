@@ -79,6 +79,7 @@ public class CameraManager : Singleton<CameraManager>
         _distance = pZoomInDistance;
         _orbitTarget = pFocusObject;
 
+        _objectFocusSequence = focusSwitchSequence;
         return focusSwitchSequence;
     }
 
@@ -100,10 +101,14 @@ public class CameraManager : Singleton<CameraManager>
             Touch secondTouch = Input.GetTouch(1);
 
             Vector2 distanceVector = firstTouch.position - secondTouch.position;
+
+            if (Mathf.Approximately(_previousTouchDistance, 0.0f))
+                _previousTouchDistance = distanceVector.magnitude;
+
             float difference = _previousTouchDistance - distanceVector.magnitude;
 
-            if(!Mathf.Approximately(difference, 0.0f)) // Ignore differences that are (almost) zero
-                _distance += difference * 0.005f;
+            if (!Mathf.Approximately(difference, 0.0f)) // Ignore differences that are (almost) zero
+            _distance += difference * 0.005f;
 
             _previousTouchDistance = distanceVector.magnitude;
         }
@@ -197,22 +202,5 @@ public class CameraManager : Singleton<CameraManager>
         {
             return _rotationXAxis;
         }
-    }
-
-    // DEBUG
-    public void ActivateDemoFocus()
-    {
-        //StartCoroutine(PlayDemoSquencesRoutine());
-    }
-
-    private IEnumerator PlayDemoSquencesRoutine()
-    {
-        yield return new WaitForSecondsRealtime(1.0f);
-
-        yield return _objectFocusSequence = SwitchFocusObject(GameManager.Instance.CurrentLocationTransform, 1.5f, 3.0f, 10.0f, Ease.Linear);
-
-        yield return new WaitForSecondsRealtime(3.0f);
-
-        yield return _objectFocusSequence = SwitchFocusObject(NavigationManager.Instance.PlayerTransform, 1.5f, 3.0f, 10.0f, Ease.Linear);
     }
 }

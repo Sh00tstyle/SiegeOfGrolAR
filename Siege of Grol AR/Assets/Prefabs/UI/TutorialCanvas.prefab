@@ -301,6 +301,7 @@ MonoBehaviour:
   _fadeOutTextDuration: 0.1
   _fadeInTextEase: 2
   _fadeOutTextEase: 2
+  _locationText: This is your destination
   _highlightCircle: {fileID: 2794901219036808581}
   _clickRegion: {fileID: 2794901219036808580}
   _punchScale: {x: 0.02, y: 0.02}
@@ -447,7 +448,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2794901218943914286}
-        m_MethodName: HighlightClicked
+        m_MethodName: CompleteTutorial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

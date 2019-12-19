@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
 
     private Location _currentLocation;
     private GameObject _currentLocationObject;
+    private Transform _currentLocationModelTransform;
     private int _currentLocationIndex;
 
     private void Awake()
@@ -82,9 +83,16 @@ public class GameManager : Singleton<GameManager>
         _currentLocation = _locationDatabase.locations[pIndex]; // Store the latest created location as current one
 
         Vector3 locationPos = NavigationManager.Instance.GetWorldPosFromGPS(_currentLocation.latitude, _currentLocation.longitude);
-        locationPos.y = 0.1f;
-
+        locationPos.y = 0.0f;
+         
         _currentLocationObject = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity);
+
+        Transform[] childTransforms = _currentLocationObject.GetComponentsInChildren<Transform>();
+
+        if (childTransforms.Length > 1)
+            _currentLocationModelTransform = childTransforms[1];
+        else
+            _currentLocationModelTransform = null;
     }
 
     private void HandleLocationInput()
@@ -125,6 +133,9 @@ public class GameManager : Singleton<GameManager>
     {
         get
         {
+            if (_currentLocationModelTransform != null)
+                return _currentLocationModelTransform;
+            
             return _currentLocationObject.transform;
         }
     }

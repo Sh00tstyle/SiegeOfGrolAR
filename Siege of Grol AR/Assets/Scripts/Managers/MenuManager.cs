@@ -25,12 +25,12 @@ public class MenuManager : Singleton<MenuManager>
 
     private void Awake()
     {
-        if (_startingMenu != null)
+        if (_startingMenu != null && ProgressHandler.Instance.StoryProgressIndex <= 0)
         {
             NewMenuRoot(_startingMenu);
             GoToMenu(_startingMenu);
         }
-        else
+        else if(_startingMenu == null)
         {
             Debug.LogWarning("MenuManager::Unable to initialize starting menu, the starting menu was null! This could lead to errors in the appliaction.");
         }

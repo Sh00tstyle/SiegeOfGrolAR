@@ -11,15 +11,6 @@ public class ProgressHandler : Singleton<ProgressHandler>
         SetDontDestroyOnLoad();
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Return))
-        {
-            IncreaseStoryProgress();
-
-            Debug.Log("Increased story progress to " + _StoryProgress);
-        }
-    }
     public void IncreaseStoryProgress()
     {
         if(_StoryProgress < (int)Progress.Finish)

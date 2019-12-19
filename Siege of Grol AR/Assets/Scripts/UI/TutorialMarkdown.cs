@@ -19,6 +19,7 @@ public class TutorialMarkdown : MonoBehaviour
     [SerializeField] float _fadeInTextDuration, _fadeOutTextDuration;
     [SerializeField] Ease _fadeInTextEase, _fadeOutTextEase;
 
+
     [Header("Circle")]
     [SerializeField] private RectTransform _highlightCircle;
     [SerializeField] private Button _clickRegion;
@@ -27,6 +28,15 @@ public class TutorialMarkdown : MonoBehaviour
     [SerializeField] private Ease _fadeInEase = Ease.InSine, _fadeOutEase = Ease.InSine, _moveInEase = Ease.InSine, _moveOutEase = Ease.InSine;
     [SerializeField] private float _fadeInDuration = 1, _fadeOutDuration = 2, _moveInDuration = 6, _moveOutDuration;
 
+
+    private string _locationText
+    {
+        get
+        {
+            string characterName = ((Progress)ProgressHandler.Instance.StoryProgressIndex).ToString();
+            return string.Format("You are tasked to visit the {0} at the {1}", characterName, GameManager.Instance.CurrentLocation.locationName);
+        }
+    }
 
     private Tween _activeTween;
 
@@ -58,26 +68,16 @@ public class TutorialMarkdown : MonoBehaviour
         return Vector3.Distance(pObject, CameraManager.Instance.MainCamera.gameObject.transform.position);
     }
 
-    public void HighlightClicked()
-    {
-        // Enable camera movement
-        CameraManager.Instance.gameObject.SetActive(true);
-        ResetCircle();
-    }
-
     public void UpdatePosition(Transform pLocation, bool pBounce = true, bool pBounceInfinite = true, int pBounceLoops = 0, float pPunchDelay = 2)
     {
         // If bottom menu is activated, dismiss it.
-        if (_bottomMenu.gameObject.activeSelf)
+        if (_bottomMenu != null && _bottomMenu.gameObject.activeSelf)
             _bottomMenu.HideMenu(_dissmissAnimation);
 
-        // Disable camera movement
-        CameraManager.Instance.gameObject.SetActive(false);
-
-
-        // Wait for Camera to move and focus on object
+        // Now navigate from player to the location
         CameraManager.Instance.SwitchFocusObject(pLocation, 5, 5, 3, _fadeInEase).OnComplete(() =>
         {
+            // Tell the player to go there
             //Translate Vector3 WorldPosition to Vector2 UI Space
             Vector2 CanvasPosition = GetCanvasPosition(pLocation.position);
 
@@ -98,10 +98,10 @@ public class TutorialMarkdown : MonoBehaviour
             // Get scale
             float distance = _defaultScale / GetCameraDistanceToObject(pLocation.position) + 0.2f;
 
-            _activeTween = FocusCircle(true, CanvasPosition, distance).OnComplete(() =>
+            FocusCircle(true, CanvasPosition, distance).OnComplete(() =>
             {
                 //Move Text to location and add text
-                _activeTween = FadeText(true, CanvasPosition, distance, "Click here you piece of shit");
+                _activeTween = FadeText(true, CanvasPosition, distance, _locationText);
                 // Bounce if neccesary
                 if (pBounce) _activeTween = Punch(_highlightCircle, pBounceInfinite, pBounceLoops).SetDelay(pPunchDelay);
 
@@ -110,6 +110,8 @@ public class TutorialMarkdown : MonoBehaviour
             });
         });
     }
+
+
 
 
     private Tween FadeText(bool pFadeIn, Vector2 pPosition, float pDistance, string pText = null)
@@ -137,27 +139,26 @@ public class TutorialMarkdown : MonoBehaviour
         return focusSequence;
     }
 
-    private void ResetCircle()
+    public void CompleteTutorial()
     {
         _activeTween.Kill();
 
-        // Disable user input
+        // Disable user input for the click region
         _clickRegion.interactable = false;
 
         FadeText(false, Vector3.zero, 0, null);
         FocusCircle(false, Vector2.zero, _defaultScale).OnComplete(() =>
         {
-            // Disable gameObjects
+            // Disable tutorial gameObjects
             _highlightCircle.gameObject.SetActive(false);
             _textRect.gameObject.SetActive(false);
 
             _tutorialRunning = false;
+
+            // Move back to the player
+            CameraManager.Instance.SwitchFocusObject(NavigationManager.Instance.PlayerTransform, 5, 5, 3, _fadeInEase);
         });
-
-
-
     }
-
 
     private Tween Punch(RectTransform pRect, bool pBounceInfinite, int pBounceLoops)
     {

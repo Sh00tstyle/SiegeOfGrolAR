@@ -108,18 +108,19 @@ public class NavigationManager : Singleton<NavigationManager>
         Vector3[] remaining = new Vector3[_receivedPath.Length + 2]; // The path and one extra for the player and the destination
         Vector3[] navigated = new Vector3[1]; // Only one for the player
 
-        // Extract data from receivedPath
-        Vector3 playerPos = _playerTransform.transform.position;
-        playerPos.y = 0.05f;
-        pDestinationPos.y = 0.05f;
-
         remaining[0] = pDestinationPos;
-        remaining[remaining.Length - 1] = playerPos;
+        remaining[remaining.Length - 1] = _playerTransform.position;
 
         for (int i = 0; i < _receivedPath.Length; ++i)
             remaining[i + 1] = _receivedPath[i];
 
-        navigated[0] = playerPos;
+        navigated[0] = _playerTransform.position;
+
+        for (int i = 0; i < remaining.Length; ++i)
+            remaining[i].y = 0.05f;
+
+        for (int i = 0; i < navigated.Length; ++i)
+            navigated[i].y = 0.05f;
 
         // Apply arrays to line renderers
         SetPath(_remainingPathLR, remaining);
@@ -180,11 +181,6 @@ public class NavigationManager : Singleton<NavigationManager>
                 }
 
                 _receivedPath = GeometryToVector3(response.features[0]);
-                SetPath(_remainingPathLR, _receivedPath);
-
-                _navigatedPathLR.positionCount = 2;
-                _navigatedPathLR.SetPosition(0, _receivedPath[0]);
-                _navigatedPathLR.SetPosition(1, _receivedPath[0]);
 
                 Vector3 destinationPos = GetWorldPosFromGPS(pEnd.latitude, pEnd.longitude);
 
@@ -239,8 +235,11 @@ public class NavigationManager : Singleton<NavigationManager>
         while (true)
         {
             // Always update the player position
-            _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _playerTransform.position);
-            _navigatedPathLR.SetPosition(0, _playerTransform.position);
+            Vector3 playerPos = _playerTransform.position;
+            playerPos.y = 0.05f;
+
+            _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, playerPos);
+            _navigatedPathLR.SetPosition(0, playerPos);
 
             // Update the line renderer if needed
             if (_remainingPathLR.positionCount < 2)
@@ -250,7 +249,7 @@ public class NavigationManager : Singleton<NavigationManager>
             }
 
             // Check if the line renderer segments have to be updated
-            int closestPathIndex = GetClosestPathIndex(_playerTransform.position, _currentNavigationIndex);
+            int closestPathIndex = GetClosestPathIndex(playerPos, _currentNavigationIndex);
             int difference = _currentNavigationIndex - closestPathIndex;
 
             currentSegmentPosition = _receivedPath[closestPathIndex]; // Take the position in front of the player (player is last)
@@ -264,7 +263,7 @@ public class NavigationManager : Singleton<NavigationManager>
                     _navigatedPathLR.SetPosition(_navigatedPathLR.positionCount - 1, currentSegmentPosition);
 
                     --_remainingPathLR.positionCount;
-                    _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _playerTransform.position);
+                    _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, playerPos);
 
                     if (_currentNavigationIndex > 0)
                         --_currentNavigationIndex;
@@ -284,7 +283,7 @@ public class NavigationManager : Singleton<NavigationManager>
                     _navigatedPathLR.SetPosition(_navigatedPathLR.positionCount - 1, _receivedPath[i]); // Always append the position
                 }
 
-                _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, _playerTransform.position);
+                _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, playerPos);
                 _currentNavigationIndex = closestPathIndex;
             }
 

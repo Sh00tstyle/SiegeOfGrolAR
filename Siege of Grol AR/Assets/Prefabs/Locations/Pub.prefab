@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8808840483515787742}
   - component: {fileID: 6837461148264937461}
   - component: {fileID: 1958915755839339042}
-  - component: {fileID: 706097500386812732}
   m_Layer: 0
   m_Name: Pub
   m_TagString: Location
@@ -94,17 +93,3 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &706097500386812732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254016986255830106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e94bc3fcf7fd7ad499e8ece056b31eb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _narrative: []
-  _hint: 
