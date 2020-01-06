@@ -18,6 +18,9 @@ public class AnimationPlayer : MonoBehaviour
     private VideoPlayer _videoPlayer;
     private Coroutine _preparationRoutine;
 
+    private bool _shouldSkipVideo;
+    private float _skipTimer;
+
     private void Awake()
     {
         Camera mainCamera = Camera.main;
@@ -26,6 +29,11 @@ public class AnimationPlayer : MonoBehaviour
         transform.parent = mainCamera.transform; // Parent to the camera for easier (but not ideal) access from other scripts
 
         InitializeVideoPlayer();
+    }
+
+    private void Update()
+    {
+        CheckForSkip();
     }
 
     public void PlayAnimation()
@@ -54,7 +62,15 @@ public class AnimationPlayer : MonoBehaviour
         _videoPlayer.Play();
 
         while(_videoPlayer.isPlaying)
+        {
+            if (_shouldSkipVideo)
+            {
+                _videoPlayer.Stop();
+                break;
+            }
+            
             yield return null;
+        }
 
         _background.SetActive(false);
         _arCanvas.SetActive(true);
@@ -75,6 +91,8 @@ public class AnimationPlayer : MonoBehaviour
         _videoPlayer.renderMode = UnityEngine.Video.VideoRenderMode.CameraNearPlane;
         _videoPlayer.targetCameraAlpha = 1.0f;
         _videoPlayer.isLooping = false;
+
+        _shouldSkipVideo = false;
 
         PrepareAnimationClip();
     }
@@ -97,5 +115,23 @@ public class AnimationPlayer : MonoBehaviour
 
         Debug.Log("Successfully prepared clip " + _animationClip.name);
         _preparationRoutine = null;
+    }
+
+    private void CheckForSkip()
+    {
+        if (!_videoPlayer.isPlaying)
+            return;
+
+        if (Input.GetMouseButton(0) && !_shouldSkipVideo)
+        {
+            _skipTimer += Time.deltaTime;
+
+            if (_skipTimer >= 3.0f)
+                _shouldSkipVideo = true;
+        }
+        else if (Input.GetMouseButtonUp(0) && !_shouldSkipVideo)
+        {
+            _skipTimer = 0.0f;
+        }
     }
 }
