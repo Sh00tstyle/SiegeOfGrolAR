@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class MenuManager : Singleton<MenuManager>
 {
     [SerializeField]
-    private MenuBehaviour _startingMenu, _narrationMenu, _popupPrefab, _mainMenu;
+    private MenuBehaviour _startingMenu, _popupPrefab, _mainMenu, _priestDecisionMenu, _finalLetterMenu;
 
     [SerializeField]
     private MenuAnimation _defaultAnimation, _popupAnimation;
@@ -25,6 +25,9 @@ public class MenuManager : Singleton<MenuManager>
 
     private void Awake()
     {
+        _menuStack = new Stack<MenuBehaviour>();
+        _animationStack = new Stack<MenuAnimation>();
+
         if (_startingMenu != null && ProgressHandler.Instance.StoryProgressIndex <= 0)
         {
             NewMenuRoot(_startingMenu);
@@ -71,15 +74,20 @@ public class MenuManager : Singleton<MenuManager>
 
         switch (pMenu)
         {
-            case MenuTypes.NARRATIONMENU:
-                targetMenu = _narrationMenu;
-                break;
-
             case MenuTypes.STARTINGMENU:
                 targetMenu = _startingMenu;
                 break;
+
             case MenuTypes.MAINMENU:
                 targetMenu = _mainMenu;
+                break;
+
+            case MenuTypes.PRIESTDECISIONMENU:
+                targetMenu = _priestDecisionMenu;
+                break;
+
+            case MenuTypes.FINALLETTERMENU:
+                targetMenu = _finalLetterMenu;
                 break;
         }
 
@@ -137,15 +145,8 @@ public class MenuManager : Singleton<MenuManager>
     {
         _rootMenu = pTargetRoot;
 
-        if (_menuStack == null)
-            _menuStack = new Stack<MenuBehaviour>();
-        else
-            _menuStack.Clear();
-
-        if (_animationStack == null)
-            _animationStack = new Stack<MenuAnimation>();
-        else
-            _animationStack.Clear();
+        _menuStack.Clear();
+        _animationStack.Clear();
     }
 
     private void AnimateMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation = null)
@@ -153,8 +154,10 @@ public class MenuManager : Singleton<MenuManager>
         switch (pAnimation.animation)
         {
             case AnimationOption.INSTANT:
+                if(LastMenu != null)
+                    LastMenu.gameObject.SetActive(false);
+
                 pTargetMenu.gameObject.SetActive(true);
-                LastMenu.gameObject.SetActive(true);
                 break;
 
             case AnimationOption.FADEIN:

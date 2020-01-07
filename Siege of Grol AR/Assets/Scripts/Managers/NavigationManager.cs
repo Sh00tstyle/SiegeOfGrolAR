@@ -55,6 +55,12 @@ public class NavigationManager : Singleton<NavigationManager>
         _convertedReferencePos = Util.GPS2MapPoint(_referenceLatitude, _referenceLongitude);
     }
 
+    public void SetLineRendererVisibility(bool pRemainingLR, bool pNavigatedLR)
+    {
+        _remainingPathLR.enabled = pRemainingLR;
+        _navigatedPathLR.enabled = pNavigatedLR;
+    }
+
     public void RequestNewNavigationPath()
     {
         GPSLocation reconstructedPlayerLocation = GetGPSFromWorldPos(_playerTransform.position);

@@ -7,7 +7,10 @@ using UnityEngine.Video;
 public class AnimationPlayer : MonoBehaviour
 {
     [SerializeField]
-    private VideoClip _animationClip;
+    private VideoClip _priestClip;
+
+    [SerializeField]
+    private VideoClip _cannonCommanderClip;
 
     [SerializeField]
     private GameObject _background;
@@ -47,13 +50,13 @@ public class AnimationPlayer : MonoBehaviour
 
         if (!_videoPlayer.isPrepared)
         {
-            Debug.LogError("AnimationPlayer::Unable to play animation clip " + _animationClip.name + ", the clip has not been prepared yet!");
+            Debug.LogError("AnimationPlayer::Unable to play animation clip " + _cannonCommanderClip.name + ", the clip has not been prepared yet!");
             yield break;
         }
 
         if(_videoPlayer.isPlaying)
         {
-            Debug.LogError("AnimationPlayer::Unable to play animation clip " + _animationClip.name + ", a clip is already playing on the VideoPlayer");
+            Debug.LogError("AnimationPlayer::Unable to play animation clip " + _cannonCommanderClip.name + ", a clip is already playing on the VideoPlayer");
             yield break;
         }
 
@@ -85,14 +88,22 @@ public class AnimationPlayer : MonoBehaviour
             return;
         }
 
+        Progress storyProgress = (Progress)ProgressHandler.Instance.StoryProgressIndex;
+
         _videoPlayer.playOnAwake = false;
-        _videoPlayer.clip = _animationClip;
 
         _videoPlayer.renderMode = UnityEngine.Video.VideoRenderMode.CameraNearPlane;
         _videoPlayer.targetCameraAlpha = 1.0f;
         _videoPlayer.isLooping = false;
 
         _shouldSkipVideo = false;
+
+        if (storyProgress == Progress.Priest) // Preist
+            _videoPlayer.clip = _priestClip;
+        else if (storyProgress == Progress.CannonCommander)
+            _videoPlayer.clip = _cannonCommanderClip;
+        else
+            return; // No video is needed for the current location
 
         PrepareAnimationClip();
     }
@@ -113,7 +124,7 @@ public class AnimationPlayer : MonoBehaviour
         while (!_videoPlayer.isPrepared)
             yield return null;
 
-        Debug.Log("Successfully prepared clip " + _animationClip.name);
+        Debug.Log("Successfully prepared clip " + _cannonCommanderClip.name);
         _preparationRoutine = null;
     }
 
@@ -122,11 +133,11 @@ public class AnimationPlayer : MonoBehaviour
         if (!_videoPlayer.isPlaying)
             return;
 
-        if (Input.GetMouseButton(0) && !_shouldSkipVideo)
+        if ((Input.GetMouseButton(0) || Input.GetMouseButtonDown(0)) && !_shouldSkipVideo)
         {
             _skipTimer += Time.deltaTime;
 
-            if (_skipTimer >= 3.0f)
+            if (_skipTimer >= 2.0f)
                 _shouldSkipVideo = true;
         }
         else if (Input.GetMouseButtonUp(0) && !_shouldSkipVideo)
