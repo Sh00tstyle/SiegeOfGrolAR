@@ -31,6 +31,8 @@ public class CharacterDialog : MonoBehaviour
 
     private bool _hasPlaced;
 
+    private Coroutine _finishRoutine;
+
     void Awake()
     {
         _hasPlaced = false;
@@ -144,11 +146,10 @@ public class CharacterDialog : MonoBehaviour
     {
         _currentNarationIndex++;
 
-        if (_currentNarationIndex >= _currentNaration.Length)
-            StartCoroutine(FinishDialog());
-        else
+        if (_currentNarationIndex >= _currentNaration.Length && _finishRoutine == null)
+            _finishRoutine = StartCoroutine(FinishDialog());
+        else if(_currentNarationIndex < _currentNaration.Length)
             ChangeText();
-
     }
 
     private IEnumerator FinishDialog()
@@ -158,6 +159,7 @@ public class CharacterDialog : MonoBehaviour
         if(animationPlayer == null)
         {
             Debug.LogError("CharacterDialog::Unable to get the animation player so the animation will not be played");
+            _finishRoutine = null;
             yield break;
         }
 
@@ -166,8 +168,9 @@ public class CharacterDialog : MonoBehaviour
         yield return StartCoroutine(animationPlayer.PlayAnimationClipRoutine()); // Wait until the video has finished playing
         Debug.Log("Finished playing animation, loading the next scene...");
 
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(1.0f);
 
+        _finishRoutine = null;
         SceneHandler.Instance.LoadScene(2);
     }
 }

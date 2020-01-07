@@ -117,10 +117,10 @@ public class NavigationManager : Singleton<NavigationManager>
         navigated[0] = _playerTransform.position;
 
         for (int i = 0; i < remaining.Length; ++i)
-            remaining[i].y = 0.05f;
+            remaining[i].y = 0.01f;
 
         for (int i = 0; i < navigated.Length; ++i)
-            navigated[i].y = 0.05f;
+            navigated[i].y = 0.01f;
 
         // Apply arrays to line renderers
         SetPath(_remainingPathLR, remaining);
@@ -236,7 +236,7 @@ public class NavigationManager : Singleton<NavigationManager>
         {
             // Always update the player position
             Vector3 playerPos = _playerTransform.position;
-            playerPos.y = 0.05f;
+            playerPos.y = 0.01f;
 
             _remainingPathLR.SetPosition(_remainingPathLR.positionCount - 1, playerPos);
             _navigatedPathLR.SetPosition(0, playerPos);
@@ -307,7 +307,7 @@ public class NavigationManager : Singleton<NavigationManager>
         for (int i = 0; i <= pMaxIndex; ++i)
         {
             currentPosition = _receivedPath[i];
-            currentPosition.y = 0.1f;
+            currentPosition.y = 0.0f;
 
             distanceVector = currentPosition - pPlayerPosition;
             float sqrDistance = distanceVector.sqrMagnitude;

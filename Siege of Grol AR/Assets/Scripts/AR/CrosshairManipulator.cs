@@ -109,7 +109,10 @@ public class CrosshairManipulator : Manipulator
 
     private void UpdateLineRendererPositions()
     {
-        _manipulationLineRenderer.SetPosition(0, _firstPersonCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.0f, 0.0f))); // The ray should come out at the bottom of the screen
+        Vector3 cameraPos = _firstPersonCamera.transform.position;
+        cameraPos -= _firstPersonCamera.transform.up;
+
+        _manipulationLineRenderer.SetPosition(0, cameraPos); // The ray should come out at the bottom of the screen
         _manipulationLineRenderer.SetPosition(1, _currentManipulationTransform.position);
     }
 

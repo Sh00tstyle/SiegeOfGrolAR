@@ -96,4 +96,10 @@ public class AddPartScript : MonoBehaviour
     {
         PanelCompletion.SetActive(true);
     }
+
+    public void DismissSuccessMessage()
+    {
+        ProgressHandler.Instance.IncreaseStoryProgress();
+        SceneHandler.Instance.LoadSceneWithDelay(0, 1.0f);
+    }
 }
