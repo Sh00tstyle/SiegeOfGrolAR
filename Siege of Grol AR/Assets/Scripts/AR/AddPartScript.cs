@@ -8,19 +8,19 @@ public class AddPartScript : MonoBehaviour
     //public GameObject Part2;
     //public GameObject Part3;
 
-    public GameObject BarrelTextured;
-    public GameObject CartTextured;
-    public GameObject Wheel1Textured;
-    public GameObject Wheel2Textured;
-    public GameObject Wheel3Textured;
-    public GameObject Wheel4Textured;
+    public GameObject Wheels;
+    public GameObject Trail;
+    public GameObject Axle;
+    public GameObject Reinforce;
+    public GameObject Chase;
+    public GameObject Cascable;
 
-    public GameObject BarrelUnTextured;
-    public GameObject CartUnTextured;
-    public GameObject Wheel1UnTextured;
-    public GameObject Wheel2UnTextured;
-    public GameObject Wheel3UnTextured;
-    public GameObject Wheel4UnTextured;
+    public GameObject WheelsUnTextured;
+    public GameObject TrailUnTextured;
+    public GameObject AxleUnTextured;
+    public GameObject ReinforceUnTextured;
+    public GameObject ChaseUnTextured;
+    public GameObject CascableUnTextured;
 
     public GameObject PanelWrongPart;
     public GameObject PanelCompletion;
@@ -38,34 +38,44 @@ public class AddPartScript : MonoBehaviour
         if (isCorrectObject)
         {
             //Plaatsen
-
-
             if (ObjectIndex == 0)
             {
                 // Part 0
-                BarrelTextured.SetActive(true);
-                BarrelUnTextured.SetActive(false);
+                Wheels.SetActive(true);
+                WheelsUnTextured.SetActive(false);
                 Debug.Log("Part 1 detected! +1 to ObjectIndex");
             }
             else if (ObjectIndex == 1)
             {
-                CartTextured.SetActive(true);
-                CartUnTextured.SetActive(false);
+                Trail.SetActive(true);
+                TrailUnTextured.SetActive(false);
                 Debug.Log("Part 2 detected! +1 to ObjectIndex");
             }
             else if (ObjectIndex == 2)
             {
-                Wheel1Textured.SetActive(true);
-                Wheel1UnTextured.SetActive(false);
-                Wheel2Textured.SetActive(true);
-                Wheel2UnTextured.SetActive(false);
-                Wheel3Textured.SetActive(true);
-                Wheel3UnTextured.SetActive(false);
-                Wheel4Textured.SetActive(true);
-                Wheel4UnTextured.SetActive(false);
-                Debug.Log("Part 3 detected! +1 to ObjectIndex");
-                Invoke("CompletedAssembly", 2.0f);
+                Axle.SetActive(true);
+                AxleUnTextured.SetActive(false);
+                Debug.Log("Part 3 detected! +1 to ObjectIndex");               
                 //SceneHandler.Instance.LoadSceneWithDelay(0, 3.0f);
+            }
+            else if (ObjectIndex == 3)
+            {
+                Reinforce.SetActive(true);
+                ReinforceUnTextured.SetActive(false);
+                Debug.Log("Part 4 detected! +1 to ObjectIndex");
+            }
+            else if (ObjectIndex == 4)
+            {
+                Chase.SetActive(true);
+                ChaseUnTextured.SetActive(false);
+                Debug.Log("Part 5 detected! +1 to ObjectIndex");
+            }
+            else if (ObjectIndex == 5)
+            {
+                Cascable.SetActive(true);
+                CascableUnTextured.SetActive(false);
+                Debug.Log("Part 6 detected! +1 to ObjectIndex");
+                Invoke("CompletedAssembly", 2.0f);
             }
             if (ObjectIndex < PartOrder.Length)
             {
@@ -80,67 +90,6 @@ public class AddPartScript : MonoBehaviour
             Debug.Log("This is the wrong part");
             PanelWrongPart.SetActive(true);
         }
-
-        //    if (ObjectIndex == 0 && col.gameObject == PartOrder[ObjectIndex])
-        //    {
-
-        //        BarrelTextured.SetActive(true);
-        //        BarrelUnTextured.SetActive(false);
-        //        col.transform.parent.gameObject.SetActive(false);
-        //        Destroy(col.gameObject);
-        //        Debug.Log("Part 1 detected! +1 to ObjectIndex");
-        //    }
-        //    else if (ObjectIndex == 0 && col.gameObject != PartOrder[ObjectIndex])
-        //    {
-        //        Debug.Log("This is the wrong part");
-        //        PanelWrongPart.SetActive(true);
-        //        CrossHair.SetActive(false);
-        //        ManipulationButton.SetActive(false);
-        //    }
-
-        //    if (ObjectIndex == 1 && col.gameObject == PartOrder[ObjectIndex])
-        //    {
-
-        //        CartTextured.SetActive(true);
-        //        CartUnTextured.SetActive(false);
-        //        col.transform.parent.gameObject.SetActive(false);
-        //        Destroy(col.gameObject);
-        //        Debug.Log("Part 2 detected! +1 to ObjectIndex");
-        //    }
-        //    else if (ObjectIndex == 1 && col.gameObject != PartOrder[ObjectIndex])
-        //    {
-        //        Debug.Log("This is the wrong part (2)");
-        //        PanelWrongPart.SetActive(true);
-        //        CrossHair.SetActive(false);
-        //        ManipulationButton.SetActive(false);
-        //    }
-
-        //    if (ObjectIndex == 2 && col.gameObject == PartOrder[ObjectIndex])
-        //    {
-
-        //        Wheel1Textured.SetActive(true);
-        //        Wheel1UnTextured.SetActive(false);
-        //        Wheel2Textured.SetActive(true);
-        //        Wheel2UnTextured.SetActive(false);
-        //        Wheel3Textured.SetActive(true);
-        //        Wheel3UnTextured.SetActive(false);
-        //        Wheel4Textured.SetActive(true);
-        //        Wheel4UnTextured.SetActive(false);
-        //        col.transform.parent.gameObject.SetActive(false);
-        //        Destroy(col.gameObject);
-        //        Debug.Log("Part 3 detected! +1 to ObjectIndex");
-        //        Invoke("CompletedAssembly", 2.0f);
-        //        SceneHandler.Instance.LoadSceneWithDelay(0, 3.0f);
-        //    }
-        //    else if (ObjectIndex == 2 && col.gameObject != PartOrder[ObjectIndex])
-        //    {
-        //        Debug.Log("This is the wrong part (3)");
-        //        PanelWrongPart.SetActive(true);
-        //        CrossHair.SetActive(false);
-        //        ManipulationButton.SetActive(false);
-        //    }
-
-        //    ObjectIndex++;
     }
 
     void CompletedAssembly()

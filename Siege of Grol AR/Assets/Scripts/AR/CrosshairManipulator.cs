@@ -25,10 +25,13 @@ public class CrosshairManipulator : Manipulator
     public Transform Part1;
     public Transform Part2;
     public Transform Part3;
+    public Transform Part4;
+    public Transform Part5;
+    public Transform Part6;
 
     private GameObject[] ManiCount;
     private int HowManyMani;
-    private int ManiMax = 3;
+    private int ManiMax = 6;
 
     private bool _hasPlacedPawn;
 
@@ -137,6 +140,9 @@ public class CrosshairManipulator : Manipulator
                 addManipulator(Part1, hit);
                 addManipulator(Part2, hit);
                 addManipulator(Part3, hit);
+                addManipulator(Part4, hit);
+                addManipulator(Part5, hit);
+                addManipulator(Part6, hit);
 
                 // Create an anchor to allow ARCore to track the hitpoint as understanding of
                 // the physical world evolves.
