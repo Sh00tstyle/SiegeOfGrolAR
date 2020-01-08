@@ -196,11 +196,10 @@ public class CharacterDialog : MonoBehaviour
 
     private IEnumerator FinalizeDrunkard()
     {
-        _finishRoutine = null;
-        ProgressHandler.Instance.IncreaseStoryProgress();
-        SceneHandler.Instance.LoadScene(Scenes.Map);
+        yield return new WaitForSecondsRealtime(0.5f);
 
-        yield break;
+        _finishRoutine = null;
+        SceneHandler.Instance.LoadScene(Scenes.DrunkardInteraction);
     }
 
     private IEnumerator FinalizeCannonCommander()

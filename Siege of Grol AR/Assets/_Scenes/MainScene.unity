@@ -357,6 +357,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Managers
       objectReference: {fileID: 0}
+    - target: {fileID: 9032188890336476301, guid: 1725071946759704ab5c4593e60822ac,
+        type: 3}
+      propertyPath: _minInteractionDistance
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 5406026185941479752, guid: 1725071946759704ab5c4593e60822ac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -446,11 +451,6 @@ PrefabInstance:
       propertyPath: _finalLetterMenu
       value: 
       objectReference: {fileID: 4280355280162512655}
-    - target: {fileID: 9032188890336476301, guid: 1725071946759704ab5c4593e60822ac,
-        type: 3}
-      propertyPath: _minInteractionDistance
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1725071946759704ab5c4593e60822ac, type: 3}
 --- !u!1 &1128793403

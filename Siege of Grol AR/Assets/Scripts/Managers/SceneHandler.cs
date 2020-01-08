@@ -78,5 +78,6 @@ public enum Scenes
 {
     Map = 0,
     Dialog = 1,
-    CannonInteraction = 2
+    DrunkardInteraction = 2,
+    CannonInteraction = 3
 }

@@ -26,6 +26,8 @@ public class AnimationPlayer : MonoBehaviour
 
     private void Awake()
     {
+        _background.SetActive(false);
+
         Camera mainCamera = Camera.main;
 
         _videoPlayer = mainCamera.gameObject.AddComponent<VideoPlayer>();
