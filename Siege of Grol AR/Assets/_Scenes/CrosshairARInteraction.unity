@@ -2360,7 +2360,7 @@ MonoBehaviour:
   sounds:
   - name: CannonTheme
     clip: {fileID: 8300000, guid: ecdcd2da480ffde47b4f408d868b7cdd, type: 3}
-    volume: 0.3
+    volume: 0.5
     pitch: 1
     loop: 1
     source: {fileID: 0}
@@ -2372,7 +2372,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: PartCorrect
     clip: {fileID: 8300000, guid: 40d90b528b7f1544baa0c52704aee402, type: 3}
-    volume: 1
+    volume: 0.8
     pitch: 1
     loop: 0
     source: {fileID: 0}
