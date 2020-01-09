@@ -796,10 +796,14 @@ MonoBehaviour:
   _narratorNameField: {fileID: 638312190}
   _narrationCanvas: {fileID: 1512770042}
   _priestNarration:
-  - Text: Hello, I am the Preist!
+  - Text: Hello, I am the Priest!
   - Text: But I don't know what to tell you...
-  _drunkardNarration: []
-  _cannonNarration: []
+  _drunkardNarration:
+  - Text: Hello, I am the Drunkard!
+  - Text: But I don't know what to tell you...
+  _cannonNarration:
+  - Text: Hello, I am the Cannon Commander!
+  - Text: But I don't know what to tell you...
 --- !u!4 &825752483
 Transform:
   m_ObjectHideFlags: 0
@@ -1546,5 +1550,17 @@ PrefabInstance:
       propertyPath: _background
       value: 
       objectReference: {fileID: 1112556875}
+    - target: {fileID: 8863313654714643486, guid: d819ad46ad9d4f34f935f5c474db6bc8,
+        type: 3}
+      propertyPath: _priestClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 99f462c4360fda94995332b5a4761508,
+        type: 3}
+    - target: {fileID: 8863313654714643486, guid: d819ad46ad9d4f34f935f5c474db6bc8,
+        type: 3}
+      propertyPath: _cannonCommanderClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 99f462c4360fda94995332b5a4761508,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d819ad46ad9d4f34f935f5c474db6bc8, type: 3}

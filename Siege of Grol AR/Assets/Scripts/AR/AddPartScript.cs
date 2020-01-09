@@ -108,6 +108,6 @@ public class AddPartScript : MonoBehaviour
     public void DismissSuccessMessage()
     {
         ProgressHandler.Instance.IncreaseStoryProgress();
-        SceneHandler.Instance.LoadSceneWithDelay(0, 1.0f);
+        SceneHandler.Instance.LoadScene(Scenes.Map);
     }
 }

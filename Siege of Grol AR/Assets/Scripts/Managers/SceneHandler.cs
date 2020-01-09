@@ -14,22 +14,23 @@ public class SceneHandler : Singleton<SceneHandler>
         SetDontDestroyOnLoad();
     }
 
+#if DEBUG
     private void Update()
     {
-        // DEBUG
         if (Input.GetKeyDown(KeyCode.Space) || (Input.touchCount >= 4 && !_debug))
         {
             _debug = true;
 
             ProgressHandler.Instance.IncreaseStoryProgress();
-            LoadScene(0);
+            LoadScene(Scenes.Map);
         }
 
         if (Input.touchCount <= 3 && _debug)
             _debug = false;
     }
+#endif
 
-    public void LoadSceneWithDelay(int pSceneBuildIndex, float pDelay)
+    public void LoadSceneWithDelay(Scenes pTargetScene, float pDelay)
     {
         if(_sceneLoadingRoutine != null)
         {
@@ -37,25 +38,25 @@ public class SceneHandler : Singleton<SceneHandler>
             return;
         }
 
-        _sceneLoadingRoutine = StartCoroutine(LoadSceneWithDelayInternally(pSceneBuildIndex, pDelay));
+        _sceneLoadingRoutine = StartCoroutine(LoadSceneWithDelayInternally(pTargetScene, pDelay));
     }
 
-    public void LoadScene(int pSceneBuildIndex)
+    public void LoadScene(Scenes pTargetScene)
     {
-        Debug.Log("Loading scene at build index: " + pSceneBuildIndex);
+        Debug.Log("Loading scene at build index: " + pTargetScene);
 
         KillAllCoroutines();
-        SceneManager.LoadScene(pSceneBuildIndex, LoadSceneMode.Single);
+        SceneManager.LoadScene((int)pTargetScene, LoadSceneMode.Single);
 
         _sceneLoadingRoutine = null;
     }
 
-    private IEnumerator LoadSceneWithDelayInternally(int pSceneBuildIndex, float pDelay)
+    private IEnumerator LoadSceneWithDelayInternally(Scenes pTargetScene, float pDelay)
     {
-        Debug.Log("Waiting " + pDelay + " seconds before loading scene " + pSceneBuildIndex);
+        Debug.Log("Waiting " + pDelay + " seconds before loading scene " + pTargetScene);
         yield return new WaitForSecondsRealtime(pDelay);
 
-        LoadScene(pSceneBuildIndex);
+        LoadScene(pTargetScene);
     }
 
     private void KillAllCoroutines()
@@ -71,4 +72,12 @@ public class SceneHandler : Singleton<SceneHandler>
         if (GPSManager.Instance != null)
             GPSManager.Instance.StopAllCoroutines();
     }
+}
+
+public enum Scenes 
+{
+    Map = 0,
+    Dialog = 1,
+    DrunkardInteraction = 2,
+    CannonInteraction = 3
 }

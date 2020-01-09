@@ -50,6 +50,10 @@ public class GPSManager : Singleton<GPSManager>
 
     private IEnumerator InitializeInternally()
     {
+#if DEBUG
+        _useFakeLocation = true;
+#endif
+
         if (_useFakeLocation)
             yield return StartCoroutine(InitializeMockLocation());
         else

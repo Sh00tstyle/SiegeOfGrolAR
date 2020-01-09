@@ -27,19 +27,20 @@ public class CharacterDialog : MonoBehaviour
 
     private GameObject _currentObject;
     private Narration[] _currentNaration;
-    private int _currentNarationIndex;
+    private int _currentNarrationIndex;
 
     private bool _hasPlaced;
 
     private Coroutine _finishRoutine;
+    private Progress _storyProgress;
 
     void Awake()
     {
         _hasPlaced = false;
-        _currentNarationIndex = 0;
+        _currentNarrationIndex = 0;
 
-        Progress storyProgress = (Progress)ProgressHandler.Instance.StoryProgressIndex;
-        switch (storyProgress)
+        _storyProgress = (Progress)ProgressHandler.Instance.StoryProgressIndex;
+        switch (_storyProgress)
         {
             case Progress.Priest:
                 _currentObject = _priest;
@@ -55,7 +56,7 @@ public class CharacterDialog : MonoBehaviour
                 break;
         }
 
-        _narratorNameField.text = storyProgress.ToString();
+        _narratorNameField.text = _storyProgress.ToString();
     }
 
     void Update()
@@ -68,7 +69,6 @@ public class CharacterDialog : MonoBehaviour
 
         if (!_hasPlaced)
             PlacePreview();
-
     }
 
     void DetectCharacterSelect()
@@ -114,7 +114,6 @@ public class CharacterDialog : MonoBehaviour
 
     }
 
-
     private void PositionCharacter(TrackableHit pHit)
     {
         _currentObject.transform.position = pHit.Pose.position;
@@ -138,25 +137,47 @@ public class CharacterDialog : MonoBehaviour
 
     private void ChangeText()
     {
-        Narration narration = _currentNaration[_currentNarationIndex];
+        Narration narration = _currentNaration[_currentNarrationIndex];
         _narrationTextField.text = narration.Text;
     }
 
     public void NextNarration()
     {
-        _currentNarationIndex++;
+        _currentNarrationIndex++;
 
-        if (_currentNarationIndex >= _currentNaration.Length && _finishRoutine == null)
+        if (_currentNarrationIndex >= _currentNaration.Length && _finishRoutine == null)
             _finishRoutine = StartCoroutine(FinishDialog());
-        else if(_currentNarationIndex < _currentNaration.Length)
+        else if(_currentNarrationIndex < _currentNaration.Length)
             ChangeText();
     }
 
     private IEnumerator FinishDialog()
     {
+        switch (_storyProgress)
+        {
+            case Progress.Priest:
+                yield return StartCoroutine(FinalizePriest());
+                break;
+
+            case Progress.Drunkard:
+                yield return StartCoroutine(FinalizeDrunkard());
+                break;
+
+            case Progress.CannonCommander:
+                yield return StartCoroutine(FinalizeCannonCommander());
+                break;
+
+            default:
+                Debug.LogError("No dialog should be needed for this location/progress");
+                break;
+        }
+    }
+
+    private IEnumerator FinalizePriest()
+    {
         AnimationPlayer animationPlayer = Camera.main.GetComponentInChildren<AnimationPlayer>();
 
-        if(animationPlayer == null)
+        if (animationPlayer == null)
         {
             Debug.LogError("CharacterDialog::Unable to get the animation player so the animation will not be played");
             _finishRoutine = null;
@@ -168,9 +189,36 @@ public class CharacterDialog : MonoBehaviour
         yield return StartCoroutine(animationPlayer.PlayAnimationClipRoutine()); // Wait until the video has finished playing
         Debug.Log("Finished playing animation, loading the next scene...");
 
-        yield return new WaitForSecondsRealtime(1.0f);
+        _finishRoutine = null;
+        ProgressHandler.Instance.IncreaseStoryProgress();
+        SceneHandler.Instance.LoadScene(Scenes.Map); // Load into the map and show the decision screen
+    }
+
+    private IEnumerator FinalizeDrunkard()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
 
         _finishRoutine = null;
-        SceneHandler.Instance.LoadScene(2);
+        SceneHandler.Instance.LoadScene(Scenes.DrunkardInteraction);
+    }
+
+    private IEnumerator FinalizeCannonCommander()
+    {
+        AnimationPlayer animationPlayer = Camera.main.GetComponentInChildren<AnimationPlayer>();
+
+        if (animationPlayer == null)
+        {
+            Debug.LogError("CharacterDialog::Unable to get the animation player so the animation will not be played");
+            _finishRoutine = null;
+            yield break;
+        }
+
+        _narrationCanvas.SetActive(false);
+
+        yield return StartCoroutine(animationPlayer.PlayAnimationClipRoutine()); // Wait until the video has finished playing
+        Debug.Log("Finished playing animation, loading the next scene...");
+
+        _finishRoutine = null;
+        SceneHandler.Instance.LoadScene(Scenes.CannonInteraction);
     }
 }

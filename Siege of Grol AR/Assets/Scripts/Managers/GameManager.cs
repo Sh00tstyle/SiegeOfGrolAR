@@ -14,8 +14,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private float _minInteractionDistance = 1.0f;
 
-    private bool _isHelpingSpy;
-
     private Location _currentLocation;
     private GameObject _currentLocationObject;
     private Transform _currentLocationModelTransform;
@@ -39,7 +37,26 @@ public class GameManager : Singleton<GameManager>
 
     public void SetStoryDecision(bool pIsHelpingSpy)
     {
-        _isHelpingSpy = pIsHelpingSpy;
+        ProgressHandler.Instance.SetStoryDecision(pIsHelpingSpy);
+        MenuManager.Instance.GoToMenu(MenuTypes.MAINMENU);
+    }
+
+    public void SelectFinalLetterCharacter(int pCharacterIndex)
+    {
+        LetterCharacter character = (LetterCharacter)pCharacterIndex;
+        Debug.Log("Selected " + character);
+
+        // Frame Citizen: Commander, Identify Spy: Drunkard
+        if((ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Commander) || (!ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Drunkard))
+        {
+            ProgressHandler.Instance.IncreaseStoryProgress();
+            MenuManager.Instance.GoToMenu(MenuTypes.MAINMENU);
+            NavigationManager.Instance.SetLineRendererVisibility(false, false);
+        }
+        else
+        {
+            MenuManager.Instance.ShowPopup("Are you sure?", "It seems like you selected the wrong option, try again!", "OK", null);
+        }
     }
 
     public void LoadStoryProgress()
@@ -50,8 +67,25 @@ public class GameManager : Singleton<GameManager>
         for (int i = 0; i <= currentProgressIndex; ++i) // Create the location for each progress point that was reached
             CreateLocation(i);
 
-        if (currentProgressIndex > 0)
-            MenuManager.Instance.GoToMenu(MenuTypes.MAINMENU);
+
+        switch(currentProgressIndex)
+        {
+            case 0: // Do nothing, just there to prevent going into "default" during the first load
+                break;
+
+            case 1: // Priest decision
+                MenuManager.Instance.GoToMenu(MenuTypes.PRIESTDECISIONMENU);
+                break;
+
+            case 3: // Selection for framing/identification
+                MenuManager.Instance.GoToMenu(MenuTypes.FINALLETTERMENU);
+                break;
+
+            default: // Default return to the map
+                MenuManager.Instance.GoToMenu(MenuTypes.MAINMENU);
+                break;
+        }
+            
     }
 
     public void NextStorySegment()
@@ -114,19 +148,11 @@ public class GameManager : Singleton<GameManager>
             {
                 if (hit.transform.tag == Tags.Location && hit.transform.gameObject == _currentLocationObject)
                 {
-                    SceneHandler.Instance.LoadScene(1); // Dialog scene
+                    SceneHandler.Instance.LoadScene(Scenes.Dialog);
                 }
             }
         }
 
-    }
-
-    public bool IsHelpingSpy
-    {
-        get
-        {
-            return _isHelpingSpy;
-        }
     }
 
     public Transform CurrentLocationTransform
@@ -147,4 +173,11 @@ public class GameManager : Singleton<GameManager>
             return _currentLocation;
         }
     }
+}
+
+public enum LetterCharacter
+{
+    Priest, 
+    Drunkard,
+    Commander
 }

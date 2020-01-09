@@ -1495,7 +1495,7 @@ RectTransform:
   m_GameObject: {fileID: 5633184601139881545}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99998194, y: 0.99998194, z: 0.99998194}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4974863868643091687}
   m_RootOrder: 0
@@ -1636,7 +1636,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 68.2
+  m_fontSize: 68.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2494,7 +2494,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1099860948781827330
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2662,7 +2662,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 69.45
+  m_fontSize: 69.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3305,66 +3305,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3145951429495993772, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: m_Name
-      value: Introduction
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145951429495993772, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: animations.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: animations.Array.data[0].menu
-      value: 
-      objectReference: {fileID: 9005182374970925356}
-    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: animations.Array.data[0].animation
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: animations.Array.data[0].customCurve.m_PreInfinity
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: animations.Array.data[0].customCurve.m_PostInfinity
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: animations.Array.data[0].customCurve.m_RotationOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: animations.Array.data[0].direction
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: animations.Array.data[0].triggerButton
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: animations.Array.data[0].ease
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
-        type: 3}
-      propertyPath: animations.Array.data[0].easeDuration
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 3145951430571697229, guid: 0b1432c61b9895c4195ebea21d91d7fc,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -3384,6 +3324,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145951429495993772, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: m_Name
+      value: Introduction
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145951429495993772, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3145951429495993744, guid: 0b1432c61b9895c4195ebea21d91d7fc,
         type: 3}
@@ -3504,6 +3454,56 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RaycastTarget
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: animations.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: animations.Array.data[0].menu
+      value: 
+      objectReference: {fileID: 9005182374970925356}
+    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: animations.Array.data[0].animation
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: animations.Array.data[0].customCurve.m_PreInfinity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: animations.Array.data[0].customCurve.m_PostInfinity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: animations.Array.data[0].customCurve.m_RotationOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: animations.Array.data[0].direction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: animations.Array.data[0].triggerButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: animations.Array.data[0].ease
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3145951429495993746, guid: 0b1432c61b9895c4195ebea21d91d7fc,
+        type: 3}
+      propertyPath: animations.Array.data[0].easeDuration
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b1432c61b9895c4195ebea21d91d7fc, type: 3}
