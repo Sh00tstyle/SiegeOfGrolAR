@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine;
 
-public class AudioManager : Singleton<SceneHandler>
+public class AudioManager : Singleton<AudioManager>
 {
 
     public Sound[] sounds;

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6100530994374176620}
   - component: {fileID: 6100530994374176621}
   - component: {fileID: 6100530994374176623}
+  - component: {fileID: 6100530995539657400}
   m_Layer: 0
   m_Name: Handlers
   m_TagString: Untagged
@@ -56,3 +57,142 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdbe7c1b0ef811d4d94897c6f3575cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6100530995539657400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6100530994374176622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feee5efbc330fbb43845be0629637733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: StartTheme
+    clip: {fileID: 8300000, guid: 6ba6933c2533500438bdd7057389c45a, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: FlagPress
+    clip: {fileID: 8300000, guid: a158d70fc82fc7c46a31a1a4806c44f9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: UINext
+    clip: {fileID: 8300000, guid: 004fb9a3391733746835bb6fb1341e7f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: UIPrev
+    clip: {fileID: 8300000, guid: 0aeed56f70596a04386155361f58b836, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: ScrollClose
+    clip: {fileID: 8300000, guid: b4a35ba27e2f4a74baaca706b5aa41ae, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: SettingsOpen
+    clip: {fileID: 8300000, guid: 07a1c3db5f46aa441abff2353941dcc6, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: HelpOpen
+    clip: {fileID: 8300000, guid: c648407e94f005f40829b7fabebbb27b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GameBG
+    clip: {fileID: 8300000, guid: 296f68279fd89eb4e8325979ddd08db4, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: FrameWrong
+    clip: {fileID: 8300000, guid: 0dfcf7cdacf7cef46be327cbdd31a5d0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: FrameCorrect
+    clip: {fileID: 8300000, guid: f07d11e5a5ad6e244b51afd600a35b6c, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CannonTheme
+    clip: {fileID: 8300000, guid: ecdcd2da480ffde47b4f408d868b7cdd, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: PartWrong
+    clip: {fileID: 8300000, guid: 0c82ad392d543cc41b239bae997fe872, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PartCorrect
+    clip: {fileID: 8300000, guid: 40d90b528b7f1544baa0c52704aee402, type: 3}
+    volume: 0.8
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: CannonCompleted
+    clip: {fileID: 8300000, guid: d9f81c7687dc55f47bf662cc2fd5ad4a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: UITheme
+    clip: {fileID: 8300000, guid: 6ba6933c2533500438bdd7057389c45a, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: FlagPress
+    clip: {fileID: 8300000, guid: a158d70fc82fc7c46a31a1a4806c44f9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: UINext
+    clip: {fileID: 8300000, guid: 004fb9a3391733746835bb6fb1341e7f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: UIPrev
+    clip: {fileID: 8300000, guid: 0aeed56f70596a04386155361f58b836, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PriestBG
+    clip: {fileID: 8300000, guid: 2113afc3971f79a4dbd5c5569915585f, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: DrunkardBG
+    clip: {fileID: 8300000, guid: f9f68abe77605764cb81f7c8e05f1ec8, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: CommanderBG
+    clip: {fileID: 0}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
