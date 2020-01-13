@@ -156,7 +156,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 220, y: -128}
-  m_SizeDelta: {x: 160, y: 160}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &21176211
 MonoBehaviour:
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -329,7 +329,7 @@ PrefabInstance:
     - target: {fileID: 3560608276620467028, guid: 602fad633585130479b72b2533ebd1c3,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 967756544, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -337,7 +337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 967756544, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -6.399994
+      value: -6.4000244
       objectReference: {fileID: 0}
     - target: {fileID: 967756544, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_SizeDelta.x
@@ -483,15 +483,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_text
-      value: '1. HINT
-
-        2. HINT
-
-        3. HINT'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_fontSize
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6606371306735528306, guid: 602fad633585130479b72b2533ebd1c3,
         type: 3}
@@ -588,7 +588,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 157, y: 660}
-  m_SizeDelta: {x: 160, y: 160}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &276250706
 MonoBehaviour:
@@ -657,7 +657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -680,6 +680,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 276250704}
   m_CullTransparentMesh: 0
+--- !u!114 &290893233 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 176097662}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &545049713
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,7 +801,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -237, y: 748}
-  m_SizeDelta: {x: 160, y: 160}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &560293970
 MonoBehaviour:
@@ -858,7 +870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -881,6 +893,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560293968}
   m_CullTransparentMesh: 0
+--- !u!114 &907172901 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+    type: 3}
+  m_PrefabInstance: {fileID: 2037127184}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &952937591
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,7 +941,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -298, y: 374}
-  m_SizeDelta: {x: 160, y: 160}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &952937593
 MonoBehaviour:
@@ -986,7 +1010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1128,15 +1152,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c59090dba6822b4281a8bbc2024b27f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _houses:
+  _houseButtons:
   - {fileID: 560293970}
   - {fileID: 276250706}
   - {fileID: 952937593}
   - {fileID: 1826191533}
   - {fileID: 1253879819}
   - {fileID: 21176211}
+  _houseImages:
+  - {fileID: 560293971}
+  - {fileID: 276250707}
+  - {fileID: 952937594}
+  - {fileID: 1826191534}
+  - {fileID: 1253879820}
+  - {fileID: 21176212}
+  _houseSprites:
+  - {fileID: 21300000, guid: eba7a943520b20b409e3d2c8497b3ef0, type: 3}
+  - {fileID: 21300000, guid: 6f8a65796dd670a47bd823b87f9f63f5, type: 3}
+  - {fileID: 21300000, guid: 4050a748840ba9d4697a681ac949e04f, type: 3}
+  - {fileID: 21300000, guid: 83968dd716b4a8645a5d4131f0ed2c33, type: 3}
+  - {fileID: 21300000, guid: 645c327de3e7f824b98dad37476f99b8, type: 3}
+  - {fileID: 21300000, guid: a1c91d419a27ae2408119fea78624f93, type: 3}
+  _hintTemplates:
+  - The roof is {0}.
+  - The door is {0}.
+  - The windows are {0}.
+  - Sorry, I really can not think of anything else right now...
   _dialogCanvas: {fileID: 2037127185}
+  _dialogTextContainer: {fileID: 907172901}
+  _introNarration:
+  - Text: I am too drunk to find my house, help me please.
+  - Text: Right now I only know one detail about how my house looks...
+  _wrongFeedbackNarration:
+  - Text: I do not think that is my house. Let me think, maybe I have some more hints...
+  _rightFeedbackNarration:
+  - Text: Thats the one, thanks for your help!
   _hintCanvas: {fileID: 176097663}
+  _hintTextContainer: {fileID: 290893233}
 --- !u!1 &1253879817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,7 +1225,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -326, y: 100}
-  m_SizeDelta: {x: 160, y: 160}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1253879819
 MonoBehaviour:
@@ -1242,7 +1294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1457,7 +1509,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 250, y: 383}
-  m_SizeDelta: {x: 160, y: 160}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1826191533
 MonoBehaviour:
@@ -1526,7 +1578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1712,6 +1764,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585971477244162678, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1189928076}
+    - target: {fileID: 1585971477244162678, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AdvanceDialog
       objectReference: {fileID: 0}
     - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
         type: 3}
