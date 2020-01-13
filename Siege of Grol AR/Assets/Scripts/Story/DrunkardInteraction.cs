@@ -7,6 +7,12 @@ public class DrunkardInteraction : MonoBehaviour
     [SerializeField]
     private HouseButton[] _houses;
 
+    [SerializeField]
+    private GameObject _dialogCanvas;
+
+    [SerializeField]
+    private GameObject _hintCanvas;
+
     private int _correctHouseIndex;
 
     private void Awake()
@@ -16,6 +22,12 @@ public class DrunkardInteraction : MonoBehaviour
 
         for(int i = 0; i < _houses.Length; ++i)
             _houses[i].Initialize(i);
+    }
+
+    public void SetDialogCanvasVisibility(bool pVisibility)
+    {
+        _dialogCanvas.SetActive(pVisibility);
+        _hintCanvas.SetActive(!pVisibility);
     }
 
     public void CheckForSuccess(int pHouseIndex)

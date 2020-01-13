@@ -49,9 +49,11 @@ public class GameManager : Singleton<GameManager>
         // Frame Citizen: Commander, Identify Spy: Drunkard
         if((ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Commander) || (!ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Drunkard))
         {
-            ProgressHandler.Instance.IncreaseStoryProgress();
-            MenuManager.Instance.GoToMenu(MenuTypes.MAINMENU);
-            NavigationManager.Instance.SetLineRendererVisibility(false, false);
+            MenuManager.Instance.ShowPopup("Great!", "I knew I could count on you!", "OK", () => {
+                ProgressHandler.Instance.IncreaseStoryProgress();
+                MenuManager.Instance.GoToMenu(MenuTypes.MAINMENU);
+                NavigationManager.Instance.SetLineRendererVisibility(false, false);
+            });
         }
         else
         {
