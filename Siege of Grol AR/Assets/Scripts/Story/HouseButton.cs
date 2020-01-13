@@ -27,7 +27,9 @@ public class HouseButton : Button
 
     public void ActivateButton()
     {
-        Debug.Log("Clicked on house " + _index);
+        if (_interaction.InDialog)
+            return;
+
         _interaction.CheckForSuccess(_index);
     }
 
