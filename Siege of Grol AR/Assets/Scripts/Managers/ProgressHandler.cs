@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProgressHandler : Singleton<ProgressHandler>
 {
-    private static int _StoryProgress = 3;
+    private static int _StoryProgress = 0;
     private static bool _IsHelpingSpy = false;
 
     private void Awake()

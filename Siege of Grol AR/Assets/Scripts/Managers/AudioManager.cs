@@ -3,13 +3,15 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<SceneHandler>
 {
 
     public Sound[] sounds;
 
     void Awake()
     {
+        SetDontDestroyOnLoad();
+
         foreach (Sound s in sounds) {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
