@@ -770,6 +770,20 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 646831370}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &646831372 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1637996540812124, guid: c10877f7cd5764de18d46d7b777d1faa,
+    type: 3}
+  m_PrefabInstance: {fileID: 646831370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!81 &646831373
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646831372}
+  m_Enabled: 1
 --- !u!1001 &690995859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -831,6 +845,7 @@ GameObject:
   m_Component:
   - component: {fileID: 825752483}
   - component: {fileID: 825752482}
+  - component: {fileID: 825752484}
   m_Layer: 0
   m_Name: Dialog System
   m_TagString: Untagged
@@ -857,15 +872,48 @@ MonoBehaviour:
   _narrationTextField: {fileID: 371839041}
   _narratorNameField: {fileID: 638312190}
   _narrationCanvas: {fileID: 1512770042}
+  _audioComponent: {fileID: 825752484}
   _priestNarration:
   - Text: Hello, I am the Priest!
+    AudioClip: {fileID: 0}
   - Text: But I don't know what to tell you...
+    AudioClip: {fileID: 0}
   _drunkardNarration:
-  - Text: Hello, I am the Drunkard!
-  - Text: But I don't know what to tell you...
+  - Text: "Oi! You there! Aren\u2019t you the stranger from far away that everyone
+      is talking about? Come here and have a beer with me. My name is Dirck."
+    AudioClip: {fileID: 0}
+  - Text: "I know yer have been digging around, I saw yer at the church, I will tell
+      ya what\u2019s been going on in this craphole ever since the spy is here."
+    AudioClip: {fileID: 0}
+  - Text: "I think every living soul kinda knows who the spy is and what the bloke\u2019s
+      been up to in Grol. But I\u2019m not gonna mention a name to ya, mate."
+    AudioClip: {fileID: 0}
+  - Text: "That\u2019s where yer will have to start using that pretty head of yours.
+      But I know this spy has been sending letters to the Dutch about the situation
+      in Grol."
+    AudioClip: {fileID: 0}
+  - Text: "This spy also tried to poison the food of Spanish troops.  Bloody hell,
+      I\u2019m wasted, I need to get to me house, mate. "
+    AudioClip: {fileID: 0}
+  - Text: I want to pay for my beer but the pub only accepts Spanish coins while all
+      I have is Dutch coins. Jammer. I will pay my beers next time then.
+    AudioClip: {fileID: 0}
+  - Text: Anyways, can yer bring me home? If ya help me, I could tell ya more about
+      this sneaky little spy eh?
+    AudioClip: {fileID: 0}
   _cannonNarration:
-  - Text: Hello, I am the Cannon Commander!
-  - Text: But I don't know what to tell you...
+  - Text: 'Soldier! Oh you''re not one of my soldiers. Whatever, I need all the help
+      I get get. We don''t have time. '
+    AudioClip: {fileID: 8300000, guid: 1d5324b1aa836cb409aefae712994c18, type: 3}
+  - Text: 'Help me with this cannon. We need to get into formation and prepare for
+      a counter attack. '
+    AudioClip: {fileID: 8300000, guid: 5ec8ae1375ac55e4c82cc95a75c4ba7c, type: 3}
+  - Text: 'My patrols heard rumors that the Dutch troops are planning on breaching
+      our gates. '
+    AudioClip: {fileID: 8300000, guid: 809da3fdeb5e8d74bb5b73c50a968f16, type: 3}
+  - Text: Make yourself useful and help out. Since you do not have a rank, we should
+      look at instructions for the cannon together.
+    AudioClip: {fileID: 8300000, guid: 5c4e5c5464bd9c74b910b10f7e655a37, type: 3}
 --- !u!4 &825752483
 Transform:
   m_ObjectHideFlags: 0
@@ -880,6 +928,102 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &825752484
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825752481}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1112556875
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,6 +1316,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6100530995539657400, guid: b51728b5eb64125488e949d7cf3a8193,
+        type: 3}
+      propertyPath: sounds.Array.data[16].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6e2dc55941b0d2347a75e32ebe74bb2c, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b51728b5eb64125488e949d7cf3a8193, type: 3}
 --- !u!1 &1717342970
@@ -1616,7 +1765,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _priestClip
       value: 
-      objectReference: {fileID: 32900000, guid: 99f462c4360fda94995332b5a4761508,
+      objectReference: {fileID: 32900000, guid: 7c106c5084a922e42ab1980e0e529350,
         type: 3}
     - target: {fileID: 8863313654714643486, guid: d819ad46ad9d4f34f935f5c474db6bc8,
         type: 3}

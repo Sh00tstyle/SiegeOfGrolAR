@@ -160,24 +160,6 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
-  - name: FlagPress
-    clip: {fileID: 8300000, guid: a158d70fc82fc7c46a31a1a4806c44f9, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: UINext
-    clip: {fileID: 8300000, guid: 004fb9a3391733746835bb6fb1341e7f, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-  - name: UIPrev
-    clip: {fileID: 8300000, guid: 0aeed56f70596a04386155361f58b836, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
   - name: PriestBG
     clip: {fileID: 8300000, guid: 2113afc3971f79a4dbd5c5569915585f, type: 3}
     volume: 0.5
@@ -186,7 +168,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: DrunkardBG
     clip: {fileID: 8300000, guid: f9f68abe77605764cb81f7c8e05f1ec8, type: 3}
-    volume: 0.3
+    volume: 0.7
     pitch: 1
     loop: 1
     source: {fileID: 0}
