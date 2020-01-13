@@ -81,4 +81,10 @@ public class InteractionButton : MonoBehaviour
             OnButtonPressEnd();
         }
     }
+
+    public void ContinueStory()
+    {
+        ProgressHandler.Instance.IncreaseStoryProgress();
+        SceneHandler.Instance.LoadScene(Scenes.Map);
+    }
 }
