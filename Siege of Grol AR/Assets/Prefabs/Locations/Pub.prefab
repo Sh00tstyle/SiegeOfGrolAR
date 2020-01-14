@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5364204233125133636}
-  - component: {fileID: 1958915755839339042}
+  - component: {fileID: 652885967892363109}
   m_Layer: 0
   m_Name: Pub
   m_TagString: Location
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1958915755839339042
+--- !u!136 &652885967892363109
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,12 +40,12 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254016986255830106}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 1.23
+  m_Height: 0
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: -0.79, y: 0.7, z: -0.5}
 --- !u!1001 &7091937615278368163
 PrefabInstance:
   m_ObjectHideFlags: 0
