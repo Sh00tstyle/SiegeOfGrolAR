@@ -15,8 +15,8 @@ public class CharacterDialog : MonoBehaviour
     [SerializeField] GameObject _narrationCanvas;
     [SerializeField] private AudioSource _audioComponent;
     [SerializeField] Narration[] _priestNarration, _drunkardNarration, _cannonNarration;
-    
-    
+
+
 
     [Serializable]
     public struct Narration
@@ -64,7 +64,7 @@ public class CharacterDialog : MonoBehaviour
         }
 
         _narratorNameField.text = _storyProgress.ToString();
-        _currentAnimator = _currentObject.GetComponent<Animator>();
+        _currentAnimator = _currentObject.GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -147,22 +147,25 @@ public class CharacterDialog : MonoBehaviour
     {
         Narration narration = _currentNaration[_currentNarrationIndex];
         _narrationTextField.text = narration.Text;
+
+        _audioComponent.clip = _currentNaration[_currentNarrationIndex].AudioClip;
+        _audioComponent.Play();
+
+        if (_currentAnimator != null)
+            _currentAnimator.Play("Talking");
     }
 
     public void NextNarration()
     {
         _currentNarrationIndex++;
 
+
+
         if (_currentNarrationIndex >= _currentNaration.Length && _finishRoutine == null)
             _finishRoutine = StartCoroutine(FinishDialog());
         else if (_currentNarrationIndex < _currentNaration.Length)
         {
             ChangeText();
-            _audioComponent.clip = _currentNaration[_currentNarrationIndex].AudioClip;
-            _audioComponent.Play();
-
-            _currentAnimator.Play("Talking");
-
             AudioManager.Instance.StopPlaying("PriestBG");
             AudioManager.Instance.StopPlaying("DrunkardBG");
             AudioManager.Instance.StopPlaying("CommanderBG");
@@ -174,11 +177,11 @@ public class CharacterDialog : MonoBehaviour
         switch (_storyProgress)
         {
             case Progress.Priest:
-                yield return StartCoroutine(FinalizePriest());              
+                yield return StartCoroutine(FinalizePriest());
                 break;
 
             case Progress.Drunkard:
-                yield return StartCoroutine(FinalizeDrunkard());               
+                yield return StartCoroutine(FinalizeDrunkard());
                 break;
 
             case Progress.CannonCommander:
