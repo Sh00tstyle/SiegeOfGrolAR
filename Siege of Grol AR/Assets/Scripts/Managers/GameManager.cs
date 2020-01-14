@@ -21,6 +21,10 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
+#if !UNITY_EDITOR
+        Screen.orientation = ScreenOrientation.Portrait;
+#endif
+
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 0;;
     }
@@ -104,6 +108,18 @@ public class GameManager : Singleton<GameManager>
         ProgressHandler.Instance.IncreaseStoryProgress(); // Update the story progress as well
     }
 
+    public void PlayLocationAnimation()
+    {
+        StartCoroutine(PlayLocationAnimationInternally());
+    }
+
+    private IEnumerator PlayLocationAnimationInternally()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        _currentLocationObject.GetComponentInChildren<Animator>().Play("Awake");
+    }
+
     private bool IncreaseLocationIndex()
     {
         if (_currentLocationIndex >= _locationDatabase.locations.Length - 1)
@@ -125,8 +141,8 @@ public class GameManager : Singleton<GameManager>
          
         _currentLocationObject = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity);
 
-        // Play animation
-        _currentLocationObject.GetComponentInChildren<Animator>().Play("Awake");
+        if (pIndex < ProgressHandler.Instance.StoryProgressIndex)
+            _currentLocationObject.GetComponentInChildren<Animator>().Play("Awake"); // Play animation for already visited locations
 
         Transform[] childTransforms = _currentLocationObject.GetComponentsInChildren<Transform>();
 

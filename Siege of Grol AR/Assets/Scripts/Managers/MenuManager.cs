@@ -80,6 +80,7 @@ public class MenuManager : Singleton<MenuManager>
 
             case MenuTypes.MAINMENU:
                 targetMenu = _mainMenu;
+                GameManager.Instance.PlayLocationAnimation();
                 break;
 
             case MenuTypes.PRIESTDECISIONMENU:

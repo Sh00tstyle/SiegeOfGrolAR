@@ -62,6 +62,8 @@ public class AnimationPlayer : MonoBehaviour
             yield break;
         }
 
+        Screen.orientation = ScreenOrientation.Landscape;
+
         _background.SetActive(true);
         _arCanvas.SetActive(false);
         _videoPlayer.Play();
@@ -80,6 +82,8 @@ public class AnimationPlayer : MonoBehaviour
         _background.SetActive(false);
         _arCanvas.SetActive(true);
         _videoPlayer.enabled = false;
+
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     private void InitializeVideoPlayer()
@@ -126,7 +130,6 @@ public class AnimationPlayer : MonoBehaviour
         while (!_videoPlayer.isPrepared)
             yield return null;
 
-        Debug.Log("Successfully prepared clip " + _cannonCommanderClip.name);
         _preparationRoutine = null;
     }
 
