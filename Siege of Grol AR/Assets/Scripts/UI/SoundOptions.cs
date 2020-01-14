@@ -14,11 +14,21 @@ public class SoundOptions : MonoBehaviour
     {
         _ambientSlider.value = GetSavedValue(SoundGroup.AMBIENT);
         _musicSlider.value = GetSavedValue(SoundGroup.MUSIC);
-        _sfxSlider.value = GetSavedValue(SoundGroup.SFX);
+        _sfxSlider.value = GetSavedValue(SoundGroup.SFX);   
+    }
 
+    private void OnEnable()
+    {
         _ambientSlider.onValueChanged.AddListener(delegate { ChangeValue(SoundGroup.AMBIENT, _ambientSlider.value); });
         _musicSlider.onValueChanged.AddListener(delegate { ChangeValue(SoundGroup.MUSIC, _musicSlider.value); });
         _sfxSlider.onValueChanged.AddListener(delegate { ChangeValue(SoundGroup.SFX, _sfxSlider.value); });
+    }
+
+    private void OnDisable()
+    {
+        _ambientSlider.onValueChanged.RemoveAllListeners();
+        _musicSlider.onValueChanged.RemoveAllListeners();
+        _sfxSlider.onValueChanged.RemoveAllListeners();
     }
 
     float GetSavedValue(SoundGroup pGroup)
