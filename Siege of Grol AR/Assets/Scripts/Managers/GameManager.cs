@@ -21,6 +21,10 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
+#if !UNITY_EDITOR
+        Screen.orientation = ScreenOrientation.Portrait;
+#endif
+
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 0;;
     }
@@ -49,7 +53,7 @@ public class GameManager : Singleton<GameManager>
         // Frame Citizen: Commander, Identify Spy: Drunkard
         if((ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Commander) || (!ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Drunkard))
         {
-            FindObjectOfType<AudioManager>().Play("FrameCorrect");
+            AudioManager.Instance.Play("FrameCorrect");
             MenuManager.Instance.ShowPopup("Great!", "I knew I could count on you!", "OK", () => {
                 ProgressHandler.Instance.IncreaseStoryProgress();
                 MenuManager.Instance.GoToMenu(MenuTypes.MAINMENU);
@@ -58,7 +62,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            FindObjectOfType<AudioManager>().Play("FrameWrong");
+            AudioManager.Instance.Play("FrameWrong");
             MenuManager.Instance.ShowPopup("Are you sure?", "It seems like you selected the wrong option, try again!", "OK", null);
         }
     }
@@ -104,6 +108,18 @@ public class GameManager : Singleton<GameManager>
         ProgressHandler.Instance.IncreaseStoryProgress(); // Update the story progress as well
     }
 
+    public void PlayLocationAnimation()
+    {
+        StartCoroutine(PlayLocationAnimationInternally());
+    }
+
+    private IEnumerator PlayLocationAnimationInternally()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        _currentLocationObject.GetComponentInChildren<Animator>().Play("Awake");
+    }
+
     private bool IncreaseLocationIndex()
     {
         if (_currentLocationIndex >= _locationDatabase.locations.Length - 1)
@@ -124,6 +140,9 @@ public class GameManager : Singleton<GameManager>
         locationPos.y = 0.0f;
          
         _currentLocationObject = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity);
+
+        if (pIndex < ProgressHandler.Instance.StoryProgressIndex)
+            _currentLocationObject.GetComponentInChildren<Animator>().Play("Awake"); // Play animation for already visited locations
 
         Transform[] childTransforms = _currentLocationObject.GetComponentsInChildren<Transform>();
 
@@ -152,7 +171,7 @@ public class GameManager : Singleton<GameManager>
             {
                 if (hit.transform.tag == Tags.Location && hit.transform.gameObject == _currentLocationObject)
                 {
-                    FindObjectOfType<AudioManager>().StopPlaying("GameBG");
+                    AudioManager.Instance.StopPlaying("GameBG");
                     SceneHandler.Instance.LoadScene(Scenes.Dialog);                 
                 }
             }

@@ -43,21 +43,21 @@ public class AddPartScript : MonoBehaviour
                 // Part 0
                 Wheels.SetActive(true);
                 WheelsUnTextured.SetActive(false);
-                FindObjectOfType<AudioManager>().Play("PartCorrect");
+                AudioManager.Instance.Play("PartCorrect");
                 Debug.Log("Part 1 detected! +1 to ObjectIndex");
             }
             else if (ObjectIndex == 1)
             {
                 Trail.SetActive(true);
                 TrailUnTextured.SetActive(false);
-                FindObjectOfType<AudioManager>().Play("PartCorrect");
+                AudioManager.Instance.Play("PartCorrect");
                 Debug.Log("Part 2 detected! +1 to ObjectIndex");
             }
             else if (ObjectIndex == 2)
             {
                 Axle.SetActive(true);
                 AxleUnTextured.SetActive(false);
-                FindObjectOfType<AudioManager>().Play("PartCorrect");
+                AudioManager.Instance.Play("PartCorrect");
                 Debug.Log("Part 3 detected! +1 to ObjectIndex");               
                 //SceneHandler.Instance.LoadSceneWithDelay(0, 3.0f);
             }
@@ -65,21 +65,21 @@ public class AddPartScript : MonoBehaviour
             {
                 Reinforce.SetActive(true);
                 ReinforceUnTextured.SetActive(false);
-                FindObjectOfType<AudioManager>().Play("PartCorrect");
+                AudioManager.Instance.Play("PartCorrect");
                 Debug.Log("Part 4 detected! +1 to ObjectIndex");
             }
             else if (ObjectIndex == 4)
             {
                 Chase.SetActive(true);
                 ChaseUnTextured.SetActive(false);
-                FindObjectOfType<AudioManager>().Play("PartCorrect");
+                AudioManager.Instance.Play("PartCorrect");
                 Debug.Log("Part 5 detected! +1 to ObjectIndex");
             }
             else if (ObjectIndex == 5)
             {
                 Cascable.SetActive(true);
                 CascableUnTextured.SetActive(false);
-                FindObjectOfType<AudioManager>().Play("PartCorrect");
+                AudioManager.Instance.Play("PartCorrect");
                 Debug.Log("Part 6 detected! +1 to ObjectIndex");
                 Invoke("CompletedAssembly", 2.0f);
             }
@@ -93,7 +93,7 @@ public class AddPartScript : MonoBehaviour
         else
         {
             // Error
-            FindObjectOfType<AudioManager>().Play("PartWrong");
+            AudioManager.Instance.Play("PartWrong");
             Debug.Log("This is the wrong part");
             PanelWrongPart.SetActive(true);
         }
@@ -101,7 +101,7 @@ public class AddPartScript : MonoBehaviour
 
     void CompletedAssembly()
     {
-        FindObjectOfType<AudioManager>().Play("CannonCompleted");
+        AudioManager.Instance.Play("CannonCompleted");
         PanelCompletion.SetActive(true);
     }
 

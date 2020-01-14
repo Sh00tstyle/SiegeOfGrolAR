@@ -16,6 +16,7 @@ public class CharacterDialog : MonoBehaviour
     [SerializeField] private AudioSource _audioComponent;
     [SerializeField] Narration[] _priestNarration, _drunkardNarration, _cannonNarration;
     
+    
 
     [Serializable]
     public struct Narration
@@ -30,6 +31,7 @@ public class CharacterDialog : MonoBehaviour
     private GameObject _currentObject;
     private Narration[] _currentNaration;
     private int _currentNarrationIndex;
+    private Animator _currentAnimator;
 
     private bool _hasPlaced;
 
@@ -45,23 +47,24 @@ public class CharacterDialog : MonoBehaviour
         switch (_storyProgress)
         {
             case Progress.Priest:
-                FindObjectOfType<AudioManager>().Play("PriestBG");
+                AudioManager.Instance.Play("PriestBG");
                 _currentObject = _priest;
                 _currentNaration = _priestNarration;
                 break;
             case Progress.Drunkard:
-                FindObjectOfType<AudioManager>().Play("DrunkardBG");
+                AudioManager.Instance.Play("DrunkardBG");
                 _currentObject = _drunkard;
                 _currentNaration = _drunkardNarration;
                 break;
             case Progress.CannonCommander:
-                FindObjectOfType<AudioManager>().Play("CommanderBG");
+                AudioManager.Instance.Play("CommanderBG");
                 _currentObject = _cannonCommander;
                 _currentNaration = _cannonNarration;
                 break;
         }
 
         _narratorNameField.text = _storyProgress.ToString();
+        _currentAnimator = _currentObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -157,9 +160,12 @@ public class CharacterDialog : MonoBehaviour
             ChangeText();
             _audioComponent.clip = _currentNaration[_currentNarrationIndex].AudioClip;
             _audioComponent.Play();
-            FindObjectOfType<AudioManager>().StopPlaying("PriestBG");
-            FindObjectOfType<AudioManager>().StopPlaying("DrunkardBG");
-            FindObjectOfType<AudioManager>().StopPlaying("CommanderBG");
+
+            _currentAnimator.Play("Talking");
+
+            AudioManager.Instance.StopPlaying("PriestBG");
+            AudioManager.Instance.StopPlaying("DrunkardBG");
+            AudioManager.Instance.StopPlaying("CommanderBG");
         }
     }
 
@@ -204,7 +210,7 @@ public class CharacterDialog : MonoBehaviour
         _finishRoutine = null;
         ProgressHandler.Instance.IncreaseStoryProgress();
         SceneHandler.Instance.LoadScene(Scenes.Map); // Load into the map and show the decision screen
-        FindObjectOfType<AudioManager>().Play("GameBG");
+        AudioManager.Instance.Play("GameBG");
     }
 
     private IEnumerator FinalizeDrunkard()
@@ -213,7 +219,7 @@ public class CharacterDialog : MonoBehaviour
 
         _finishRoutine = null;
         SceneHandler.Instance.LoadScene(Scenes.DrunkardInteraction);
-        FindObjectOfType<AudioManager>().Play("");
+        AudioManager.Instance.Play("");
     }
 
     private IEnumerator FinalizeCannonCommander()
@@ -234,6 +240,6 @@ public class CharacterDialog : MonoBehaviour
 
         _finishRoutine = null;
         SceneHandler.Instance.LoadScene(Scenes.CannonInteraction);
-        FindObjectOfType<AudioManager>().Play("");
+        AudioManager.Instance.Play("");
     }
 }
