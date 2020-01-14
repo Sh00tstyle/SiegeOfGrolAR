@@ -11,7 +11,7 @@ public class AudioManager : Singleton<AudioManager>
 
     void Awake()
     {
-        SetDontDestroyOnLoad();
+        //SetDontDestroyOnLoad();
 
         foreach (Sound s in sounds)
         {
