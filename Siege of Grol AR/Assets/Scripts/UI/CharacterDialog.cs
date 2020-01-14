@@ -162,10 +162,6 @@ public class CharacterDialog : MonoBehaviour
             _audioComponent.Play();
 
             _currentAnimator.Play("Talking");
-
-            AudioManager.Instance.StopPlaying("PriestBG");
-            AudioManager.Instance.StopPlaying("DrunkardBG");
-            AudioManager.Instance.StopPlaying("CommanderBG");
         }
     }
 
@@ -193,6 +189,8 @@ public class CharacterDialog : MonoBehaviour
 
     private IEnumerator FinalizePriest()
     {
+        AudioManager.Instance.StopPlaying("PriestBG");
+
         AnimationPlayer animationPlayer = Camera.main.GetComponentInChildren<AnimationPlayer>();
 
         if (animationPlayer == null)
@@ -209,21 +207,24 @@ public class CharacterDialog : MonoBehaviour
 
         _finishRoutine = null;
         ProgressHandler.Instance.IncreaseStoryProgress();
-        SceneHandler.Instance.LoadScene(Scenes.Map); // Load into the map and show the decision screen
         AudioManager.Instance.Play("GameBG");
+        SceneHandler.Instance.LoadScene(Scenes.Map); // Load into the map and show the decision screen
     }
 
     private IEnumerator FinalizeDrunkard()
     {
         yield return new WaitForSecondsRealtime(0.5f);
 
+        AudioManager.Instance.StopPlaying("DrunkardBG");
+
         _finishRoutine = null;
+        //AudioManager.Instance.Play("DrunkardTheme");
         SceneHandler.Instance.LoadScene(Scenes.DrunkardInteraction);
-        AudioManager.Instance.Play("");
     }
 
     private IEnumerator FinalizeCannonCommander()
     {
+        AudioManager.Instance.StopPlaying("CommanderBG");
         AnimationPlayer animationPlayer = Camera.main.GetComponentInChildren<AnimationPlayer>();
 
         if (animationPlayer == null)
@@ -239,7 +240,7 @@ public class CharacterDialog : MonoBehaviour
         Debug.Log("Finished playing animation, loading the next scene...");
 
         _finishRoutine = null;
+        AudioManager.Instance.Play("CannonTheme");
         SceneHandler.Instance.LoadScene(Scenes.CannonInteraction);
-        AudioManager.Instance.Play("");
     }
 }

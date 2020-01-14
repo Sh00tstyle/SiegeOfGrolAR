@@ -107,6 +107,7 @@ public class AddPartScript : MonoBehaviour
     public void DismissSuccessMessage()
     {
         ProgressHandler.Instance.IncreaseStoryProgress();
+        AudioManager.Instance.Play("GameBG");
         SceneHandler.Instance.LoadScene(Scenes.Map);
     }
 }

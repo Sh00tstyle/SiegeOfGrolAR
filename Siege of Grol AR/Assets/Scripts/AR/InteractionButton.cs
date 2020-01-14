@@ -94,6 +94,8 @@ public class InteractionButton : MonoBehaviour
         yield return new WaitForSeconds(23.0f);
 
         ProgressHandler.Instance.IncreaseStoryProgress();
+        AudioManager.Instance.StopPlaying("CannonTheme");
+        AudioManager.Instance.Play("GameBG");
         SceneHandler.Instance.LoadScene(Scenes.Map);
     }
 }
