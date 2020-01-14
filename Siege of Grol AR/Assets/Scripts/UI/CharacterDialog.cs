@@ -45,17 +45,17 @@ public class CharacterDialog : MonoBehaviour
         switch (_storyProgress)
         {
             case Progress.Priest:
-                FindObjectOfType<AudioManager>().Play("PriestBG");
+                AudioManager.Instance.Play("PriestBG");
                 _currentObject = _priest;
                 _currentNaration = _priestNarration;
                 break;
             case Progress.Drunkard:
-                FindObjectOfType<AudioManager>().Play("DrunkardBG");
+                AudioManager.Instance.Play("DrunkardBG");
                 _currentObject = _drunkard;
                 _currentNaration = _drunkardNarration;
                 break;
             case Progress.CannonCommander:
-                FindObjectOfType<AudioManager>().Play("CommanderBG");
+                AudioManager.Instance.Play("CommanderBG");
                 _currentObject = _cannonCommander;
                 _currentNaration = _cannonNarration;
                 break;
@@ -157,9 +157,9 @@ public class CharacterDialog : MonoBehaviour
             ChangeText();
             _audioComponent.clip = _currentNaration[_currentNarrationIndex].AudioClip;
             _audioComponent.Play();
-            FindObjectOfType<AudioManager>().StopPlaying("PriestBG");
-            FindObjectOfType<AudioManager>().StopPlaying("DrunkardBG");
-            FindObjectOfType<AudioManager>().StopPlaying("CommanderBG");
+            AudioManager.Instance.StopPlaying("PriestBG");
+            AudioManager.Instance.StopPlaying("DrunkardBG");
+            AudioManager.Instance.StopPlaying("CommanderBG");
         }
     }
 
@@ -204,7 +204,7 @@ public class CharacterDialog : MonoBehaviour
         _finishRoutine = null;
         ProgressHandler.Instance.IncreaseStoryProgress();
         SceneHandler.Instance.LoadScene(Scenes.Map); // Load into the map and show the decision screen
-        FindObjectOfType<AudioManager>().Play("GameBG");
+        AudioManager.Instance.Play("GameBG");
     }
 
     private IEnumerator FinalizeDrunkard()
@@ -213,7 +213,7 @@ public class CharacterDialog : MonoBehaviour
 
         _finishRoutine = null;
         SceneHandler.Instance.LoadScene(Scenes.DrunkardInteraction);
-        FindObjectOfType<AudioManager>().Play("");
+        AudioManager.Instance.Play("");
     }
 
     private IEnumerator FinalizeCannonCommander()
@@ -234,6 +234,6 @@ public class CharacterDialog : MonoBehaviour
 
         _finishRoutine = null;
         SceneHandler.Instance.LoadScene(Scenes.CannonInteraction);
-        FindObjectOfType<AudioManager>().Play("");
+        AudioManager.Instance.Play("");
     }
 }

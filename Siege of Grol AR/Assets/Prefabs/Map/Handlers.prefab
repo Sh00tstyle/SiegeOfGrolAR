@@ -154,12 +154,6 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: UITheme
-    clip: {fileID: 8300000, guid: 6ba6933c2533500438bdd7057389c45a, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 1
-    source: {fileID: 0}
   - name: PriestBG
     clip: {fileID: 8300000, guid: 2113afc3971f79a4dbd5c5569915585f, type: 3}
     volume: 0.5
@@ -168,7 +162,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: DrunkardBG
     clip: {fileID: 8300000, guid: f9f68abe77605764cb81f7c8e05f1ec8, type: 3}
-    volume: 0.7
+    volume: 0.3
     pitch: 1
     loop: 1
     source: {fileID: 0}
@@ -177,4 +171,10 @@ MonoBehaviour:
     volume: 0.3
     pitch: 1
     loop: 1
+    source: {fileID: 0}
+  - name: ScrollOpen
+    clip: {fileID: 8300000, guid: 70eabe51a26f00948abba35c4d7dc2df, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
     source: {fileID: 0}

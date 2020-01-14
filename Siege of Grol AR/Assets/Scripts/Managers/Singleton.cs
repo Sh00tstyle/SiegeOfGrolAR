@@ -11,7 +11,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     protected void SetDontDestroyOnLoad()
     {
         if (_Instance != null)
-            Destroy(gameObject);
+            Destroy(this);
         else
             DontDestroyOnLoad(gameObject);
     }

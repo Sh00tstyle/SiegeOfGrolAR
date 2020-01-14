@@ -49,7 +49,7 @@ public class GameManager : Singleton<GameManager>
         // Frame Citizen: Commander, Identify Spy: Drunkard
         if((ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Commander) || (!ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Drunkard))
         {
-            FindObjectOfType<AudioManager>().Play("FrameCorrect");
+            AudioManager.Instance.Play("FrameCorrect");
             MenuManager.Instance.ShowPopup("Great!", "I knew I could count on you!", "OK", () => {
                 ProgressHandler.Instance.IncreaseStoryProgress();
                 MenuManager.Instance.GoToMenu(MenuTypes.MAINMENU);
@@ -58,7 +58,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            FindObjectOfType<AudioManager>().Play("FrameWrong");
+            AudioManager.Instance.Play("FrameWrong");
             MenuManager.Instance.ShowPopup("Are you sure?", "It seems like you selected the wrong option, try again!", "OK", null);
         }
     }
@@ -155,7 +155,7 @@ public class GameManager : Singleton<GameManager>
             {
                 if (hit.transform.tag == Tags.Location && hit.transform.gameObject == _currentLocationObject)
                 {
-                    FindObjectOfType<AudioManager>().StopPlaying("GameBG");
+                    AudioManager.Instance.StopPlaying("GameBG");
                     SceneHandler.Instance.LoadScene(Scenes.Dialog);                 
                 }
             }
