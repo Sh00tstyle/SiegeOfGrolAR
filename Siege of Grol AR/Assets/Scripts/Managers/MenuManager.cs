@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class MenuManager : Singleton<MenuManager>
 {
     [SerializeField]
-    private MenuBehaviour _startingMenu, _popupPrefab, _mainMenu, _priestDecisionMenu, _finalLetterMenu;
+    private MenuBehaviour _startingMenu, _popupPrefab, _mainMenu, _priestDecisionMenu, _finalLetterMenu, _resultScreen;
 
     [SerializeField]
     private MenuAnimation _defaultAnimation, _popupAnimation;
@@ -89,6 +89,10 @@ public class MenuManager : Singleton<MenuManager>
 
             case MenuTypes.FINALLETTERMENU:
                 targetMenu = _finalLetterMenu;
+                break;
+
+            case MenuTypes.RESULTSCREEN:
+                targetMenu = _resultScreen;
                 break;
         }
 

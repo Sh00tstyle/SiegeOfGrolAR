@@ -48,7 +48,6 @@ public class GameManager : Singleton<GameManager>
     public void SelectFinalLetterCharacter(int pCharacterIndex)
     {
         LetterCharacter character = (LetterCharacter)pCharacterIndex;
-        Debug.Log("Selected " + character);
 
         // Frame Citizen: Commander, Identify Spy: Drunkard
         if((ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Commander) || (!ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Drunkard))
@@ -58,6 +57,8 @@ public class GameManager : Singleton<GameManager>
                 ProgressHandler.Instance.IncreaseStoryProgress();
                 MenuManager.Instance.GoToMenu(MenuTypes.MAINMENU);
                 NavigationManager.Instance.SetLineRendererVisibility(false, false);
+
+                MenuManager.Instance.GoToMenu(MenuTypes.RESULTSCREEN);
             });
         }
         else
@@ -87,6 +88,10 @@ public class GameManager : Singleton<GameManager>
 
             case 3: // Selection for framing/identification
                 MenuManager.Instance.GoToMenu(MenuTypes.FINALLETTERMENU);
+                break;
+
+            case 4: // Completed story
+                MenuManager.Instance.GoToMenu(MenuTypes.RESULTSCREEN);
                 break;
 
             default: // Default return to the map
