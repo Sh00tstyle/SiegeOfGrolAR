@@ -47,6 +47,15 @@ TextureImporter:
   - first:
       213: -3741109556946786936
     second: Button_next
+  - first:
+      213: -5175782161296126273
+    second: Facebook
+  - first:
+      213: -8572156100854741756
+    second: Twitter
+  - first:
+      213: 862813387504686821
+    second: Instagram
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -453,6 +462,69 @@ TextureImporter:
       bones: []
       spriteID: 776f0a6426246fc45a3e757f6fd3a9b4
       internalID: -3741109556946786936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Facebook
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 81
+        width: 73
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca3d17aee5ce2244cbaa61013c47be63
+      internalID: -5175782161296126273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Twitter
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 93
+        width: 98
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf7f19c06ea02f74f9006335609305f9
+      internalID: -8572156100854741756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Instagram
+      rect:
+        serializedVersion: 2
+        x: 821
+        y: 96
+        width: 98
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec932e499ac332b4a9d5693a5ab42a43
+      internalID: 862813387504686821
       vertices: []
       indices: 
       edges: []
