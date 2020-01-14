@@ -1752,7 +1752,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _cannonCommanderClip
       value: 
-      objectReference: {fileID: 32900000, guid: 99f462c4360fda94995332b5a4761508,
+      objectReference: {fileID: 32900000, guid: 8fce1d5688fd15540a754b14fd6d7a09,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d819ad46ad9d4f34f935f5c474db6bc8, type: 3}
