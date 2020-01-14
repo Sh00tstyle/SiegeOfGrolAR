@@ -125,6 +125,9 @@ public class GameManager : Singleton<GameManager>
          
         _currentLocationObject = Instantiate(_currentLocation.locationPrefab, locationPos, Quaternion.identity);
 
+        // Play animation
+        _currentLocationObject.GetComponentInChildren<Animator>().Play("Awake");
+
         Transform[] childTransforms = _currentLocationObject.GetComponentsInChildren<Transform>();
 
         if (childTransforms.Length > 1)
