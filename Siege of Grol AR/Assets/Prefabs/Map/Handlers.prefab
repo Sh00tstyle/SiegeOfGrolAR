@@ -168,7 +168,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: DrunkardBG
     clip: {fileID: 8300000, guid: f9f68abe77605764cb81f7c8e05f1ec8, type: 3}
-    volume: 0.7
+    volume: 1
     pitch: 1
     loop: 1
     source: {fileID: 0}
@@ -177,4 +177,10 @@ MonoBehaviour:
     volume: 0.3
     pitch: 1
     loop: 1
+    source: {fileID: 0}
+  - name: CannonFinal
+    clip: {fileID: 8300000, guid: e85f931ef6865704ea2eb371da550d35, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
     source: {fileID: 0}

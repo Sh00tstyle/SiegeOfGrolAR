@@ -84,6 +84,15 @@ public class InteractionButton : MonoBehaviour
 
     public void ContinueStory()
     {
+        StartCoroutine(FinalizeCannonInteraction());
+    }
+
+    IEnumerator FinalizeCannonInteraction()
+    {
+        AudioManager.Instance.Play("CannonFinal");
+
+        yield return new WaitForSeconds(23.0f);
+
         ProgressHandler.Instance.IncreaseStoryProgress();
         SceneHandler.Instance.LoadScene(Scenes.Map);
     }
