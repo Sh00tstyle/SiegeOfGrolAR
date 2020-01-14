@@ -75,7 +75,7 @@ public class TutorialMarkdown : MonoBehaviour
             _bottomMenu.HideMenu(_dissmissAnimation);
 
         // Now navigate from player to the location
-        CameraManager.Instance.SwitchFocusObject(pLocation, 5, 5, 3, _fadeInEase).OnComplete(() =>
+        CameraManager.Instance.SwitchFocusObject(pLocation, 3, 5, 3, _fadeInEase).OnComplete(() =>
         {
             // Tell the player to go there
             //Translate Vector3 WorldPosition to Vector2 UI Space
