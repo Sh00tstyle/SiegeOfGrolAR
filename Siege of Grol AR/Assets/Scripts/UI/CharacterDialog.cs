@@ -16,6 +16,7 @@ public class CharacterDialog : MonoBehaviour
     [SerializeField] private AudioSource _audioComponent;
     [SerializeField] Narration[] _priestNarration, _drunkardNarration, _cannonNarration;
     
+    
 
     [Serializable]
     public struct Narration
@@ -30,6 +31,7 @@ public class CharacterDialog : MonoBehaviour
     private GameObject _currentObject;
     private Narration[] _currentNaration;
     private int _currentNarrationIndex;
+    private Animator _currentAnimator;
 
     private bool _hasPlaced;
 
@@ -62,6 +64,7 @@ public class CharacterDialog : MonoBehaviour
         }
 
         _narratorNameField.text = _storyProgress.ToString();
+        _currentAnimator = _currentObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -157,6 +160,9 @@ public class CharacterDialog : MonoBehaviour
             ChangeText();
             _audioComponent.clip = _currentNaration[_currentNarrationIndex].AudioClip;
             _audioComponent.Play();
+
+            _currentAnimator.Play("Talking");
+
             AudioManager.Instance.StopPlaying("PriestBG");
             AudioManager.Instance.StopPlaying("DrunkardBG");
             AudioManager.Instance.StopPlaying("CommanderBG");
