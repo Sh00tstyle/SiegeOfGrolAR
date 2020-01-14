@@ -829,17 +829,10 @@ MonoBehaviour:
   _narrationCanvas: {fileID: 1512770042}
   _audioComponent: {fileID: 825752484}
   _priestNarration:
-  - Text: Hello to you, a child of the Lord, I have never met you before, you are
-      not from here, I suppose.
-    AudioClip: {fileID: 8300000, guid: 45ae528fdfbed55469ca0bc3dbdccf1c, type: 3}
-  - Text: 'I am the Archbishop of this town, Philip Rovenius. '
-    AudioClip: {fileID: 8300000, guid: 1c06bc57dd64eb94aa7d747b7897ea2f, type: 3}
-  - Text: 'I believe our Mayor Matthijs must have sent you this way, and you are wondering
-      about the war that is going on outside of these town walls? '
-    AudioClip: {fileID: 8300000, guid: bac9dc6e617c2ba40b1559882d7791f8, type: 3}
-  - Text: The house of God will be the place where you find all the answers. Perhaps
-      my short explanation could help you to understand this.
-    AudioClip: {fileID: 8300000, guid: e55e35689e295ca499a671527b77f76e, type: 3}
+  - Text: Hello, I am the Priest!
+    AudioClip: {fileID: 0}
+  - Text: But I don't know what to tell you...
+    AudioClip: {fileID: 0}
   _drunkardNarration:
   - Text: "Oi! You there! Aren\u2019t you the stranger from far away that everyone
       is talking about? Come here and have a beer with me. My name is Dirck."
@@ -899,8 +892,7 @@ AudioSource:
   m_GameObject: {fileID: 825752481}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3619503673339072550, guid: 693d53fbdc7efa742b4b0a7a94bc9bd4,
-    type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1545,6 +1537,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Archbishop
       objectReference: {fileID: 0}
+    - target: {fileID: 865234967910730843, guid: fd06bf2fd560e914aa44fa902263bcdf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 865234967910730843, guid: fd06bf2fd560e914aa44fa902263bcdf,
+        type: 3}
+      propertyPath: m_TagString
+      value: ARCharacter
+      objectReference: {fileID: 0}
     - target: {fileID: 865234967911157883, guid: fd06bf2fd560e914aa44fa902263bcdf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1600,7 +1602,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7578478693844939978, guid: fd06bf2fd560e914aa44fa902263bcdf,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: -0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7578478693844939978, guid: fd06bf2fd560e914aa44fa902263bcdf,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7578478693844939978, guid: fd06bf2fd560e914aa44fa902263bcdf,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7578478693844939978, guid: fd06bf2fd560e914aa44fa902263bcdf,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7578478693844545095, guid: fd06bf2fd560e914aa44fa902263bcdf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fd06bf2fd560e914aa44fa902263bcdf, type: 3}
 --- !u!1 &7578478693836801790 stripped
 GameObject:
@@ -1608,6 +1631,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7578478693836801789}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &7578478693836801791
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7578478693836801790}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.7, z: 0.51750064}
+  m_Center: {x: 0, y: 0.72, z: 0.046624407}
 --- !u!1001 &8863313654506892119
 PrefabInstance:
   m_ObjectHideFlags: 0

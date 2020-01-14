@@ -15,8 +15,8 @@ public class CharacterDialog : MonoBehaviour
     [SerializeField] GameObject _narrationCanvas;
     [SerializeField] private AudioSource _audioComponent;
     [SerializeField] Narration[] _priestNarration, _drunkardNarration, _cannonNarration;
-
-
+    
+    
 
     [Serializable]
     public struct Narration
@@ -64,7 +64,7 @@ public class CharacterDialog : MonoBehaviour
         }
 
         _narratorNameField.text = _storyProgress.ToString();
-        _currentAnimator = _currentObject.GetComponentInChildren<Animator>();
+        _currentAnimator = _currentObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -147,28 +147,21 @@ public class CharacterDialog : MonoBehaviour
     {
         Narration narration = _currentNaration[_currentNarrationIndex];
         _narrationTextField.text = narration.Text;
-
-        _audioComponent.clip = _currentNaration[_currentNarrationIndex].AudioClip;
-        _audioComponent.Play();
-
-        if (_currentAnimator != null)
-            _currentAnimator.Play("Talking");
     }
 
     public void NextNarration()
     {
         _currentNarrationIndex++;
 
-
-
         if (_currentNarrationIndex >= _currentNaration.Length && _finishRoutine == null)
             _finishRoutine = StartCoroutine(FinishDialog());
         else if (_currentNarrationIndex < _currentNaration.Length)
         {
             ChangeText();
-            AudioManager.Instance.StopPlaying("PriestBG");
-            AudioManager.Instance.StopPlaying("DrunkardBG");
-            AudioManager.Instance.StopPlaying("CommanderBG");
+            _audioComponent.clip = _currentNaration[_currentNarrationIndex].AudioClip;
+            _audioComponent.Play();
+
+            _currentAnimator.Play("Talking");
         }
     }
 
@@ -177,11 +170,11 @@ public class CharacterDialog : MonoBehaviour
         switch (_storyProgress)
         {
             case Progress.Priest:
-                yield return StartCoroutine(FinalizePriest());
+                yield return StartCoroutine(FinalizePriest());              
                 break;
 
             case Progress.Drunkard:
-                yield return StartCoroutine(FinalizeDrunkard());
+                yield return StartCoroutine(FinalizeDrunkard());               
                 break;
 
             case Progress.CannonCommander:
@@ -196,6 +189,8 @@ public class CharacterDialog : MonoBehaviour
 
     private IEnumerator FinalizePriest()
     {
+        AudioManager.Instance.StopPlaying("PriestBG");
+
         AnimationPlayer animationPlayer = Camera.main.GetComponentInChildren<AnimationPlayer>();
 
         if (animationPlayer == null)
@@ -212,21 +207,24 @@ public class CharacterDialog : MonoBehaviour
 
         _finishRoutine = null;
         ProgressHandler.Instance.IncreaseStoryProgress();
-        SceneHandler.Instance.LoadScene(Scenes.Map); // Load into the map and show the decision screen
         AudioManager.Instance.Play("GameBG");
+        SceneHandler.Instance.LoadScene(Scenes.Map); // Load into the map and show the decision screen
     }
 
     private IEnumerator FinalizeDrunkard()
     {
         yield return new WaitForSecondsRealtime(0.5f);
 
+        AudioManager.Instance.StopPlaying("DrunkardBG");
+
         _finishRoutine = null;
+        //AudioManager.Instance.Play("DrunkardTheme");
         SceneHandler.Instance.LoadScene(Scenes.DrunkardInteraction);
-        AudioManager.Instance.Play("");
     }
 
     private IEnumerator FinalizeCannonCommander()
     {
+        AudioManager.Instance.StopPlaying("CommanderBG");
         AnimationPlayer animationPlayer = Camera.main.GetComponentInChildren<AnimationPlayer>();
 
         if (animationPlayer == null)
@@ -242,7 +240,7 @@ public class CharacterDialog : MonoBehaviour
         Debug.Log("Finished playing animation, loading the next scene...");
 
         _finishRoutine = null;
+        AudioManager.Instance.Play("CannonTheme");
         SceneHandler.Instance.LoadScene(Scenes.CannonInteraction);
-        AudioManager.Instance.Play("");
     }
 }

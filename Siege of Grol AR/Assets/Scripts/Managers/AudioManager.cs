@@ -24,28 +24,13 @@ public class AudioManager : Singleton<AudioManager>
 
     void Start()
     {
-        // Create a temporary reference to the current scene.
-        Scene currentScene = SceneManager.GetActiveScene();
-
-        // Retrieve the name of this scene.
-        string sceneName = currentScene.name;
-
-        if (sceneName == "CrosshairARInteraction")
-        {
-            Play("CannonTheme");
-        }
-        else if (sceneName == "DialogScene")
-        {
-
-        }
-        else if (sceneName == "MainScene")
-        {
-            Play("StartTheme");
-        }
+        Play("StartTheme"); // This is only called in the main scene during the first startup
     }
 
     public void Play (string name)
     {
+        Debug.Log("Playing sound " + name);
+
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {
@@ -57,6 +42,8 @@ public class AudioManager : Singleton<AudioManager>
 
     public void StopPlaying(string sound)
     {
+        Debug.Log("Stopping sound " + name);
+
         Sound s = Array.Find(sounds, item => item.name == sound);
         if (s == null)
         {
