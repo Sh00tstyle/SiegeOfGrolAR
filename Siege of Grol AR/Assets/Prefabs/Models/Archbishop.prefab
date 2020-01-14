@@ -318,6 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 865234967911157883}
   - component: {fileID: 7578478693836801791}
+  - component: {fileID: 8614190553179075128}
   m_Layer: 0
   m_Name: Archbishop
   m_TagString: ARCharacter
@@ -353,6 +354,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.7, z: 0.51750064}
   m_Center: {x: 0, y: 0.72, z: 0.046624407}
+--- !u!54 &8614190553179075128
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865234967910730843}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &886116211091516653
 GameObject:
   m_ObjectHideFlags: 0
@@ -1806,7 +1823,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7578478693844939978}
   - component: {fileID: 8033119302788558360}
-  - component: {fileID: 7578478693844545092}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -1850,22 +1866,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!54 &7578478693844545092
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7578478693844642026}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &7788453014966083609
 GameObject:
   m_ObjectHideFlags: 0

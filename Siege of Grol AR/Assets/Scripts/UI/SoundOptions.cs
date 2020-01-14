@@ -12,16 +12,16 @@ public class SoundOptions : MonoBehaviour
 
     private void Awake()
     {
-        _ambientSlider.value = GetSavedValue(SoundGroup.AMBIENT);
-        _musicSlider.value = GetSavedValue(SoundGroup.MUSIC);
-        _sfxSlider.value = GetSavedValue(SoundGroup.SFX);   
+        _ambientSlider.value = GetSavedValue(SoundChannel.AMBIENT);
+        _musicSlider.value = GetSavedValue(SoundChannel.MUSIC);
+        _sfxSlider.value = GetSavedValue(SoundChannel.SFX);   
     }
 
     private void OnEnable()
     {
-        _ambientSlider.onValueChanged.AddListener(delegate { ChangeValue(SoundGroup.AMBIENT, _ambientSlider.value); });
-        _musicSlider.onValueChanged.AddListener(delegate { ChangeValue(SoundGroup.MUSIC, _musicSlider.value); });
-        _sfxSlider.onValueChanged.AddListener(delegate { ChangeValue(SoundGroup.SFX, _sfxSlider.value); });
+        _ambientSlider.onValueChanged.AddListener(delegate { ChangeValue(SoundChannel.AMBIENT, _ambientSlider.value); });
+        _musicSlider.onValueChanged.AddListener(delegate { ChangeValue(SoundChannel.MUSIC, _musicSlider.value); });
+        _sfxSlider.onValueChanged.AddListener(delegate { ChangeValue(SoundChannel.SFX, _sfxSlider.value); });
     }
 
     private void OnDisable()
@@ -31,7 +31,7 @@ public class SoundOptions : MonoBehaviour
         _sfxSlider.onValueChanged.RemoveAllListeners();
     }
 
-    float GetSavedValue(SoundGroup pGroup)
+    float GetSavedValue(SoundChannel pGroup)
     {
         string channel = pGroup.ToString();
         if (PlayerPrefs.HasKey(channel))
@@ -41,7 +41,7 @@ public class SoundOptions : MonoBehaviour
     }
 
 
-    public void ChangeValue(SoundGroup pGroup, float pValue)
+    public void ChangeValue(SoundChannel pGroup, float pValue)
     {
         string channel = pGroup.ToString();
 

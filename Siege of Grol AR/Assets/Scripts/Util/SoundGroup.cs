@@ -1,4 +1,4 @@
-﻿public enum SoundGroup
+﻿public enum SoundChannel
 {
     MUSIC,
     AMBIENT,
