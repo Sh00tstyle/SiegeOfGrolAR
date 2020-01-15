@@ -53,6 +53,12 @@ public class MenuManager : Singleton<MenuManager>
         }
     }
 
+    public void OpenMapMenu()
+    {
+        // Dirty
+        GoToMenu(MenuTypes.MAINMENU);
+    }
+
     public void GoToMenu(MenuBehaviour pTargetMenu, MenuAnimation pAnimation = null)
     {
         if (pAnimation == null)

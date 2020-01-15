@@ -17,6 +17,7 @@ public class LanguageFlags : MonoBehaviour
     {
         ChangeLanguage(0);
     }
+
     public void ChangeLanguage(int index)
     {
         if (_currentIndex == index) return;
@@ -27,9 +28,6 @@ public class LanguageFlags : MonoBehaviour
             _activeTweens[i] = _languageFlags[i].DOFade(i == index ? 1 : _minimumOpacity, _flagFadeDuration).SetEase(Ease.InOutSine);
             _activeTweens[i] = _languageFlags[i].rectTransform.DOScale(i == index ? _maxScale : 1, _flagFadeDuration).SetEase(Ease.InOutSine);
         }
-
-        AudioManager.Instance.Play("FlagPress");
-          
 
         // Change settings in GameManager?
         // GameManager.Instance.Save(x);
