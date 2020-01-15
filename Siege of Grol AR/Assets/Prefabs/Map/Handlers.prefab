@@ -208,7 +208,7 @@ MonoBehaviour:
     channel: 0
     volume: 1
     pitch: 1
-    loop: 0
+    loop: 1
     source: {fileID: 0}
   _ambientGroup: {fileID: 59804496695275377, guid: 693d53fbdc7efa742b4b0a7a94bc9bd4,
     type: 2}
