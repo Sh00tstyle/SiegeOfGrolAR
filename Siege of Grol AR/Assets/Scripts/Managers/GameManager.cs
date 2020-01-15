@@ -120,7 +120,7 @@ public class GameManager : Singleton<GameManager>
 
     private IEnumerator PlayLocationAnimationInternally()
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.75f);
 
         _currentLocationObject.GetComponentInChildren<Animator>().Play("Awake");
     }

@@ -80,9 +80,9 @@ public class DrunkardInteraction : MonoBehaviour
             StartDialog(_wrongFeedbackNarration, () =>
             {
                 if (_shownHints < _hints.Length)
-                    _dialogTextContainer.text = _hints[_shownHints].ToUpper();
+                    _dialogTextContainer.text = _hints[_shownHints];
                 else
-                    _dialogTextContainer.text = _hintTemplates[_hintTemplates.Length - 1].ToUpper();
+                    _dialogTextContainer.text = _hintTemplates[_hintTemplates.Length - 1];
 
                 ShowNextHint();
             });
@@ -95,7 +95,7 @@ public class DrunkardInteraction : MonoBehaviour
 
         if (_currentNarrationIndex < _currentNarration.Length) // Next text
         {
-            _dialogTextContainer.text = _currentNarration[_currentNarrationIndex].Text.ToUpper();
+            _dialogTextContainer.text = _currentNarration[_currentNarrationIndex].Text;
         }
         else if (_currentNarrationIndex >= _currentNarration.Length) // No more text left
         {
@@ -152,7 +152,7 @@ public class DrunkardInteraction : MonoBehaviour
         ShowNextHint();
         StartDialog(_introNarration, () =>
         {
-            _dialogTextContainer.text = _hints[0].ToUpper();
+            _dialogTextContainer.text = _hints[0];
         });
     }
 
@@ -164,7 +164,7 @@ public class DrunkardInteraction : MonoBehaviour
         _currentNarrationAction = pAction;
         _currentNarrationIndex = 0;
 
-        _dialogTextContainer.text = _currentNarration[_currentNarrationIndex].Text.ToUpper();
+        _dialogTextContainer.text = _currentNarration[_currentNarrationIndex].Text;
     }
 
     private List<int> GetRandomSequence(int pMaxRange)
@@ -189,7 +189,7 @@ public class DrunkardInteraction : MonoBehaviour
         if (_shownHints >= _hints.Length)
             return;
 
-        _hintTextContainer.text += (_shownHints + 1) + ". " + _hints[_shownHints].ToUpper() + "\n";
+        _hintTextContainer.text += (_shownHints + 1) + ". " + _hints[_shownHints] + "\n";
         ++_shownHints;
     }
 

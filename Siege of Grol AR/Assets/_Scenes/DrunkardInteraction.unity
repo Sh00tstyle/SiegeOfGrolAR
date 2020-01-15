@@ -1182,11 +1182,15 @@ MonoBehaviour:
   _dialogTextContainer: {fileID: 907172901}
   _introNarration:
   - Text: I am too drunk to find my house, help me please.
+    AudioClip: {fileID: 0}
   - Text: Right now I only know one detail about how my house looks...
+    AudioClip: {fileID: 0}
   _wrongFeedbackNarration:
   - Text: I do not think that is my house. Let me think, maybe I have some more hints...
+    AudioClip: {fileID: 0}
   _rightFeedbackNarration:
   - Text: Thats the one, thanks for your help!
+    AudioClip: {fileID: 0}
   _hintCanvas: {fileID: 176097663}
   _hintTextContainer: {fileID: 290893233}
 --- !u!1 &1253879817
@@ -1618,6 +1622,40 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_text
+      value: 'Bla bla bla I''m so drunk...
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c72e6601e9405d444b0c604226e8e130,
+        type: 2}
+    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -185442500163504199, guid: c72e6601e9405d444b0c604226e8e130,
+        type: 2}
     - target: {fileID: 8413252752247986875, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1723,11 +1761,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8413252752247986874, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5975720735329074160, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -1737,18 +1770,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 733441385974063907, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
-        type: 3}
-      propertyPath: m_text
-      value: 'Drunkard
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 733441385974063907, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1585971477244162678, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
         type: 3}
@@ -1775,40 +1796,23 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: AdvanceDialog
       objectReference: {fileID: 0}
-    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+    - target: {fileID: 733441385974063907, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
         type: 3}
       propertyPath: m_text
-      value: 'Bla bla bla I''m so drunk...
+      value: 'Drunkard
 
 '
       objectReference: {fileID: 0}
-    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+    - target: {fileID: 733441385974063907, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 28
+      value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+    - target: {fileID: 8413252752247986874, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
         type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 6
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: f60eb8a0debc44d458459b65f0d821da,
-        type: 2}
-    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -1088201182262858655, guid: f60eb8a0debc44d458459b65f0d821da,
-        type: 2}
     m_RemovedComponents:
     - {fileID: 3073040946138000397, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99, type: 3}

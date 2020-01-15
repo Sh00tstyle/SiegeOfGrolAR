@@ -66,7 +66,7 @@ public class CharacterDialog : MonoBehaviour
                 break;
         }
 
-        _narratorNameField.text = _storyProgress.ToString();
+        _narratorNameField.text = _storyProgress.ToString().ToUpper();
         _currentAnimator = _currentObject.GetComponentInChildren<Animator>();
     }
 
@@ -173,7 +173,6 @@ public class CharacterDialog : MonoBehaviour
         else if (_currentNarrationIndex < _currentNaration.Length)
         {
             ChangeText();
-
         }
     }
 

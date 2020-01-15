@@ -184,54 +184,31 @@ public class CrosshairManipulator : Manipulator
         
     }
 
-    /**
-    protected override bool CanStartManipulationForGesture(TapGesture gesture)
+    public void ContinueStory()
     {
-        if (gesture.TargetObject == null)
-        {
-            return true;
-        }
-
-        return false;
+        StartCoroutine(FinalizeCannonInteraction());
     }
 
-    protected override void OnEndManipulation(TapGesture gesture)
+    IEnumerator FinalizeCannonInteraction()
     {
-        TrackableHit hit;
-        TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon;
+        AudioManager.Instance.Play("CannonFinal");
 
-        if (Frame.Raycast(Screen.width * 0.5f, Screen.height * 0.5f, raycastFilter, out hit))
+        float timer = 23.0f;
+
+        while (timer > 0.0f) // DEBUG
         {
-            // Use hit pose and camera pose to check if hittest is from the
-            // back of the plane, if it is, no need to create the anchor.
-            if ((hit.Trackable is DetectedPlane) &&
-                Vector3.Dot(_firstPersonCamera.transform.position - hit.Pose.position,
-                    hit.Pose.rotation * Vector3.up) < 0)
-            {
-                Debug.Log("Hit at back of the current DetectedPlane");
-            }
-            else
-            {
-                // Instantiate game object at the hit pose.
-                var gameObject = Instantiate(_pawnPrefab, hit.Pose.position, hit.Pose.rotation);
+            if (Input.touchCount >= 3)
+                break;
 
-                // Instantiate manipulator.
-                var manipulator = Instantiate(_manipulatorPrefab, hit.Pose.position, hit.Pose.rotation);
-
-                // Make game object a child of the manipulator.
-                gameObject.transform.parent = manipulator.transform;
-
-                // Create an anchor to allow ARCore to track the hitpoint as understanding of
-                // the physical world evolves.
-                var anchor = hit.Trackable.CreateAnchor(hit.Pose);
-
-                // Make manipulator a child of the anchor.
-                manipulator.transform.parent = anchor.transform;
-
-                // Select the placed object.
-                manipulator.GetComponent<Manipulator>().Select();
-            }
+            timer -= Time.deltaTime;
+            yield return null;
         }
+
+        //yield return new WaitForSeconds(23.0f); // Maybe not do this?
+
+        ProgressHandler.Instance.IncreaseStoryProgress();
+        AudioManager.Instance.StopPlaying("CannonTheme");
+        AudioManager.Instance.Play("GameBG");
+        SceneHandler.Instance.LoadScene(Scenes.Map);
     }
-    /**/
 }
