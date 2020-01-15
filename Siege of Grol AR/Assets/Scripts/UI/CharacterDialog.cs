@@ -72,7 +72,7 @@ public class CharacterDialog : MonoBehaviour
     {
         if (_hasPlaced)
         {
-            DetectCharacterSelect();
+            // DetectCharacterSelect();
             return;
         }
 
@@ -120,10 +120,9 @@ public class CharacterDialog : MonoBehaviour
 
             }
         }
+
         if (Input.GetMouseButton(0) && !_hasPlaced && _hasPositioned)
             PlaceCharacter(_hit);
-
-
     }
 
     private void PositionCharacter(TrackableHit pHit)
