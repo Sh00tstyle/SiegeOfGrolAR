@@ -463,23 +463,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 23
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_text
@@ -487,11 +487,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_fontSize
-      value: 50
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
       propertyPath: m_fontSizeMax
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: f60eb8a0debc44d458459b65f0d821da,
+        type: 2}
+    - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1088201182262858655, guid: f60eb8a0debc44d458459b65f0d821da,
+        type: 2}
+    - target: {fileID: 1059874733, guid: 602fad633585130479b72b2533ebd1c3, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6606371306735528306, guid: 602fad633585130479b72b2533ebd1c3,
         type: 3}
@@ -1189,7 +1203,17 @@ MonoBehaviour:
   - Text: I do not think that is my house. Let me think, maybe I have some more hints...
     AudioClip: {fileID: 0}
   _rightFeedbackNarration:
-  - Text: Thats the one, thanks for your help!
+  - Text: Well Lad, thank you for getting me back to me bed hehe. Yer tryna find the
+      spy to help him right?
+    AudioClip: {fileID: 0}
+  - Text: "I saw yer  at the church, you don\u2019t like the Spanish eh? I don\u2019t
+      like them either."
+    AudioClip: {fileID: 0}
+  - Text: Those blokes try to hard to force Catholic beliefs  on our people and now
+      they even take more food from us to fight in the war!
+    AudioClip: {fileID: 0}
+  - Text: Either way, if you want to know more ye should go to the cannon commander,
+      you will see how the situation really is at the Spanish side.
     AudioClip: {fileID: 0}
   _hintCanvas: {fileID: 176097663}
   _hintTextContainer: {fileID: 290893233}

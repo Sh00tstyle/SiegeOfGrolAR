@@ -189,7 +189,7 @@ public class DrunkardInteraction : MonoBehaviour
         if (_shownHints >= _hints.Length)
             return;
 
-        _hintTextContainer.text += (_shownHints + 1) + ". " + _hints[_shownHints] + "\n";
+        _hintTextContainer.text += (_shownHints + 1) + ". " + _hints[_shownHints].ToUpper() + "\n";
         ++_shownHints;
     }
 

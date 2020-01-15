@@ -16,8 +16,6 @@ public class CharacterDialog : MonoBehaviour
     [SerializeField] private AudioSource _audioComponent;
     [SerializeField] Narration[] _priestNarration, _drunkardNarration, _cannonNarration;
 
-
-
     [Serializable]
     public struct Narration
     {

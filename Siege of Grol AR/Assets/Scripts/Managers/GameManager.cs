@@ -53,7 +53,7 @@ public class GameManager : Singleton<GameManager>
         if((ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Commander) || (!ProgressHandler.Instance.IsHelpingSpy && character == LetterCharacter.Drunkard))
         {
             AudioManager.Instance.Play("FrameCorrect");
-            MenuManager.Instance.ShowPopup("Great!", "I knew I could count on you!", "OK", () => {
+            MenuManager.Instance.ShowPopup("Great!".ToUpper(), "I knew I could count on you!".ToUpper(), "OK".ToUpper(), () => {
                 ProgressHandler.Instance.IncreaseStoryProgress();
                 MenuManager.Instance.GoToMenu(MenuTypes.MAINMENU);
                 NavigationManager.Instance.SetLineRendererVisibility(false, false);
@@ -64,7 +64,7 @@ public class GameManager : Singleton<GameManager>
         else
         {
             AudioManager.Instance.Play("FrameWrong");
-            MenuManager.Instance.ShowPopup("Are you sure?", "It seems like you selected the wrong option, try again!", "OK", null);
+            MenuManager.Instance.ShowPopup("Are you sure?".ToUpper(), "It seems like you selected the wrong option, try again!".ToUpper(), "OK".ToUpper(), null);
         }
     }
 
