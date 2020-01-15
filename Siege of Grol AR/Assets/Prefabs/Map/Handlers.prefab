@@ -178,7 +178,7 @@ MonoBehaviour:
   - name: PriestBG
     clip: {fileID: 8300000, guid: 2113afc3971f79a4dbd5c5569915585f, type: 3}
     channel: 0
-    volume: 0.5
+    volume: 0.4
     pitch: 1
     loop: 1
     source: {fileID: 0}
@@ -206,7 +206,7 @@ MonoBehaviour:
   - name: DrunkGameBG
     clip: {fileID: 8300000, guid: dd598896ae630e848b217d30d2dd069c, type: 3}
     channel: 0
-    volume: 1
+    volume: 0.7
     pitch: 1
     loop: 1
     source: {fileID: 0}
