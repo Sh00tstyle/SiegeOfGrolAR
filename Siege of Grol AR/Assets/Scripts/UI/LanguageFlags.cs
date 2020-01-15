@@ -27,6 +27,8 @@ public class LanguageFlags : MonoBehaviour
             _activeTweens[i] = _languageFlags[i].DOFade(i == index ? 1 : _minimumOpacity, _flagFadeDuration).SetEase(Ease.InOutSine);
             _activeTweens[i] = _languageFlags[i].rectTransform.DOScale(i == index ? _maxScale : 1, _flagFadeDuration).SetEase(Ease.InOutSine);
         }
+
+        AudioManager.Instance.Play("FlagPress");
           
 
         // Change settings in GameManager?

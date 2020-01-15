@@ -317,13 +317,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 865234967911157883}
+  - component: {fileID: 7578478693836801791}
+  - component: {fileID: 8614190553179075128}
   m_Layer: 0
   m_Name: Archbishop
-  m_TagString: Untagged
+  m_TagString: ARCharacter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &865234967911157883
 Transform:
   m_ObjectHideFlags: 0
@@ -339,6 +341,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7578478693836801791
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865234967910730843}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.7, z: 0.51750064}
+  m_Center: {x: 0, y: 0.72, z: 0.046624407}
+--- !u!54 &8614190553179075128
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865234967910730843}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &886116211091516653
 GameObject:
   m_ObjectHideFlags: 0
@@ -1792,8 +1823,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7578478693844939978}
   - component: {fileID: 8033119302788558360}
-  - component: {fileID: 7578478693844545092}
-  - component: {fileID: 7578478693844545095}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -1809,8 +1838,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7578478693844642026}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.757219, z: -0.03729953}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalPosition: {x: 0, y: 0, z: -0.03729953}
+  m_LocalScale: {x: 0.8, y: 0.8, z: -0.8}
   m_Children:
   - {fileID: 1186262266943898370}
   - {fileID: 75547621380331277}
@@ -1837,35 +1866,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!54 &7578478693844545092
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7578478693844642026}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!65 &7578478693844545095
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7578478693844642026}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2.0299332, z: 0.51750064}
-  m_Center: {x: 0, y: 0.9465238, z: 0.046624407}
 --- !u!1 &7788453014966083609
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,8 +15,8 @@ public class CharacterDialog : MonoBehaviour
     [SerializeField] GameObject _narrationCanvas;
     [SerializeField] private AudioSource _audioComponent;
     [SerializeField] Narration[] _priestNarration, _drunkardNarration, _cannonNarration;
-    
-    
+
+
 
     [Serializable]
     public struct Narration
@@ -33,10 +33,13 @@ public class CharacterDialog : MonoBehaviour
     private int _currentNarrationIndex;
     private Animator _currentAnimator;
 
-    private bool _hasPlaced;
+    private bool _hasPlaced, _hasPositioned;
 
     private Coroutine _finishRoutine;
     private Progress _storyProgress;
+
+    private TrackableHit _hit;
+
 
     void Awake()
     {
@@ -64,7 +67,7 @@ public class CharacterDialog : MonoBehaviour
         }
 
         _narratorNameField.text = _storyProgress.ToString();
-        _currentAnimator = _currentObject.GetComponent<Animator>();
+        _currentAnimator = _currentObject.GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -98,11 +101,13 @@ public class CharacterDialog : MonoBehaviour
     void PlacePreview()
     {
         TrackableHit hit;
-        TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon;
 
-        if (Frame.Raycast(Screen.width * 0.5f, Screen.height * 0.5f, raycastFilter, out hit)) // Middle of the screen
+        if (Frame.Raycast(Screen.width * 0.5f, Screen.height * 0.5f, TrackableHitFlags.PlaneWithinPolygon, out hit)) // Middle of the screen
         {
-            if ((hit.Trackable is DetectedPlane) && Vector3.Dot(_firstPersonCamera.transform.position - hit.Pose.position, hit.Pose.rotation * Vector3.up) < 0)
+            if (hit.Pose != null)
+                _hit = hit;
+
+            if ((_hit.Trackable is DetectedPlane) && Vector3.Dot(_firstPersonCamera.transform.position - _hit.Pose.position, _hit.Pose.rotation * Vector3.up) < 0)
             {
                 Debug.Log("Hit at back of the current DetectedPlane");
             }
@@ -113,12 +118,13 @@ public class CharacterDialog : MonoBehaviour
                     _currentObject.gameObject.SetActive(true);
 
                 // Place object in center of the screen
-                if (Input.GetMouseButtonDown(0) && !_hasPlaced)
-                    PlaceCharacter(hit);
-                else
-                    PositionCharacter(hit);
+                PositionCharacter(_hit);
+
             }
         }
+        if (Input.GetMouseButton(0) && !_hasPlaced && _hasPositioned)
+            PlaceCharacter(_hit);
+
 
     }
 
@@ -126,6 +132,8 @@ public class CharacterDialog : MonoBehaviour
     {
         _currentObject.transform.position = pHit.Pose.position;
         _currentObject.transform.rotation = pHit.Pose.rotation;
+
+        _hasPositioned = true;
     }
 
 
@@ -135,6 +143,7 @@ public class CharacterDialog : MonoBehaviour
         PositionCharacter(pHit);
 
         // Anchor it and parent it to the anchor
+
         Anchor anchor = pHit.Trackable.CreateAnchor(pHit.Pose);
         _currentObject.transform.parent = anchor.transform;
 
@@ -147,6 +156,12 @@ public class CharacterDialog : MonoBehaviour
     {
         Narration narration = _currentNaration[_currentNarrationIndex];
         _narrationTextField.text = narration.Text;
+
+        _audioComponent.clip = _currentNaration[_currentNarrationIndex].AudioClip;
+        _audioComponent.Play();
+
+        if (_currentAnimator != null)
+            _currentAnimator.Play("Talking");
     }
 
     public void NextNarration()
@@ -158,14 +173,7 @@ public class CharacterDialog : MonoBehaviour
         else if (_currentNarrationIndex < _currentNaration.Length)
         {
             ChangeText();
-            _audioComponent.clip = _currentNaration[_currentNarrationIndex].AudioClip;
-            _audioComponent.Play();
 
-            _currentAnimator.Play("Talking");
-
-            AudioManager.Instance.StopPlaying("PriestBG");
-            AudioManager.Instance.StopPlaying("DrunkardBG");
-            AudioManager.Instance.StopPlaying("CommanderBG");
         }
     }
 
@@ -174,11 +182,11 @@ public class CharacterDialog : MonoBehaviour
         switch (_storyProgress)
         {
             case Progress.Priest:
-                yield return StartCoroutine(FinalizePriest());              
+                yield return StartCoroutine(FinalizePriest());
                 break;
 
             case Progress.Drunkard:
-                yield return StartCoroutine(FinalizeDrunkard());               
+                yield return StartCoroutine(FinalizeDrunkard());
                 break;
 
             case Progress.CannonCommander:
@@ -193,6 +201,8 @@ public class CharacterDialog : MonoBehaviour
 
     private IEnumerator FinalizePriest()
     {
+        AudioManager.Instance.StopPlaying("PriestBG");
+
         AnimationPlayer animationPlayer = Camera.main.GetComponentInChildren<AnimationPlayer>();
 
         if (animationPlayer == null)
@@ -209,21 +219,24 @@ public class CharacterDialog : MonoBehaviour
 
         _finishRoutine = null;
         ProgressHandler.Instance.IncreaseStoryProgress();
-        SceneHandler.Instance.LoadScene(Scenes.Map); // Load into the map and show the decision screen
         AudioManager.Instance.Play("GameBG");
+        SceneHandler.Instance.LoadScene(Scenes.Map); // Load into the map and show the decision screen
     }
 
     private IEnumerator FinalizeDrunkard()
     {
         yield return new WaitForSecondsRealtime(0.5f);
 
+        AudioManager.Instance.StopPlaying("DrunkardBG");
+
         _finishRoutine = null;
+        //AudioManager.Instance.Play("DrunkardTheme");
         SceneHandler.Instance.LoadScene(Scenes.DrunkardInteraction);
-        AudioManager.Instance.Play("");
     }
 
     private IEnumerator FinalizeCannonCommander()
     {
+        AudioManager.Instance.StopPlaying("CommanderBG");
         AnimationPlayer animationPlayer = Camera.main.GetComponentInChildren<AnimationPlayer>();
 
         if (animationPlayer == null)
@@ -239,7 +252,7 @@ public class CharacterDialog : MonoBehaviour
         Debug.Log("Finished playing animation, loading the next scene...");
 
         _finishRoutine = null;
+        AudioManager.Instance.Play("CannonTheme");
         SceneHandler.Instance.LoadScene(Scenes.CannonInteraction);
-        AudioManager.Instance.Play("");
     }
 }

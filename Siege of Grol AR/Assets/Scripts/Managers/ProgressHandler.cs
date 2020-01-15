@@ -9,7 +9,7 @@ public class ProgressHandler : Singleton<ProgressHandler>
 
     private void Awake()
     {
-        SetDontDestroyOnLoad();
+        //SetDontDestroyOnLoad();
     }
 
     public void IncreaseStoryProgress()

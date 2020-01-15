@@ -59,7 +59,6 @@ public class AddPartScript : MonoBehaviour
                 AxleUnTextured.SetActive(false);
                 AudioManager.Instance.Play("PartCorrect");
                 Debug.Log("Part 3 detected! +1 to ObjectIndex");               
-                //SceneHandler.Instance.LoadSceneWithDelay(0, 3.0f);
             }
             else if (ObjectIndex == 3)
             {
@@ -108,6 +107,7 @@ public class AddPartScript : MonoBehaviour
     public void DismissSuccessMessage()
     {
         ProgressHandler.Instance.IncreaseStoryProgress();
+        AudioManager.Instance.Play("GameBG");
         SceneHandler.Instance.LoadScene(Scenes.Map);
     }
 }

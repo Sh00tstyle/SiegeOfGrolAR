@@ -7,15 +7,17 @@ public class AudioManager : Singleton<AudioManager>
 {
 
     public Sound[] sounds;
+    [SerializeField] private AudioMixerGroup _ambientGroup, _sfxGroup, _musicGroup;
 
     void Awake()
     {
-        SetDontDestroyOnLoad();
+        //SetDontDestroyOnLoad();
 
-        foreach (Sound s in sounds) {
+        foreach (Sound s in sounds)
+        {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
-
+            s.source.outputAudioMixerGroup = GetMixerGroup(s.channel);
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
@@ -24,37 +26,20 @@ public class AudioManager : Singleton<AudioManager>
 
     void Start()
     {
-        // Create a temporary reference to the current scene.
-        Scene currentScene = SceneManager.GetActiveScene();
-
-        // Retrieve the name of this scene.
-        string sceneName = currentScene.name;
-
-        if (sceneName == "CrosshairARInteraction")
-        {
-            Play("CannonTheme");
-        }
-        else if (sceneName == "DialogScene")
-        {
-
-        }
-        else if (sceneName == "MainScene")
-        {
-            Play("StartTheme");
-        }
+        if (SceneManager.GetActiveScene().buildIndex == (int)Scenes.Map) // This is only called in the main scene during the first startup
+            Play("StartTheme"); // This is only called in the main scene during the first startup
     }
 
-    public void Play (string name)
+    public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " not found");
             return;
-        }          
+        }
         s.source.Play();
     }
-
     public void StopPlaying(string sound)
     {
         Sound s = Array.Find(sounds, item => item.name == sound);
@@ -63,10 +48,27 @@ public class AudioManager : Singleton<AudioManager>
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
         }
-
         //s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
         //s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
         s.source.Stop();
     }
+
+
+
+    AudioMixerGroup GetMixerGroup(SoundChannel pChannel)
+    {
+        switch (pChannel)
+        {
+            case SoundChannel.MUSIC:
+                return _musicGroup;
+            case SoundChannel.AMBIENT:
+                return _ambientGroup;
+            case SoundChannel.SFX:
+                return _sfxGroup;
+            default:
+                return _sfxGroup;
+        }
+    }
+
 }
