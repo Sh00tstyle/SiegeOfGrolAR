@@ -149,6 +149,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c72e6601e9405d444b0c604226e8e130,
+        type: 2}
+    - target: {fileID: 1769957330827733577, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8413252752247986875, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
         type: 3}
       propertyPath: m_LocalPosition.x
