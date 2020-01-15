@@ -230,7 +230,7 @@ public class CharacterDialog : MonoBehaviour
         AudioManager.Instance.StopPlaying("DrunkardBG");
 
         _finishRoutine = null;
-        //AudioManager.Instance.Play("DrunkardTheme");
+        AudioManager.Instance.Play("DrunkGameBG");
         SceneHandler.Instance.LoadScene(Scenes.DrunkardInteraction);
     }
 

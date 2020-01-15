@@ -120,7 +120,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: GameBG
-    clip: {fileID: 8300000, guid: 296f68279fd89eb4e8325979ddd08db4, type: 3}
+    clip: {fileID: 8300000, guid: ed89d59604f9c1b47b7fc78fb167633a, type: 3}
     channel: 1
     volume: 1
     pitch: 1
@@ -157,7 +157,7 @@ MonoBehaviour:
   - name: PartCorrect
     clip: {fileID: 8300000, guid: 40d90b528b7f1544baa0c52704aee402, type: 3}
     channel: 2
-    volume: 0.8
+    volume: 0.6
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -190,14 +190,21 @@ MonoBehaviour:
     loop: 1
     source: {fileID: 0}
   - name: CommanderBG
-    clip: {fileID: 0}
-    channel: 0
+    clip: {fileID: 8300000, guid: f1e282a74ee760e4bba8f4f018e08997, type: 3}
+    channel: 1
     volume: 0.3
     pitch: 1
     loop: 1
     source: {fileID: 0}
   - name: CannonFinal
     clip: {fileID: 8300000, guid: e85f931ef6865704ea2eb371da550d35, type: 3}
+    channel: 0
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: DrunkGameBG
+    clip: {fileID: 8300000, guid: dd598896ae630e848b217d30d2dd069c, type: 3}
     channel: 0
     volume: 1
     pitch: 1

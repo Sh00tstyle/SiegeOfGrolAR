@@ -70,7 +70,7 @@ public class DrunkardInteraction : MonoBehaviour
         {
             StartDialog(_rightFeedbackNarration, () => { 
                 ProgressHandler.Instance.IncreaseStoryProgress();
-                //AudioManager.Instance.StopPlaying("DrunkardTheme");
+                AudioManager.Instance.StopPlaying("DrunkGameBG");
                 AudioManager.Instance.Play("GameBG");
                 SceneHandler.Instance.LoadScene(Scenes.Map);
             });
