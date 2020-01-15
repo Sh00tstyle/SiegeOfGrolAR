@@ -63,13 +63,22 @@ public class Carousel : MonoBehaviour
         _rightAnchorMax = new Vector2(1, _avatars[0].anchorMax.y);
     }
 
+    public void ForcePosition(int index)
+    {
+        if (index == _currentIndex)
+            return;
+
+        ChangePosition(index > _currentIndex);
+    }
 
     public void ChangePosition(bool pSwipeLeft)
     {
+
         if (!pSwipeLeft && _currentIndex <= 0)
             return;
         else if (pSwipeLeft && _currentIndex >= _carouselPanels.Length - 1)
             return;
+
 
         // Cancel current animations
         _activeTween.Kill();
