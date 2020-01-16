@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-#if !UNITY_EDITOR && UNITY_ANDROIDD 
+#if !UNITY_EDITOR && UNITY_ANDROID 
 using UnityEngine.Android;
 #endif
 
