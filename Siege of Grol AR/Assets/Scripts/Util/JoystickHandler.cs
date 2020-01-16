@@ -71,7 +71,8 @@ public class JoystickHandler : MonoBehaviour
 
     private void EvaluateJoystickInput()
     {
-        if (!IsUsingJoystick) return;
+        if (!IsUsingJoystick) 
+            return;
 
         Vector3 deltaMovement = Input.mousePosition - _startPosition;
 

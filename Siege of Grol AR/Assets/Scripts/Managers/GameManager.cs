@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+#if !UNITY_EDITOR && UNITY_ANDROIDD 
+#endif
+using UnityEngine.Android;
+
 public class GameManager : Singleton<GameManager>
 {
     public string playerName;
@@ -21,8 +25,18 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
-#if !UNITY_EDITOR
+#if !UNITY_EDITOR && UNITY_ANDROID
         Screen.orientation = ScreenOrientation.Portrait;
+
+        if(!Permission.HasUserAuthorizedPermission(Permission.Camera))
+        {
+            Permission.RequestUserPermission(Permission.Camera);
+        }
+
+        if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+        {
+            Permission.RequestUserPermission(Permission.FineLocation);
+        }
 #endif
 
         Application.targetFrameRate = 60;

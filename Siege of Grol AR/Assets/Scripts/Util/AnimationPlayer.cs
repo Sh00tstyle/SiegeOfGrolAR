@@ -104,7 +104,7 @@ public class AnimationPlayer : MonoBehaviour
 
         _shouldSkipVideo = false;
 
-        if (storyProgress == Progress.Priest) // Preist
+        if (storyProgress == Progress.Priest) // Priest
             _videoPlayer.clip = _priestClip;
         else if (storyProgress == Progress.CannonCommander)
             _videoPlayer.clip = _cannonCommanderClip;

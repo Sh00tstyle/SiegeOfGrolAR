@@ -175,6 +175,9 @@ public class CharacterDialog : MonoBehaviour
 
     private IEnumerator FinishDialog()
     {
+        if(_audioComponent.isPlaying)
+            _audioComponent.Stop();
+
         switch (_storyProgress)
         {
             case Progress.Priest:
