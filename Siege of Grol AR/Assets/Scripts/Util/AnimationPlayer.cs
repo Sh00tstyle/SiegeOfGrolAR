@@ -32,12 +32,8 @@ public class AnimationPlayer : MonoBehaviour
 
         _videoPlayer = mainCamera.gameObject.AddComponent<VideoPlayer>();
         transform.parent = mainCamera.transform; // Parent to the camera for easier (but not ideal) access from other scripts
-    }
 
-    private void Start()
-    {
         InitializeVideoPlayer();
-        _videoPlayer.enabled = false;
     }
 
     private void Update()
@@ -101,7 +97,6 @@ public class AnimationPlayer : MonoBehaviour
         Progress storyProgress = (Progress)ProgressHandler.Instance.StoryProgressIndex;
 
         _videoPlayer.playOnAwake = false;
-
         _videoPlayer.renderMode = UnityEngine.Video.VideoRenderMode.CameraNearPlane;
         _videoPlayer.targetCameraAlpha = 1.0f;
         _videoPlayer.isLooping = false;
