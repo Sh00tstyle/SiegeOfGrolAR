@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 #if !UNITY_EDITOR && UNITY_ANDROIDD 
-#endif
 using UnityEngine.Android;
+#endif
 
 public class GameManager : Singleton<GameManager>
 {
@@ -33,10 +33,12 @@ public class GameManager : Singleton<GameManager>
             Permission.RequestUserPermission(Permission.Camera);
         }
 
+        /**
         if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
         {
             Permission.RequestUserPermission(Permission.FineLocation);
         }
+        /**/
 #endif
 
         Application.targetFrameRate = 60;
