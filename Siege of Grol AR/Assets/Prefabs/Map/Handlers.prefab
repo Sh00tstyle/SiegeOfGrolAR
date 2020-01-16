@@ -143,7 +143,7 @@ MonoBehaviour:
   - name: CannonTheme
     clip: {fileID: 8300000, guid: ecdcd2da480ffde47b4f408d868b7cdd, type: 3}
     channel: 0
-    volume: 0.5
+    volume: 0.3
     pitch: 1
     loop: 1
     source: {fileID: 0}

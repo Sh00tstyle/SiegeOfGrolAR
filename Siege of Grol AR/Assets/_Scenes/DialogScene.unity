@@ -297,9 +297,45 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1585971477244162678, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585971477244162678, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 825752482}
+    - target: {fileID: 1585971477244162678, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585971477244162678, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585971477244162678, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 6100530995539657400, guid: b51728b5eb64125488e949d7cf3a8193,
+        type: 3}
+    - target: {fileID: 1585971477244162678, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585971477244162678, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585971477244162678, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: UINext
+      objectReference: {fileID: 0}
     - target: {fileID: 3417383822508483444, guid: c5f6f4de7d1a9d649acd2b9e5f9b3b99,
         type: 3}
       propertyPath: m_RaycastTarget
